@@ -451,7 +451,17 @@ async function runAnalysis() {
         }
 
         // Markdown Formatting
-        const formattedContent = marked.parse(content);
+        let formattedContent = marked.parse(content);
+
+        // Enhance formatting with regex
+        // 1. Highlight Timestamps [mm:ss] or [mm:ss~mm:ss]
+        formattedContent = formattedContent.replace(/\[(\d{2}:\d{2}(?:~\d{2}:\d{2})?)\]/g, '<span class="timestamp">[$1]</span>');
+
+        // 2. Highlight Scores (e.g., 6.5, 6.00)
+        // Add '점' if not present, and wrap in span
+        formattedContent = formattedContent.replace(/\b([0-9]\.[0-9]{1,2})\b(?!점)/g, '<span class="score">$1점</span>');
+        // If '점' was already there (e.g. from AI), just wrap the number
+        formattedContent = formattedContent.replace(/\b([0-9]\.[0-9]{1,2})점/g, '<span class="score">$1점</span>');
 
         setModalStep('step-complete');
         modalTitle.textContent = ANALYSIS_CONFIG.messages.resultTitle;
