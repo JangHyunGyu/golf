@@ -344,8 +344,8 @@ async function runAnalysis() {
             <div class="loader-wave">
                 <div></div><div></div><div></div><div></div><div></div>
             </div>
-            <p style="text-align:center; font-weight:bold; color:#bd34fe;">${ANALYSIS_CONFIG.messages.stepAnalyzing}</p>
-            <p style="font-size: 0.9rem; color: #888; text-align:center">${ANALYSIS_CONFIG.messages.analyzeTimeWarning}</p>
+            <p style="text-align:center; font-weight:bold; color:#d4af37;">${ANALYSIS_CONFIG.messages.stepAnalyzing}</p>
+            <p style="font-size: 0.9rem; color: #b0bec5; text-align:center">${ANALYSIS_CONFIG.messages.analyzeTimeWarning}</p>
         `;
 
         const genre = document.getElementById('danceGenre').value;

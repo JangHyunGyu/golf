@@ -7,10 +7,11 @@
     height: 60px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #0288d1; /* Sky Blue */
+    border-top-color: #d4af37; /* Gold */
     animation: spin 1.5s linear infinite;
     position: relative;
     margin: 0 auto 20px;
+    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
 }
 .loader-orbit:before {
     content: "";
@@ -33,7 +34,7 @@
     bottom: 15px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #fbc02d; /* Gold */
+    border-top-color: #f1f8e9; /* Off-white */
     animation: spin 1s linear infinite;
 }
 
@@ -49,7 +50,7 @@
 .loader-wave div {
     width: 6px;
     height: 100%;
-    background: linear-gradient(to top, #0288d1, #2e7d32);
+    background: linear-gradient(to top, #1b5e20, #d4af37); /* Deep Green to Gold */
     animation: wave 1.2s infinite ease-in-out;
     border-radius: 4px;
 }
@@ -61,5 +62,5 @@
 
 @keyframes wave {
     0%, 40%, 100% { transform: scaleY(0.4); opacity: 0.6; }
-    20% { transform: scaleY(1.0); opacity: 1; box-shadow: 0 0 15px rgba(46, 125, 50, 0.4); }
+    20% { transform: scaleY(1.0); opacity: 1; box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
 }
