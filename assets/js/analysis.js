@@ -60,7 +60,7 @@ const detectBrowserLanguage = () => {
 
 // Kakao SDK Init
 try {
-    Kakao.init('2a0f97309508f0405a563d70e1c01262'); 
+    Kakao.init('41684f8ded61c7e396e37031d51bbc3c'); 
 } catch (e) {
     console.warn("Kakao SDK init failed (Key not set)");
 }
@@ -442,7 +442,7 @@ function shareKakao() {
         script.onload = () => {
             try {
                 if (!Kakao.isInitialized()) {
-                    Kakao.init('2a0f97309508f0405a563d70e1c01262');
+                    Kakao.init('41684f8ded61c7e396e37031d51bbc3c');
                 }
                 shareKakao();
             } catch (e) {
@@ -458,7 +458,7 @@ function shareKakao() {
 
     try {
         if (!Kakao.isInitialized()) {
-            Kakao.init('2a0f97309508f0405a563d70e1c01262');
+            Kakao.init('41684f8ded61c7e396e37031d51bbc3c');
         }
 
         const shareUrl = window.location.href.split('?')[0] + (currentAnalysisId ? `?id=${currentAnalysisId}` : '');
@@ -488,7 +488,7 @@ function shareKakao() {
         });
     } catch (err) {
         console.error('Kakao Share Error:', err);
-        alert('Error sharing: ' + err.message);
+        alert('카카오톡 공유 실패: ' + JSON.stringify(err, Object.getOwnPropertyNames(err)));
     }
 }
 
