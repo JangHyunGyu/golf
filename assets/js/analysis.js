@@ -468,7 +468,7 @@ function shareKakao() {
             content: {
                 title: ANALYSIS_CONFIG.messages.shareTitle,
                 description: ANALYSIS_CONFIG.messages.shareDesc,
-                imageUrl: 'https://via.placeholder.com/1200x630?text=Golf+Swing+Analysis',
+                imageUrl: 'https://golf.archerlab.dev/assets/images/kakao_golf.png',
                 imageWidth: 1200,
                 imageHeight: 630,
                 link: {
