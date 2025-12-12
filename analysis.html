@@ -237,6 +237,7 @@
                     2. **NO REPETITION**: Do NOT repeat the user's prompt or instructions.
                     3. **START IMMEDIATELY**: The output MUST start with "1. **총평**:"
                     4. **LANGUAGE**: Korean ONLY. (English allowed for technical terms).
+                    5. **NO POSTSCRIPT**: Do NOT add any English notes, metadata, or "Club Context" at the end. STOP immediately after "One Point Lesson".
 
                     [ANALYSIS INSTRUCTIONS]
                     1. **Identify Video Type**: 
@@ -270,6 +271,10 @@
 
                     4. **원포인트 레슨 (One Point Lesson)**:
                     - (Most critical fix & drill)
+
+                    [IMPORTANT]
+                    STOP GENERATING TEXT IMMEDIATELY AFTER THE ONE POINT LESSON.
+                    DO NOT OUTPUT ANY ENGLISH METADATA, CONTEXT, OR REASONING.
                     `.trim();
             }
         };
