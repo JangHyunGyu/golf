@@ -387,6 +387,13 @@ async function runAnalysis() {
         const startIndex = content.indexOf(startMarker);
         if (startIndex > 0) {
             content = content.substring(startIndex);
+        } else if (startIndex === -1) {
+            // Fallback for old format or if AI ignores ###
+            const oldMarker = "1. **총평**:";
+            const oldIndex = content.indexOf(oldMarker);
+            if (oldIndex !== -1) {
+                content = content.substring(oldIndex);
+            }
         }
 
         // Remove English postscript/metadata (if any)
