@@ -2,14 +2,14 @@
 :root {
     --primary-color: #2e7d32; /* Forest Green */
     --primary-light: #4caf50;
-    --secondary-color: #0277bd; /* Deep Sky Blue */
-    --bg-dark: #e1f5fe; /* Light Sky Blue */
-    --surface-dark: rgba(255, 255, 255, 0.75);
-    --text-main: #1b5e20; /* Dark Green Text */
-    --text-muted: #546e7a;
-    --border-color: rgba(0, 0, 0, 0.08);
-    --gradient-vite: linear-gradient(135deg, #43a047 0%, #0288d1 100%);
-    --glow-color: rgba(67, 160, 71, 0.2);
+    --secondary-color: #d4af37; /* Gold */
+    --bg-dark: #05100e; /* Deep Dark Green */
+    --surface-dark: rgba(10, 31, 24, 0.8);
+    --text-main: #f1f8e9; /* Off-white */
+    --text-muted: #b0bec5;
+    --border-color: rgba(212, 175, 55, 0.2);
+    --gradient-vite: linear-gradient(135deg, #2e7d32 0%, #d4af37 100%);
+    --glow-color: rgba(212, 175, 55, 0.2);
 }
 
 html, body {
@@ -22,7 +22,7 @@ html, body {
 body {
     background-color: var(--bg-dark);
     background-image: 
-        linear-gradient(to bottom, rgba(225, 245, 254, 0.6), rgba(255, 255, 255, 0.4)),
+        linear-gradient(to bottom, rgba(5, 16, 14, 0.4), rgba(5, 16, 14, 0.7)),
         url('https://images.unsplash.com/photo-1535131749006-b7f58c99034b?q=80&w=2070&auto=format&fit=crop');
     background-size: cover;
     background-position: center;
@@ -375,11 +375,11 @@ h1, h2, h3, .hero__title, .modal-title, .site-logo {
     max-width: 900px;
     margin: auto;
     padding: 3rem;
-    background: rgba(255, 255, 255, 0.7); /* Light Glass */
-    backdrop-filter: blur(16px);
+    background: rgba(10, 31, 24, 0.75); /* Dark Glass */
+    backdrop-filter: blur(24px);
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
     text-align: center;
     word-break: keep-all;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -387,14 +387,14 @@ h1, h2, h3, .hero__title, .modal-title, .site-logo {
 }
 
 .analysis-container:hover {
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
-    border-color: #fff;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    border-color: rgba(212, 175, 55, 0.4);
 }
 
 .section-title {
     font-size: 0.9rem;
     font-weight: 700;
-    color: #2e7d32; /* Forest Green */
+    color: #d4af37; /* Gold */
     margin-bottom: 0.8rem;
     text-align: left;
     display: flex;
@@ -409,7 +409,7 @@ h1, h2, h3, .hero__title, .modal-title, .site-logo {
     display: block;
     width: 4px;
     height: 14px;
-    background: linear-gradient(to bottom, #43a047, #0288d1);
+    background: linear-gradient(to bottom, #d4af37, #2e7d32);
     border-radius: 2px;
 }
 
@@ -437,11 +437,11 @@ h1, h2, h3, .hero__title, .modal-title, .site-logo {
         margin: 0 auto;
         border-radius: 20px;
         
-        /* Mobile Light Glass Effect */
-        border: 1px solid rgba(255, 255, 255, 0.8);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
-        background: rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(15px);
+        /* Mobile Dark Glass Effect */
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        background: rgba(10, 31, 24, 0.85);
+        backdrop-filter: blur(20px);
     }
     
     .options-grid {
@@ -812,7 +812,7 @@ select:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
     display: none;
     justify-content: center;
     align-items: center;
@@ -821,67 +821,67 @@ select:focus {
 }
 
 .modal-container {
-    background: #1e1e24;
+    background: #fff;
     width: 90%;
     max-width: 800px;
     max-height: 85vh;
     border-radius: 20px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
     position: relative;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(0,0,0,0.1);
     transition: box-shadow 0.5s ease, border-color 0.5s ease;
 }
 
 /* Modal Backlight Steps */
 .modal-container.step-init,
 .modal-container.step-upload {
-    border-color: rgba(65, 209, 255, 0.6);
-    box-shadow: 0 0 40px rgba(65, 209, 255, 0.3);
+    border-color: #0288d1;
+    box-shadow: 0 0 30px rgba(2, 136, 209, 0.15);
 }
 
 .modal-container.step-processing {
-    border-color: rgba(189, 52, 254, 0.6);
-    box-shadow: 0 0 40px rgba(189, 52, 254, 0.3);
+    border-color: #0277bd;
+    box-shadow: 0 0 30px rgba(2, 119, 189, 0.15);
 }
 
 .modal-container.step-analyzing {
-    border-color: rgba(255, 45, 136, 0.6);
-    box-shadow: 0 0 40px rgba(255, 45, 136, 0.3);
+    border-color: #2e7d32;
+    box-shadow: 0 0 30px rgba(46, 125, 50, 0.15);
 }
 
 .modal-container.step-complete {
-    border-color: rgba(0, 255, 157, 0.6);
-    box-shadow: 0 0 40px rgba(0, 255, 157, 0.3);
+    border-color: #43a047;
+    box-shadow: 0 0 30px rgba(67, 160, 71, 0.15);
 }
 
 .modal-container.step-error {
-    border-color: rgba(255, 82, 82, 0.6);
-    box-shadow: 0 0 40px rgba(255, 82, 82, 0.3);
+    border-color: #e53935;
+    box-shadow: 0 0 30px rgba(229, 57, 53, 0.15);
 }
 
 .modal-header {
     padding: 1.5rem 2rem;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.02);
     border-radius: 20px 20px 0 0;
 }
 
 .modal-title {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #fff;
+    color: #1b5e20;
     margin: 0;
 }
 
 .modal-close {
     background: none;
     border: none;
-    color: var(--text-muted);
+    color: #546e7a;
     font-size: 1.5rem;
     cursor: pointer;
     padding: 0.5rem;
@@ -891,7 +891,7 @@ select:focus {
 }
 
 .modal-close:hover {
-    color: #fff;
+    color: #1b5e20;
     opacity: 1;
 }
 
@@ -899,10 +899,10 @@ select:focus {
     padding: 2rem;
     overflow-y: auto;
     line-height: 1.8;
-    color: #e0e0e0;
+    color: #37474f;
     font-size: 1.1rem;
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.05);
+    scrollbar-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.05);
 }
 
 .modal-body::-webkit-scrollbar {
@@ -911,13 +911,17 @@ select:focus {
 }
 
 .modal-body::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.05);
     border-radius: 4px;
 }
 
 .modal-body::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
 }
 
 .modal-body::-webkit-scrollbar-thumb:hover {

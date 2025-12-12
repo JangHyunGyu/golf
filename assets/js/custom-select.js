@@ -28,9 +28,9 @@ function injectCustomStyles() {
             padding: 0 20px;
             font-size: 1rem;
             font-weight: 500;
-            color: #37474f;
-            background: #fff;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #f1f8e9;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             border-radius: 16px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -38,22 +38,22 @@ function injectCustomStyles() {
             box-sizing: border-box;
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .custom-select-modern__trigger:hover {
-            background: #f9fbe7;
-            border-color: #4caf50;
-            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
             transform: translateY(-1px);
         }
 
         .custom-select-modern.open .custom-select-modern__trigger {
-            border-color: #2e7d32;
-            background: #fff;
+            border-color: #d4af37;
+            background: rgba(255, 255, 255, 0.08);
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
-            box-shadow: 0 0 0 2px rgba(46, 125, 50, 0.2);
+            box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.3);
         }
 
         .custom-select-modern__arrow {
@@ -70,7 +70,7 @@ function injectCustomStyles() {
             bottom: 0;
             width: 2px;
             height: 100%;
-            background-color: #546e7a;
+            background-color: #b0bec5;
             transition: all 0.3s ease;
             border-radius: 2px;
         }
@@ -93,7 +93,7 @@ function injectCustomStyles() {
 
         .custom-select-modern.open .custom-select-modern__arrow::before,
         .custom-select-modern.open .custom-select-modern__arrow::after {
-            background-color: #2e7d32;
+            background-color: #d4af37;
         }
 
         .custom-options-modern {
@@ -102,11 +102,11 @@ function injectCustomStyles() {
             top: 100%;
             left: 0;
             right: 0;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             border-top: 0;
             border-bottom-left-radius: 16px;
             border-bottom-right-radius: 16px;
-            background: #fff;
+            background: rgba(10, 31, 24, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -116,7 +116,7 @@ function injectCustomStyles() {
             z-index: 1000;
             transform: translateY(-10px) scale(0.98);
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
 
         .custom-select-modern.open .custom-options-modern {
@@ -133,10 +133,10 @@ function injectCustomStyles() {
             padding: 14px 20px;
             font-size: 0.95rem;
             font-weight: 400;
-            color: #37474f;
+            color: #cfd8dc;
             cursor: pointer;
             transition: all 0.2s ease;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .custom-option-modern:last-child { 
@@ -144,14 +144,14 @@ function injectCustomStyles() {
         }
 
         .custom-option-modern:hover {
-            color: #1b5e20;
-            background: #f1f8e9;
+            color: #f1f8e9;
+            background: rgba(255, 255, 255, 0.05);
             padding-left: 24px;
         }
 
         .custom-option-modern.selected {
-            color: #2e7d32;
-            background: #e8f5e9;
+            color: #d4af37;
+            background: rgba(212, 175, 55, 0.1);
             font-weight: 600;
         }
 
@@ -161,7 +161,7 @@ function injectCustomStyles() {
             right: 20px;
             width: 6px;
             height: 10px;
-            border: solid #2e7d32;
+            border: solid #d4af37;
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
         }
@@ -177,16 +177,16 @@ function injectCustomStyles() {
         }
         
         .custom-options-modern::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.02);
+            background: rgba(0, 0, 0, 0.1);
         }
         
         .custom-options-modern::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 3px;
         }
         
         .custom-options-modern::-webkit-scrollbar-thumb:hover {
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         @media (max-width: 600px) {

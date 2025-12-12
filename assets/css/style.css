@@ -1,23 +1,33 @@
 :root {
   --max-width: 1100px;
   --page-padding: 32px;
-  --color-bg: #f0f9ff; /* Very Light Sky Blue */
-  --color-bg-alt: #e0f2f1;
-  --color-surface: rgba(255, 255, 255, 0.6);
-  --color-surface-soft: rgba(255, 255, 255, 0.4);
-  --color-surface-elevated: rgba(255, 255, 255, 0.85);
-  --color-border: rgba(0, 80, 0, 0.1);
-  --color-text: #1a3c34; /* Deep Dark Green */
-  --color-muted: #376e63;
-  --color-subtle: #78909c;
-  --color-accent: #00c853; /* Vivid Green */
-  --color-accent-soft: rgba(0, 200, 83, 0.1);
+  
+  /* Premium Palette */
+  --color-bg: #05100e; /* Deepest Green */
+  --color-bg-alt: #0a1f18;
+  
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-surface-soft: rgba(255, 255, 255, 0.03);
+  --color-surface-elevated: rgba(255, 255, 255, 0.1);
+  
+  --color-border: rgba(212, 175, 55, 0.2); /* Subtle Gold */
+  
+  --color-text: #f1f8e9;
+  --color-muted: #cfd8dc;
+  --color-subtle: #90a4ae;
+  
+  --color-accent: #d4af37; /* Gold */
+  --color-accent-soft: rgba(212, 175, 55, 0.1);
+  
   --radius-lg: 32px;
   --radius-md: 24px;
   --radius-sm: 16px;
-  --shadow-lg: 0 25px 50px -12px rgba(0, 60, 0, 0.15);
-  --shadow-md: 0 15px 35px -10px rgba(0, 60, 0, 0.1);
-  --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  
+  --shadow-lg: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+  
+  --font-heading: 'Playfair Display', serif;
+  --font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
 }
 
 * {
