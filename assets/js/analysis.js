@@ -384,13 +384,15 @@ async function runAnalysis() {
         // --- Client-side Filtering Logic ---
         // Remove English preamble (if any)
         const startMarker = "### 1. 총평";
-        const startIndex = content.indexOf(startMarker);
-        if (startIndex > 0) {
+        // Use lastIndexOf to pick the FINAL output, ignoring any initial drafts or self-corrections
+        const startIndex = content.lastIndexOf(startMarker);
+        
+        if (startIndex !== -1) {
             content = content.substring(startIndex);
-        } else if (startIndex === -1) {
+        } else {
             // Fallback for old format or if AI ignores ###
             const oldMarker = "1. **총평**:";
-            const oldIndex = content.indexOf(oldMarker);
+            const oldIndex = content.lastIndexOf(oldMarker);
             if (oldIndex !== -1) {
                 content = content.substring(oldIndex);
             }
