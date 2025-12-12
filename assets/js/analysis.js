@@ -379,7 +379,41 @@ async function runAnalysis() {
             throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
         }
         
-        const content = data.choices?.[0]?.message?.content || ANALYSIS_CONFIG.messages.resultError;
+        let content = data.choices?.[0]?.message?.content || ANALYSIS_CONFIG.messages.resultError;
+        
+        // --- Client-side Filtering Logic ---
+        // Remove English preamble (if any)
+        const startMarker = "1. **총평**:";
+        const startIndex = content.indexOf(startMarker);
+        if (startIndex > 0) {
+            content = content.substring(startIndex);
+        }
+
+        // Remove English postscript/metadata (if any)
+        const stopMarkers = [
+            "**Club Context**:",
+            "**Video Type**:",
+            "**Angle**:",
+            "**Scoring Standard Applied**:",
+            "**Timestamps Cited**:",
+            "**Language**:",
+            "**Output Format**:",
+            "**Start**:",
+            "**No Preamble**:",
+            "**Ready to generate output.**",
+            "**Wait, I need to double check"
+        ];
+
+        let cutIndex = content.length;
+        for (const marker of stopMarkers) {
+            const idx = content.indexOf(marker);
+            if (idx !== -1 && idx < cutIndex) {
+                cutIndex = idx;
+            }
+        }
+        content = content.substring(0, cutIndex).trim();
+        // -----------------------------------
+
         latestAnalysisResult = content;
 
         // Save Result
