@@ -451,7 +451,13 @@ async function runAnalysis() {
         }
 
         // Markdown Formatting
-        let formattedContent = marked.parse(content);
+        let formattedContent;
+        if (typeof marked !== 'undefined' && marked.parse) {
+             formattedContent = marked.parse(content);
+        } else {
+             console.warn("Marked library not found, displaying raw text.");
+             formattedContent = content.replace(/\n/g, '<br>');
+        }
 
         // Enhance formatting with regex
         // 1. Highlight Timestamps [mm:ss] or [mm:ss~mm:ss] or [mm:ss - mm:ss]
@@ -588,7 +594,13 @@ window.addEventListener('DOMContentLoaded', async () => {
             const content = data.result;
             latestAnalysisResult = content;
 
-            const formattedContent = marked.parse(content);
+            let formattedContent;
+            if (typeof marked !== 'undefined' && marked.parse) {
+                 formattedContent = marked.parse(content);
+            } else {
+                 console.warn("Marked library not found, displaying raw text.");
+                 formattedContent = content.replace(/\n/g, '<br>');
+            }
 
             setModalStep('step-complete'); // Success state (Green)
             modalTitle.textContent = ANALYSIS_CONFIG.messages.resultTitleShared;
