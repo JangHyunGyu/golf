@@ -383,7 +383,7 @@ async function runAnalysis() {
         
         // --- Client-side Filtering Logic ---
         // Remove English preamble (if any)
-        const startMarker = "1. **총평**:";
+        const startMarker = "### 1. 총평";
         const startIndex = content.indexOf(startMarker);
         if (startIndex > 0) {
             content = content.substring(startIndex);
