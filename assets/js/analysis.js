@@ -401,7 +401,13 @@ async function runAnalysis() {
             "**Start**:",
             "**No Preamble**:",
             "**Ready to generate output.**",
-            "**Wait, I need to double check"
+            "**Wait, I need to double check",
+            "5. **클럽 정보**:",
+            "**참고**:",
+            "**주의**:",
+            "**면책 조항**:",
+            "(End of Output)",
+            "**Note**:"
         ];
 
         let cutIndex = content.length;
