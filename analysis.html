@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>골프 스윙 분석 & 코칭</title>
+	<meta name="description" content="골프 스윙 분석 엔진이 당신의 스윙 영상을 분석하여 프로 수준의 코칭 및 피드백을 제공합니다." />
+	<link rel="canonical" href="https://golfswing.kr/analysis.html" />
+	<meta name="keywords" content="골프, 스윙 분석, 골프 레슨, 골프 코치, 자세 교정, 드라이버 스윙, 아이언 스윙, 골프 독학, 스윙 플레인, 비거리 늘리기" />
+	<meta name="robots" content="index,follow" />
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="ko_KR" />
+	<meta property="og:site_name" content="골프 스윙 마스터" />
+	<meta property="og:title" content="골프 스윙 분석 & 코칭" />
+	<meta property="og:description" content="골프 스윙 분석 엔진이 당신의 스윙 영상을 분석하여 피드백을 제공합니다." />
+	<meta property="og:url" content="https://golfswing.kr/analysis.html" />
+	<meta property="og:image" content="https://golfswing.kr/assets/images/kakao_golf.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="골프 스윙 분석 & 코칭" />
+	<meta name="twitter:description" content="골프 스윙 분석 엔진이 당신의 스윙 영상을 분석하여 피드백을 제공합니다." />
+	<meta name="twitter:image" content="https://golfswing.kr/assets/images/kakao_golf.png" />
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Pretendard:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+	<link rel="stylesheet" href="assets/css/style.css?v=103">
+	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
+	<script defer src="assets/js/ga.js"></script>
+    
+    <link rel="stylesheet" href="assets/css/analysis.css?v=final1">
+    <link rel="stylesheet" href="assets/css/analysis-loaders.css">
+    <!-- <link rel="stylesheet" href="assets/css/custom-select.css"> -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "골프 스윙 분석기",
+      "operatingSystem": "Web",
+      "applicationCategory": "SportsApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "description": "골프 스윙 모션 분석 및 자세 교정 서비스"
+    }
+    </script>
+</head>
+
+<body>
+
+	<main class="site-main">
+        <div class="home-nav">
+            <a href="index.html" class="home-btn">
+                <span class="home-icon">🏠</span>
+                <span class="home-text">HOME</span>
+            </a>
+        </div>
+        <!-- Language switcher removed -->
+        <!-- <div class="lang-switcher">
+            <a href="analysis.html" class="lang-link active">KR</a>
+        </div> -->
+        <div class="analysis-container">
+            <h1 class="hero__title">골프 스윙 영상 분석</h1>
+            
+            <button id="guideBtn" class="guide-btn">
+                <span class="guide-icon">ℹ️</span> 이용 안내
+            </button>
+
+            <div class="options-grid">
+                <div>
+                    <label class="section-title">클럽 (Club)</label>
+                    <select id="danceGenre">
+                        <option value="Driver">드라이버 (Driver)</option>
+                        <option value="WoodHybrid">우드/유틸리티 (Wood/Hybrid)</option>
+                        <option value="Iron">아이언 (Iron)</option>
+                        <option value="Wedge">웨지 (Wedge)</option>
+                    </select>
+                </div>
+                <!-- Angle selection removed, Auto detect -->
+            </div>
+
+            <div class="upload-area" id="dropZone">
+                <span class="upload-icon">📁</span>
+                <label for="videoInput" class="upload-btn-label">영상 선택하기</label>
+                <input type="file" id="videoInput" accept="video/*">
+                <p class="upload-hint">또는 영상을 여기로 드래그하세요</p>
+                <div id="fileName" class="file-name"></div>
+            </div>
+
+            <button id="analyzeBtn" disabled>분석 & 코칭</button>
+            
+            <!-- Loading div removed, moved to modal -->
+            
+            <div id="result"></div>
+        </div>
+	</main>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle" class="modal-title">정밀 분석 결과</h3>
+                <button id="modalCloseBtn" class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <!-- Analysis content will be injected here -->
+            </div>
+            <button id="scrollTopBtn" title="맨 위로">↑</button>
+            <div id="modalFooter" class="modal-footer">
+                <button class="share-btn share-kakao" onclick="shareKakao()" style="margin-right: 10px;">
+                    💬 카카오톡 공유
+                </button>
+                <button class="share-btn share-copy" onclick="copyResult()">
+                    📋 결과 복사
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Modal -->
+    <div id="guideModal" class="modal-overlay">
+        <div class="modal-container guide-container">
+            <div class="modal-header">
+                <h3 class="modal-title">이용 안내</h3>
+                <button id="guideCloseBtn" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body guide-body">
+                <div class="guide-section">
+                    <h4>🤖 골프 스윙 분석이란?</h4>
+                    <p>최신 모션 분석 엔진이 영상을 프레임 단위로 정밀하게 스캔하여 스윙의 메커니즘을 분석합니다.</p>
+                    <p>PGA/LPGA 투어 프로들의 데이터와 비교하여 <strong>어드레스, 백스윙, 임팩트, 피니시</strong> 등을 객관적으로 진단해 드립니다.</p>
+                </div>
+                <div class="guide-section">
+                    <h4>🏆 레퍼런스 프로란?</h4>
+                    <p>분석 엔진 가이드 영상 소스로 수집된 <strong>월드 클래스 투어 프로</strong>들을 의미합니다.</p>
+                    <p><strong>10점 만점은 이들의 수준</strong>을 의미하며, 여러분의 스윙이 그 기준에 얼마나 근접했는지를 상대적으로 평가합니다.</p>
+                    <h5 class="reference-title">주요 레퍼런스 프로</h5>
+                    <ul class="reference-list">
+                        <li><strong>남자 (PGA)</strong>: 타이거 우즈, 로리 맥길로이, 스코티 셰플러, 존 람</li>
+                        <li><strong>여자 (LPGA)</strong>: 넬리 코다, 고진영, 리디아 고, 김효주</li>
+                    </ul>
+
+                    <div class="guide-sub-text">
+                        <span class="guide-icon">💡</span>
+                        <div class="guide-content">
+                            실망하지 마세요! 투어 프로들과 비교하므로 점수가 상대적으로 낮게 나올 수 있습니다. 
+                            <strong>6~7점만 되어도 싱글 핸디캡퍼 수준의 훌륭한 스윙입니다.</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-section">
+                    <h4>💡 이용 방법</h4>
+                    <ol>
+                        <li><strong>클럽 선택</strong>: 드라이버, 우드/유틸, 아이언, 웨지 중 선택</li>
+                        <li><strong>영상 선택</strong>: 분석할 영상을 선택하거나 드래그 해서 추가해주세요</li>
+                        <li><strong>분석 & 코칭</strong>: 버튼을 누르면 분석을 시작합니다 (최대 1~2분 소요)</li>
+                    </ol>
+                </div>
+                <div class="guide-section">
+                    <h4>⚠️ 권장 사항</h4>
+                    <ul>
+                        <li>머리부터 발끝까지 전신이 잘 보이는 영상을 권장합니다.</li>
+                        <li>측면 촬영 시 타겟 라인과 평행하게 촬영해야 정확한 플레인 분석이 가능합니다.</li>
+                        <li>너무 어둡거나 흔들림이 심한 영상은 분석이 어려울 수 있습니다.</li>
+                        <li>슬로우 모션 영상도 분석 가능하지만, 일반 속도 영상이 리듬 분석에 더 유리할 수 있습니다.</li>
+                        <li>파일 크기는 100MB 이하만 가능합니다.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/custom-select.js?v=final5"></script>
+    <script src="assets/js/analysis-bg.js"></script>
+    <script>
+        const ANALYSIS_CONFIG = {
+            messages: {
+                fileTooLarge: "파일 크기가 너무 큽니다 ({size} MB).\\n100MB 이하의 영상만 분석 가능합니다.\\n(카카오톡 등으로 압축 후 선택해주세요)",
+                fileSelected: "선택된 파일",
+                processTitle: "정밀 분석 프로세스 진행 중...",
+                stepInit: "보안 연결 수립 및 데이터 전송 세션을<br>초기화하고 있습니다...",
+                stepUpload: "분석 서버로 영상 데이터 전송 중...",
+                uploadWarning: "(고화질 영상은 전송에 시간이 소요될 수 있습니다)",
+                networkWarning: "(네트워크 환경에 따라 속도가 달라질 수 있습니다)",
+                stepProcessing: "클라우드 서버에서 영상 전처리 및<br>데이터 최적화 작업을 수행 중입니다...",
+                waitMessage: "잠시만 기다려주세요.",
+                stepAnalyzing: "골프 스윙 분석 엔진이 신체 각도와<br>클럽의 궤적을 프레임 단위로 정밀 분석하고 있습니다...",
+                analyzeTimeWarning: "(최대 1~2분 소요될 수 있습니다)",
+                resultTitle: "정밀 분석 결과",
+                errorTitle: "오류 발생",
+                resultError: "분석 결과를 가져오지 못했습니다.",
+                shareTitle: "골프 스윙 영상 분석",
+                shareDesc: "내 골프 스윙 영상을 AI가 분석해주는 서비스입니다. 지금 바로 체험해보세요!",
+                shareBtn: "분석 결과 보기",
+                copyNoResult: "복사할 분석 결과가 없습니다.",
+                copySuccess: "분석 결과가 클립보드에 복사되었습니다!",
+                copyFail: "결과 복사에 실패했습니다.",
+                loadingShared: "공유된 분석 결과 불러오는 중...",
+                resultTitleShared: "정밀 분석 결과 (공유됨)",
+                loadSharedFail: "공유된 결과를 찾을 수 없거나 만료되었습니다."
+            },
+            generatePrompt: function(club) {
+                // club: Driver, WoodHybrid, Iron, Wedge
+                // angle is now detected by AI
+
+                let referencePros = "Tiger Woods, Rory McIlroy, Nelly Korda, Jin Young Ko";
+                let clubFocus = "";
+
+                if (club === "Driver") {
+                    clubFocus = "드라이버 스윙입니다. **비거리와 방향성**이 핵심입니다. 상향 타격(Upper Blow)을 위한 셋업, 넓은 아크, 그리고 강력한 지면 반력을 중점적으로 분석해주세요.";
+                } else if (club === "Iron") {
+                    clubFocus = "아이언 스윙입니다. **정확한 임팩트와 거리 조절**이 핵심입니다. 다운블로(Down Blow) 타격, 일관된 템포, 그리고 디봇을 만드는 임팩트를 중점적으로 분석해주세요.";
+                } else if (club === "Wedge") {
+                    clubFocus = "웨지 샷입니다. **스핀 컨트롤과 정확성**이 핵심입니다. 간결한 백스윙, 가속되는 임팩트, 그리고 핀에 붙이는 거리감을 중점적으로 분석해주세요.";
+                } else {
+                    clubFocus = "우드/유틸리티 스윙입니다. **쓸어 치는 타격과 탄도 확보**가 핵심입니다. 부드러운 템포와 균형 잡힌 피니시를 중점적으로 분석해주세요.";
+                }
+
+                return `
+                    당신은 PGA/LPGA 투어 프로 수준의 골프 스윙 전문 분석가입니다.
+
+                    [중요] 먼저, 이 영상이 골프 스윙 영상인지 확인해주세요.
+                    만약 골프와 전혀 관련이 없는 영상이라면, 
+                    다른 분석을 하지 말고 오직 다음 문장만 출력하고 종료하세요:
+                    "죄송합니다. 이 영상은 골프 스윙 영상으로 보이지 않습니다. 스윙 영상을 업로드해주시면 정밀하게 분석해드리겠습니다."
+                    
+                    골프 스윙 영상이 맞다면, 다음 지침을 엄격하게 따르세요.
+
+                    [중요: 촬영 각도 자동 감지]
+                    먼저 영상의 촬영 각도가 **정면(Face On)**인지 **측면(Down the Line)**인지 스스로 판단하세요.
+                    - **정면(Face On)**일 경우: **체중 이동, 머리 고정, 손목 코킹 유지(Lag), 임팩트 시 손의 위치(Hand First)** 등을 중점적으로 분석하고, 스웨이(Sway)나 슬라이드(Slide) 여부를 체크하세요.
+                    - **측면(Down the Line)**일 경우: **스윙 플레인(Swing Plane), 척추 각도 유지(Spine Angle), 클럽 헤드의 궤적**을 중점적으로 분석하고, 얼리 익스텐션(Early Extension)이나 오버 더 탑(Over the Top) 여부를 체크하세요.
+
+                    [중요: 전체 스윙 시퀀스 분석]
+                    영상의 **어드레스(Address)부터 피니시(Finish)까지** 전체 과정을 면밀히 분석하세요.
+                    
+                    이 영상은 \${club} 클럽을 사용한 스윙 영상입니다.
+                    \${clubFocus}
+
+                    [10점 만점의 기준]
+                    10점은 \${referencePros}와 같은 월드 클래스 투어 프로의 수준을 의미합니다.
+                    이들의 **일관성, 파워, 밸런스, 메커니즘**을 기준으로 업로드된 스윙을 냉정하게 평가해주세요.
+                    아마추어 기준에서 잘한 것이 아니라, **프로 기준에서 얼마나 부족한지**를 지적해야 실력 향상에 도움이 됩니다.
+                    
+                    [점수 가이드 (0~10점)]
+                    - 9~10점: 투어 프로 수준
+                    - 7~8점: 로우 핸디캡퍼 / 티칭 프로 수준
+                    - 5~6점: 보기 플레이어 / 중급자 수준
+                    - 3~4점: 백돌이 / 초급자 수준
+                    - 0~2점: 입문자 수준
+
+                    [분석 시 필수 요청 사항]
+                    1. **타임스탬프 활용**: 문제점이 발견된 구간의 시간(예: [00:03])을 반드시 명시하세요.
+                    2. **구체적 교정법**: 단순히 "자세가 나쁩니다"가 아니라, "백스윙 탑에서 오른쪽 팔꿈치가 벌어지니(Flying Elbow), 수건을 겨드랑이에 끼우고 연습하세요"와 같이 구체적인 드릴(Drill)이나 큐(Cue)를 제공하세요.
+                    3. **오디오 분석**: 타격음(Impact Sound)이 명확하다면, 정타 여부를 소리로도 판단해보세요.
+
+                    [출력 형식]
+                    반드시 아래의 형식을 그대로 따라주세요. 서론이나 인사말을 붙이지 말고, 바로 "1. **총평**:"으로 시작하세요.
+                    마크다운(Markdown) 형식을 사용하여 가독성을 높여주세요.
+
+                    1. **총평**: 
+                       - **촬영 각도**: (AI가 판단한 각도: 정면 또는 측면)
+                       - **전체 평**: 스윙의 전체적인 흐름과 구질(Draw, Fade 등) 예상
+                    
+                    2. **5대 핵심 요소 정밀 분석 (5-Point Analysis)**:
+                    각 항목에 대해 **0~10점 사이(소수점 첫째 자리까지, 예: 7.5)**로 평가하고, 구체적인 분석 내용을 서술하세요.
+
+                    - **1. 어드레스 & 셋업 (Address & Setup)**:
+                        - (그립, 스탠스, 척추 각도 등 준비 자세의 안정성 / 점수: 소수점 첫째 자리까지)
+                    - **2. 스윙 리듬 & 템포 (Rhythm & Tempo)**:
+                        - (스윙의 일관된 속도, 급하지 않은지, 백스윙과 다운스윙의 조화 / 점수: 소수점 첫째 자리까지)
+                    - **3. 스윙 궤도 (Swing Plane)**:
+                        - (백스윙과 다운스윙의 궤적, 슬라이스/훅 유발 요인 분석 / 점수: 소수점 첫째 자리까지)
+                    - **4. 바디 턴 & 파워 (Body Turn & Power)**:
+                        - (어깨 회전, 체중 이동, 지면 반력 활용도, 비거리 요소 / 점수: 소수점 첫째 자리까지)
+                    - **5. 임팩트 & 밸런스 (Impact & Balance)**:
+                        - (정타 여부, 피니시까지의 균형 유지, 스윙의 완성도 / 점수: 소수점 첫째 자리까지)
+
+                    3. **종합 평점 및 등급**:
+                    - **종합 점수**: (위 5개 항목의 평균 점수, 소수점 둘째 자리까지 표기, 예: 7.25)
+                    - **등급**: (예: 중급자 - 보기 플레이어)
+
+                    4. **원포인트 레슨 (One Point Lesson)**:
+                    - 가장 시급하게 교정해야 할 **단 한 가지** 문제점과 그 해결책(연습 방법)을 제시하세요.
+                    `.trim();
+            }
+        };
+    </script>
+    <script src="assets/js/analysis.js"></script>
+</body>
+</html>

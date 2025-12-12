@@ -1,0 +1,396 @@
+:root {
+    --vite-purple: #2e7d32; /* Forest Green */
+    --vite-blue: #0277bd; /* Deep Sky Blue */
+    --vite-dark: #e1f5fe; /* Light Sky Blue */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.8);
+    --text-main: #1b5e20;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #4caf50; /* Fallback Green */
+    /* High-res Landscape Image for PC */
+    background-image: url('https://images.unsplash.com/photo-1535132011086-b8818f016104?q=80&w=1000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    color: var(--text-main);
+}
+
+/* Mobile Background Adjustment */
+@media (max-width: 768px) {
+    html, body {
+        /* Use a vertical image for mobile to show more scenery */
+        background-image: url('https://images.unsplash.com/photo-1535132011086-b8818f016104?q=80&w=1000&auto=format&fit=crop');
+        background-position: center bottom; /* Focus on the course layout */
+    }
+}
+
+/* Animated Background Removed for Clarity */
+/*
+body::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.15), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(2, 119, 189, 0.1), transparent 40%);
+    animation: bg-pulse 15s ease-in-out infinite alternate;
+    z-index: -1;
+    pointer-events: none;
+}
+*/
+
+@keyframes bg-pulse {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-5%, -5%) scale(1.1); }
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+.site-header {
+    flex: 0 0 auto;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+#main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
+}
+.hub-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    gap: 2vh;
+    padding: 6vh 1.5rem 4vh 1.5rem;
+    box-sizing: border-box;
+    perspective: 1000px;
+}
+
+/* Glassmorphism Card */
+.hub-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 24px;
+    padding: 1.5vh 2rem;
+    width: 100%;
+    max-width: 420px;
+    text-decoration: none;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 18vh;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.1s ease-out, box-shadow 0.4s ease; /* Faster transform for tilt */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+    transform-style: preserve-3d; /* Enable 3D space */
+    
+    /* Entrance Animation */
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    
+    /* Remove tap highlight on mobile */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 3D Pop-out Effect for Content */
+.hub-icon, .hub-title, .hub-desc {
+    transform: translateZ(20px); /* Float above card */
+    transform-style: preserve-3d;
+}
+
+.hub-icon {
+    transform: translateZ(40px); /* Icon floats higher */
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 20px rgba(255,255,255,0.2));
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/*
+.hub-icon-svg {
+    width: 40px;
+    height: 40px;
+    color: rgba(255, 255, 255, 0.9);
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+}
+*/
+
+.hub-card:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glowing Border Effect */
+.hub-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.02));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Spotlight Effect */
+.hub-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.04), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hub-card:hover::after {
+    opacity: 1;
+}
+
+/* Spotlight Border */
+.hub-card .spotlight-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.4), transparent 40%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+    z-index: 2;
+}
+
+/* PC Hover Effects (Separate from Mobile) */
+@media (hover: hover) {
+    .hub-card:hover .spotlight-border {
+        opacity: 1;
+    }
+
+    .hub-card:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 
+                    0 0 30px rgba(46, 125, 50, 0.1);
+        border-color: #4caf50;
+        background: #fff;
+    }
+
+    /* Special Glow for Analysis Card */
+    .hub-card:first-child:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 
+                    0 0 40px rgba(2, 119, 189, 0.15);
+    }
+
+    /* Hover Effects - Premium */
+    .hub-card:hover .hub-icon {
+        transform: translateZ(60px) scale(1.15);
+        filter: drop-shadow(0 0 20px rgba(46, 125, 50, 0.3));
+    }
+
+    /* Gradient Text for Titles on Hover */
+    .hub-card:hover .hub-title {
+        background: linear-gradient(to right, #2e7d32, #0277bd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .hub-card:hover .hub-desc {
+        color: #37474f;
+    }
+}
+
+.hub-title {
+    font-family: 'Manrope', 'Pretendard', sans-serif;
+    font-size: 2.4vh;
+    font-weight: 700;
+    margin-bottom: 1.2vh;
+    background: linear-gradient(135deg, #2e7d32 0%, #0277bd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    text-shadow: none;
+}
+
+.hub-desc {
+    font-family: 'Pretendard', sans-serif;
+    color: #546e7a;
+    font-size: 1.5vh;
+    line-height: 1.6;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    word-break: keep-all;
+    transition: all 0.3s;
+}
+
+/*
+.hub-card:hover .hub-desc {
+    color: rgba(255, 255, 255, 0.9);
+}
+*/
+
+.site-footer {
+    flex: 0 0 auto;
+    margin-top: 0 !important;
+    padding: 1rem 0 !important;
+    background: transparent !important;
+    border-top: none !important;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+.site-footer__inner {
+    pointer-events: auto;
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .hub-container {
+        flex-direction: row;
+        gap: 3rem;
+        justify-content: center;
+        padding: 0 2rem;
+    }
+    .hub-card {
+        height: auto;
+        max-height: none;
+        padding: 3rem 2.5rem;
+        flex: 0 1 450px;
+        min-height: 320px;
+    }
+    .hub-icon { font-size: 5rem; margin-bottom: 2rem; }
+    .hub-title { 
+        font-size: 2rem; 
+        margin-bottom: 1rem; 
+        word-break: keep-all;
+        text-align: center;
+    }
+    .hub-desc { 
+        font-size: 1.1rem; 
+        word-break: keep-all;
+    }
+    .site-footer {
+        position: relative;
+        bottom: auto;
+        padding: 2rem 0 !important;
+    }
+}
+
+/* Mobile Wow Effects (Touch Devices) */
+/* Applied when hover is none OR when .is-mobile class is present */
+@media (hover: none), (pointer: coarse) {
+    /* 1. Active/Touch Feedback */
+    .hub-card:active {
+        transform: scale(0.96);
+        transition: transform 0.1s;
+    }
+
+    .hub-card:first-child {
+        animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+    
+    .hub-card:last-child {
+        animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation-delay: 0.15s;
+    }
+}
+
+/* Force mobile effects if JS detects mobile */
+body.is-mobile .hub-card:first-child {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+body.is-mobile .hub-card:last-child {
+    animation: fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: 0.15s;
+}
+
+body.is-mobile .mobile-shine {
+    display: none !important;
+}
+
+/* Mobile Default Hover State (Always Active) */
+body.is-mobile .hub-card {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 
+                0 0 30px rgba(46, 125, 50, 0.1);
+    border-color: #4caf50;
+    background: #fff;
+}
+
+body.is-mobile .hub-card:first-child {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 
+                0 0 40px rgba(2, 119, 189, 0.15);
+}
+
+body.is-mobile .hub-card .hub-icon {
+    transform: translateZ(50px) scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(46, 125, 50, 0.3));
+}
+
+body.is-mobile .hub-card .hub-title {
+    background: linear-gradient(135deg, #2e7d32 0%, #0277bd 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+body.is-mobile .hub-card .hub-desc {
+    color: #546e7a;
+}
+
+body.is-mobile .hub-card::after {
+    opacity: 0;
+}
+
+body.is-mobile .hub-card .spotlight-border {
+    opacity: 0;
+}

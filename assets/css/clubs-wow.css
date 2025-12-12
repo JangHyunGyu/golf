@@ -1,0 +1,206 @@
+/* Animated Background for Clubs Page */
+:root {
+    --vite-purple: #bd34fe;
+    --vite-blue: #41d1ff;
+    --vite-dark: #0f0e14;
+}
+
+/* Background Animation */
+body::before {
+    content: '';
+    position: fixed; /* Fixed to viewport */
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 50% 50%, rgba(189, 52, 254, 0.1), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(65, 209, 255, 0.1), transparent 40%);
+    /* animation: bg-pulse 15s ease-in-out infinite alternate; */
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes bg-pulse {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-5%, -5%) scale(1.1); }
+}
+
+/* Venue Card 3D Effect & Border Glow */
+.venue-card {
+    transition: transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Default subtle border */
+    overflow: hidden; /* Ensure glow doesn't spill weirdly */
+}
+
+/* Gradient Border Effect for Cards */
+.venue-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px; /* Border width */
+    background: linear-gradient(135deg, rgba(189, 52, 254, 0.5), rgba(65, 209, 255, 0.5));
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.venue-card:hover::before {
+    opacity: 1;
+}
+
+.venue-card:hover {
+    box-shadow: 0 10px 30px -10px rgba(189, 52, 254, 0.3), 
+                0 0 20px -5px rgba(65, 209, 255, 0.2);
+    border-color: transparent; /* Let the gradient border show */
+}
+
+/* Logo Border Glow */
+.site-header .brand {
+    position: relative;
+    padding: 8px 16px;
+    border-radius: 24px;
+    /* Do NOT set background here to preserve text gradient */
+}
+
+/* Create the border and background using pseudo-element */
+.site-header .brand::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 2px; /* Border width */
+    background: linear-gradient(45deg, #bd34fe, #41d1ff);
+    -webkit-mask: 
+       linear-gradient(#fff 0 0) content-box, 
+       linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.8;
+    z-index: -1;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+/* Glow effect behind the border */
+.site-header .brand:hover::before {
+    filter: drop-shadow(0 0 8px rgba(189, 52, 254, 0.6));
+    opacity: 1;
+}
+
+/* Meeting Logo (Image) Backlight Effect */
+.venue-card__media {
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    /* Ensure the glow is visible */
+    overflow: visible !important; 
+}
+
+/* Fix: Clip image corners since overflow is visible */
+.venue-card__image {
+    border-radius: inherit;
+}
+
+/* Create a backlight glow behind the image */
+.venue-card__media::before {
+    content: "";
+    position: absolute;
+    inset: -2px; /* Slightly larger than the image */
+    border-radius: inherit;
+    background: linear-gradient(135deg, #bd34fe, #41d1ff);
+    z-index: -1;
+    opacity: 0;
+    filter: blur(8px);
+    transition: opacity 0.3s ease;
+}
+
+/* On hover, show the backlight */
+.venue-card:hover .venue-card__media::before {
+    opacity: 0.6;
+}
+
+/* Mobile: Always show backlight (subtler) */
+body.is-mobile .venue-card__media::before {
+    opacity: 0.5;
+    animation: pulse-glow 3s infinite alternate;
+}
+
+@keyframes pulse-glow {
+    0% { opacity: 0.3; filter: blur(6px); }
+    100% { opacity: 0.6; filter: blur(10px); }
+}
+
+/* Add a subtle border to the image itself */
+.venue-card__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    transition: border-color 0.3s ease;
+}
+
+.venue-card:hover .venue-card__media::after {
+    border-color: rgba(189, 52, 254, 0.5);
+}
+
+/* Mobile: Always show colored border */
+body.is-mobile .venue-card__media::after {
+    border-color: rgba(189, 52, 254, 0.3);
+}
+
+/* Mobile "Wow" Effects - Disabled for performance
+body.is-mobile .venue-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
+    transform: rotate(45deg) translateY(-100%);
+    animation: shine 3s infinite;
+    pointer-events: none;
+    display: block !important; 
+}
+*/
+
+@keyframes shine {
+    0% { transform: rotate(45deg) translateY(-100%); }
+    100% { transform: rotate(45deg) translateY(100%); }
+}
+
+/* Optimization for Mobile: Reduce memory usage */
+body.is-mobile .venue-card {
+    transform-style: flat;
+    will-change: auto;
+    box-shadow: none; /* Simplify shadow on mobile */
+    border: 1px solid rgba(189, 52, 254, 0.3); /* Simple border instead of complex mask */
+}
+
+/* Disable complex mask border on mobile */
+body.is-mobile .venue-card::before {
+    display: none;
+}
+
+/* Aurora Effect for Mobile */
+body.is-mobile::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 30%, rgba(65, 209, 255, 0.05), transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(189, 52, 254, 0.05), transparent 60%);
+    z-index: -1;
+    pointer-events: none;
+}
