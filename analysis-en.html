@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NR6653KS5K"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
+	<title>Golf Swing Analysis & Coaching</title>
+	<meta name="description" content="Golf Swing Analysis Engine analyzes your swing video and provides pro-level coaching and feedback." />
+	<link rel="canonical" href="https://golf.archerlab.dev/analysis-en.html" />
+    <link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/analysis.html" />
+    <link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/analysis-en.html" />
+    <link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/analysis-en.html" />
+	<meta name="keywords" content="golf, swing analysis, golf lesson, golf coach, posture correction, driver swing, iron swing, self-taught golf, swing plane, increase distance, golf AI analysis" />
+	<meta name="robots" content="index,follow" />
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:site_name" content="Golf Swing Master" />
+	<meta property="og:title" content="Golf Swing Analysis & Coaching" />
+	<meta property="og:description" content="Golf Swing Analysis Engine analyzes your swing video and provides feedback." />
+	<meta property="og:url" content="https://golf.archerlab.dev/analysis-en.html" />
+	<meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="Golf Swing Analysis & Coaching" />
+	<meta name="twitter:description" content="Golf Swing Analysis Engine analyzes your swing video and provides feedback." />
+	<meta name="twitter:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Pretendard:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        if (typeof marked === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"><\/script>');
+        }
+    </script>
+	<link rel="stylesheet" href="assets/css/style.css?v=103">
+	<script defer src="assets/js/ga.js"></script>
+	<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
+	<script type="text/javascript">
+		if(!wcs_add) var wcs_add = {};
+		wcs_add["wa"] = "15b2f3d525df3e0";
+		if(window.wcs) {
+		wcs_do();
+		}
+	</script>
+    
+    <link rel="stylesheet" href="assets/css/analysis.css?v=final1">
+    <link rel="stylesheet" href="assets/css/analysis-loaders.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Golf Swing Analyzer",
+      "operatingSystem": "Web",
+      "applicationCategory": "SportsApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Golf swing motion analysis and posture correction service"
+    }
+    </script>
+</head>
+
+<body>
+
+	<main class="site-main">
+        <div class="home-nav">
+            <a href="index-en.html" class="home-btn">
+                <span class="home-icon">🏠</span>
+                <span class="home-text">HOME</span>
+            </a>
+        </div>
+        <div class="lang-switcher">
+            <a href="analysis.html" class="lang-link">KR</a>
+            <a href="analysis-en.html" class="lang-link active">EN</a>
+        </div>
+        <div class="analysis-container">
+            <h1 class="hero__title">Golf Swing Analysis</h1>
+            
+            <button id="guideBtn" class="guide-btn">
+                <span class="guide-icon">ℹ️</span> User Guide
+            </button>
+
+            <div class="options-grid">
+                <div>
+                    <label class="section-title">Club</label>
+                    <select id="danceGenre">
+                        <option value="Driver">Driver</option>
+                        <option value="WoodHybrid">Wood/Hybrid</option>
+                        <option value="Iron">Iron</option>
+                        <option value="Wedge">Wedge</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="upload-area" id="dropZone">
+                <span class="upload-icon">📁</span>
+                <label for="videoInput" class="upload-btn-label">Select Video</label>
+                <input type="file" id="videoInput" accept="video/*">
+                <p class="upload-hint">or drag and drop video here</p>
+                <div id="fileName" class="file-name"></div>
+            </div>
+
+            <button id="analyzeBtn" disabled>Analysis & Coaching</button>
+            
+            <div id="result"></div>
+        </div>
+	</main>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle" class="modal-title">Analysis Result</h3>
+                <button id="modalCloseBtn" class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <!-- Analysis content will be injected here -->
+            </div>
+            <button id="scrollTopBtn" title="Scroll to Top">↑</button>
+            <div id="modalFooter" class="modal-footer">
+                <button class="share-btn share-kakao" onclick="shareKakao()" style="margin-right: 10px;">
+                    💬 Share to Kakao
+                </button>
+                <button class="share-btn share-copy" onclick="copyResult()">
+                    📋 Copy Result
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Modal -->
+    <div id="guideModal" class="modal-overlay">
+        <div class="modal-container guide-container">
+            <div class="modal-header">
+                <h3 class="modal-title">User Guide</h3>
+                <button id="guideCloseBtn" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body guide-body">
+                <div class="guide-section">
+                    <h4>🤖 What is Golf Swing Analysis?</h4>
+                    <p>Our advanced motion analysis engine scans your video frame-by-frame to analyze the mechanics of your swing.</p>
+                    <p>It compares your data with PGA/LPGA Tour Pros to objectively diagnose your <strong>Address, Backswing, Impact, Finish</strong>, and more.</p>
+                </div>
+                <div class="guide-section">
+                    <h4>🏆 What are Reference Pros?</h4>
+                    <p>These are <strong>World Class Tour Pros</strong> whose data is used as the standard for the analysis engine.</p>
+                    <p><strong>A perfect score of 10 represents their level</strong>, and your swing is evaluated relative to this high standard.</p>
+                    <h5 class="reference-title">Key Reference Pros</h5>
+                    <ul class="reference-list">
+                        <li><strong>Men (PGA)</strong>: Tiger Woods, Rory McIlroy, Scottie Scheffler, Jon Rahm</li>
+                        <li><strong>Women (LPGA)</strong>: Nelly Korda, Jin Young Ko, Lydia Ko, Hyo Joo Kim</li>
+                    </ul>
+
+                    <div class="guide-sub-text">
+                        <span class="guide-icon">💡</span>
+                        <div class="guide-content">
+                            Don't be disappointed! Since you are compared to Tour Pros, your score might be lower than expected.
+                            <strong>A score of 6-7 is considered excellent, at the level of a single handicapper.</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-section">
+                    <h4>💡 How to Use</h4>
+                    <ol>
+                        <li><strong>Select Club</strong>: Choose from Driver, Wood/Hybrid, Iron, Wedge</li>
+                        <li><strong>Select Video</strong>: Select or drag & drop the video to analyze</li>
+                        <li><strong>Analysis & Coaching</strong>: Click the button to start analysis (takes 1-2 mins)</li>
+                    </ol>
+                </div>
+                <div class="guide-section">
+                    <h4>⚠️ Recommendations</h4>
+                    <ul>
+                        <li>We recommend using a video where the full body (head to toe) is clearly visible.</li>
+                        <li>For side view (Down the Line), film parallel to the target line for accurate plane analysis.</li>
+                        <li>Videos that are too dark or shaky may be difficult to analyze.</li>
+                        <li>Slow-motion videos are fine, but normal speed videos may be better for rhythm analysis.</li>
+                        <li>File size must be under 100MB.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/custom-select.js?v=final5"></script>
+    <script src="assets/js/analysis-bg.js"></script>
+    <script>
+        const ANALYSIS_CONFIG = {
+            messages: {
+                fileTooLarge: "File is too large ({size} MB).\\nOnly videos under 100MB are allowed.\\n(Please compress before selecting)",
+                fileSelected: "Selected File",
+                processTitle: "Precision Analysis Process",
+                stepInit: "Establishing secure connection and initializing data transfer session...",
+                stepUpload: "Transmitting video data to analysis server...",
+                uploadWarning: "(High-quality videos may take time to transmit)",
+                networkWarning: "(Upload speed may vary depending on network conditions)",
+                stepProcessing: "Preprocessing video and optimizing data on cloud server...",
+                waitMessage: "Please wait a moment.",
+                stepAnalyzing: "Golf Swing Analysis Engine is analyzing body angles and club path frame by frame...",
+                analyzeTimeWarning: "(May take up to 1-2 minutes)",
+                resultTitle: "Precision Analysis Result",
+                errorTitle: "Error Occurred",
+                resultError: "Failed to retrieve analysis results.",
+                shareTitle: "Golf Swing Video Analysis",
+                shareDesc: "AI analyzes your golf swing video. Try it now!",
+                shareBtn: "View Analysis Result",
+                copyNoResult: "No analysis result to copy.",
+                copySuccess: "Analysis result copied to clipboard!",
+                copyFail: "Failed to copy result.",
+                loadingShared: "Loading shared analysis result...",
+                resultTitleShared: "Precision Analysis Result (Shared)",
+                loadSharedFail: "Shared result not found or expired."
+            },
+            generatePrompt: function(club) {
+                // club: Driver, WoodHybrid, Iron, Wedge
+                // angle is now detected by AI
+
+                let referencePros = "Tiger Woods, Rory McIlroy, Nelly Korda, Jin Young Ko";
+                let clubFocus = "";
+                let pointAnalysisItems = "";
+
+                if (club === "Driver") {
+                    clubFocus = "This is a Driver swing. **Distance and Direction** are key. Focus on setup for Upper Blow, wide arc, and strong ground reaction force.";
+                    pointAnalysisItems = `
+                    - **1. Address & Setup**: (0~10, one decimal place, stance width, ball position, spine tilt, etc.)
+                    - **2. Backswing & Power**: (0~10, one decimal place, rotation amount, X-Factor, overswing check)
+                    - **3. Swing Plane**: (0~10, one decimal place, shallow plane, slice/hook factors)
+                    - **4. Impact & Launch**: (0~10, one decimal place, upper blow check, sweet spot contact)
+                    - **5. Balance & Finish**: (0~10, one decimal place, weight transfer, finish hold)`;
+                } else if (club === "Iron") {
+                    clubFocus = "This is an Iron swing. **Precise Impact and Distance Control** are key. Focus on Down Blow impact, consistent tempo, and divot creation.";
+                    pointAnalysisItems = `
+                    - **1. Address & Alignment**: (0~10, one decimal place, stable posture, hand first, etc.)
+                    - **2. Backswing & Rhythm**: (0~10, one decimal place, consistent tempo, cocking maintenance)
+                    - **3. Downswing & Lag**: (0~10, one decimal place, anti-casting, lag motion)
+                    - **4. Impact & Compression**: (0~10, one decimal place, down blow, divot creation)
+                    - **5. Direction & Finish**: (0~10, one decimal place, follow through, balance)`;
+                } else if (club === "Wedge") {
+                    clubFocus = "This is a Wedge shot. **Spin Control and Accuracy** are key. Focus on compact backswing, accelerating impact, and distance feel.";
+                    pointAnalysisItems = `
+                    - **1. Setup & Ball Position**: (0~10, one decimal place, narrow stance, weight distribution)
+                    - **2. Backswing Control**: (0~10, one decimal place, swing size control, compactness)
+                    - **3. Rhythm & Consistency**: (0~10, one decimal place, unhurried tempo)
+                    - **4. Impact & Contact**: (0~10, one decimal place, clean contact, anti-duff/thin)
+                    - **5. Distance & Trajectory**: (0~10, one decimal place, spin control, trajectory control)`;
+                } else {
+                    clubFocus = "This is a Wood/Hybrid swing. **Sweeping Impact and Trajectory** are key. Focus on smooth tempo and balanced finish.";
+                    pointAnalysisItems = `
+                    - **1. Address & Setup**: (0~10, one decimal place, proper ball position, comfortable posture)
+                    - **2. Swing Plane**: (0~10, one decimal place, shallow angle of attack, sweeping motion)
+                    - **3. Rhythm & Tempo**: (0~10, one decimal place, smooth transition)
+                    - **4. Impact & Smash**: (0~10, one decimal place, precise contact, distance efficiency)
+                    - **5. Balance & Finish**: (0~10, one decimal place, balance maintained to the end)`;
+                }
+
+                return `
+                    [Role]
+                    You are a world-class Golf Swing Analyst (PGA/LPGA level).
+                    Your mission is to analyze the user's golf swing video and provide professional feedback in English.
+
+                    [Strict Output Rules]
+                    1. **Mechanical Analysis**: Exclude creativity completely. Mechanically analyze only the technical elements of the video to derive the same result every time.
+                    2. **No Intro**: Do not start with "Here is the analysis result", "Yes, I understand", etc.
+                    3. **No Repetition**: Do not repeat the user's prompt or instructions.
+                    4. **Immediate Start**: Output must start immediately with "### 1. Overall Review".
+                    4. **Language**: Use only English.
+                    5. **No Extra Comments**: Stop immediately after the "One Point Lesson" is finished. Do not add any English notes, metadata, or context explanations.
+
+                    [Analysis Guidelines]
+                    1. **Identify Video Type**: 
+                       - If it is not a golf swing video, output only this sentence and stop: "Sorry, this does not appear to be a golf swing video. Please upload a swing video for precision analysis."
+                    2. **Detect Angle**: Determine if it is Face On or Down the Line.
+                       - Face On: Focus on weight transfer, head stability, lag, hand position at impact.
+                       - Down the Line: Focus on Swing Plane, spine angle, club path.
+                    3. **Analysis Order**: Address -> Backswing -> Top -> Downswing -> Impact -> Follow-through -> Finish.
+                    4. **Club Context**: This is a \${club} swing. \${clubFocus}
+                    5. **Scoring Criteria**: 10 is World Class Pro (Tiger Woods, Nelly Korda) level. **Grade BRUTALLY STRICTLY** (to one decimal place, e.g., 5.4).
+                       **Consistency Required**: You must give the exact same score for the same video with 0.0 margin of error.
+                       - **Beginner**: 1.0 ~ 2.9
+                       - **Average Amateur**: 3.0 ~ 5.0
+                       - **Advanced Amateur**: 5.1 ~ 6.5
+                       - **Semi-Pro**: 6.6 ~ 7.9
+                       - **Tour Pro**: 8.0 ~ 10.0
+                       - **Warning**: Unless it is a perfect pro swing, never give a score above 7.0. Most users should receive scores between 3.x and 5.x.
+                    6. **Time Notation**: All key observations (Pros, Cons, Step-by-step) must include specific time (e.g., [00:03]). Do not use the word "Timestamp", just show the time.
+
+                    [Output Format - Markdown]
+                    
+                    ### 1. Overall Review
+                       - **Pros**: ...
+                       - **Cons & Improvements**: ...
+                    
+                    ### 2. Detailed Analysis of Key Elements
+                    ${pointAnalysisItems}
+
+                    ### 3. Overall Score & Grade
+                    - **Overall Score**: (Average of 5 items, to two decimal places e.g., 5.42)
+                    - **Grade**: (e.g., "Advanced Amateur")
+
+                    ### 4. One Point Lesson
+                    - (Most urgent correction and practice method)
+
+                    [Important]
+                    Stop text generation immediately after the One Point Lesson.
+                    Do not output any metadata, context explanation, or reasoning process.
+                    `.trim();
+            }
+        };
+    </script>
+    <script src="assets/js/analysis.js"></script>
+</body>
+</html>
