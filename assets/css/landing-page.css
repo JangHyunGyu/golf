@@ -62,9 +62,9 @@ body {
 }
 .site-header {
     flex: 0 0 auto;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 #main {
     flex: 1;
@@ -91,7 +91,7 @@ body {
 
 /* Glassmorphism Card */
 .hub-card {
-    background: rgba(15, 30, 25, 0.65); /* Darker, richer glass */
+    background: rgba(15, 30, 25, 0.4); /* More transparent glass */
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(212, 175, 55, 0.15); /* Subtle Gold Border */

@@ -145,7 +145,7 @@ input:focus-visible {
   font-size: 0.75rem;
   font-weight: 600;
   transition: all 0.2s ease;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .site-nav__link:is(:hover, :focus-visible) {
@@ -157,10 +157,10 @@ input:focus-visible {
 
 .site-nav__link.is-active {
   color: #ffd700;
-  background: #3a4a38;
-  border-color: #3a4a38;
+  background: #3e5238;
+  border-color: rgba(255, 255, 255, 0.1);
   font-weight: 700;
-  box-shadow: 0 0 12px rgba(58, 74, 56, 0.4);
+  backdrop-filter: blur(4px);
 }
 
 .page {
