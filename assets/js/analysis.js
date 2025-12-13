@@ -46,7 +46,7 @@ const detectBrowserLanguage = () => {
         if (browserLang === "ko" && !docLang.startsWith("ko")) {
             targetFile = baseName + ".html";
         } else if (browserLang === "ja" && !docLang.startsWith("ja")) {
-            targetFile = baseName + "-ja.html";
+            targetFile = baseName + "-jp.html";
         } else if (browserLang === "en" && !docLang.startsWith("en")) {
             targetFile = baseName + "-en.html";
         }
