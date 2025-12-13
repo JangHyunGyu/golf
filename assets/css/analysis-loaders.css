@@ -45,22 +45,44 @@
     align-items: center;
     height: 60px;
     margin-bottom: 20px;
-    gap: 6px;
+    gap: 4px;
 }
 .loader-wave div {
     width: 6px;
-    height: 100%;
     background: linear-gradient(to top, #1b5e20, #d4af37); /* Deep Green to Gold */
-    animation: wave 1.2s infinite ease-in-out;
+    animation: wave 1s infinite ease-in-out;
     border-radius: 4px;
+    height: 100%;
 }
+
+/* Dynamic Heights for "Voice" Effect */
+.loader-wave div:nth-child(1), .loader-wave div:nth-child(15) { height: 30%; animation-duration: 1.4s; }
+.loader-wave div:nth-child(2), .loader-wave div:nth-child(14) { height: 50%; animation-duration: 1.1s; }
+.loader-wave div:nth-child(3), .loader-wave div:nth-child(13) { height: 70%; animation-duration: 1.3s; }
+.loader-wave div:nth-child(4), .loader-wave div:nth-child(12) { height: 90%; animation-duration: 0.9s; }
+.loader-wave div:nth-child(5), .loader-wave div:nth-child(11) { height: 60%; animation-duration: 1.2s; }
+.loader-wave div:nth-child(6), .loader-wave div:nth-child(10) { height: 80%; animation-duration: 0.8s; }
+.loader-wave div:nth-child(7), .loader-wave div:nth-child(9) { height: 100%; animation-duration: 1.0s; }
+.loader-wave div:nth-child(8) { height: 95%; animation-duration: 1.5s; }
+
+/* Randomized Delays for Organic Feel */
 .loader-wave div:nth-child(1) { animation-delay: -1.1s; }
-.loader-wave div:nth-child(2) { animation-delay: -1.0s; }
-.loader-wave div:nth-child(3) { animation-delay: -0.9s; }
-.loader-wave div:nth-child(4) { animation-delay: -0.8s; }
-.loader-wave div:nth-child(5) { animation-delay: -0.7s; }
+.loader-wave div:nth-child(2) { animation-delay: -0.3s; }
+.loader-wave div:nth-child(3) { animation-delay: -0.7s; }
+.loader-wave div:nth-child(4) { animation-delay: -0.1s; }
+.loader-wave div:nth-child(5) { animation-delay: -0.9s; }
+.loader-wave div:nth-child(6) { animation-delay: -0.4s; }
+.loader-wave div:nth-child(7) { animation-delay: -0.8s; }
+.loader-wave div:nth-child(8) { animation-delay: -0.2s; }
+.loader-wave div:nth-child(9) { animation-delay: -0.6s; }
+.loader-wave div:nth-child(10) { animation-delay: -0.5s; }
+.loader-wave div:nth-child(11) { animation-delay: -1.0s; }
+.loader-wave div:nth-child(12) { animation-delay: -0.1s; }
+.loader-wave div:nth-child(13) { animation-delay: -0.8s; }
+.loader-wave div:nth-child(14) { animation-delay: -0.4s; }
+.loader-wave div:nth-child(15) { animation-delay: -0.9s; }
 
 @keyframes wave {
-    0%, 40%, 100% { transform: scaleY(0.4); opacity: 0.6; }
-    20% { transform: scaleY(1.0); opacity: 1; box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); }
+    0%, 100% { transform: scaleY(0.3); opacity: 0.5; }
+    50% { transform: scaleY(1.0); opacity: 1; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
 }
