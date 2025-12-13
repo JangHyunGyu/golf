@@ -1314,7 +1314,11 @@ button.scroll-top::-moz-focus-inner {
 }
 
 .contact-icon {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: #ff5252;
+  vertical-align: middle;
+  margin-bottom: 2px;
 }
 
 .copyright {
