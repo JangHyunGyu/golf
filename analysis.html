@@ -121,8 +121,51 @@
             <!-- Loading div removed, moved to modal -->
             
             <div id="result"></div>
+            
+            <footer class="site-footer">
+                <div class="site-footer__inner">
+                    <button id="contactBtn" class="contact-link" onclick="openContactModal()" style="cursor: pointer; font-family: inherit;">
+                        <span class="contact-icon">📞</span> 문의하기
+                    </button>
+                    <p class="copyright">© 2025 ArcherLab. All rights reserved.</p>
+                </div>
+            </footer>
         </div>
 	</main>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal-overlay">
+        <div class="modal-container contact-modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">문의하기</h3>
+                <button class="modal-close" onclick="closeContactModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="contact-options">
+                    <a href="https://open.kakao.com/o/pF6xil6h" target="_blank" rel="noopener noreferrer" class="contact-option kakao">
+                        <span class="contact-icon">💬</span> 카카오톡 오픈채팅
+                    </a>
+                    <a href="mailto:hyungyu@archerlab.dev" class="contact-option email">
+                        <span class="contact-icon">📧</span> 이메일 보내기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('is-open');
+        }
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('is-open');
+        }
+        document.getElementById('contactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeContactModal();
+            }
+        });
+    </script>
 
     <!-- Result Modal -->
     <div id="resultModal" class="modal-overlay">
