@@ -114,7 +114,7 @@
       "description": "ゴルフスイングモーション分析および姿勢矯正サービス"
     }
     </script>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest-jp.json">
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
@@ -174,6 +174,9 @@
                     <button id="contactBtn" class="contact-link" onclick="openContactModal()" style="cursor: pointer; font-family: inherit;">
                         <span class="contact-icon">📞</span> お問い合わせ
                     </button>
+                    <button id="installBtn" class="contact-link" onclick="installApp()" style="cursor: pointer; font-family: inherit; margin-left: 10px;">
+                        <span class="contact-icon">⬇️</span> アプリインストール
+                    </button>
                     <p class="copyright">© 2025 ArcherLab. All rights reserved.</p>
                 </div>
             </footer>
@@ -212,6 +215,48 @@
                 closeContactModal();
             }
         });
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        function installApp() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    deferredPrompt = null;
+                });
+            } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                var overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;';
+                
+                var msg = document.createElement('p');
+                msg.innerHTML = '下部の <b>[共有]</b> ボタンを押し、<br><b>[ホーム画面に追加]</b> を選択してください。';
+                msg.style.cssText = 'font-size:18px;line-height:1.5;margin-bottom:20px;';
+                
+                var arrow = document.createElement('div');
+                arrow.innerHTML = '⬇️';
+                arrow.style.cssText = 'font-size:40px;animation:bounce 1s infinite;';
+                
+                var closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '閉じる';
+                closeBtn.style.cssText = 'margin-top:30px;padding:10px 20px;background:white;color:black;border:none;border-radius:5px;font-weight:bold;cursor:pointer;';
+                closeBtn.onclick = function() { document.body.removeChild(overlay); };
+
+                var style = document.createElement('style');
+                style.innerHTML = '@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }';
+                document.head.appendChild(style);
+
+                overlay.appendChild(msg);
+                overlay.appendChild(arrow);
+                overlay.appendChild(closeBtn);
+                document.body.appendChild(overlay);
+            } else {
+                alert('既にインストールされているか、\nサポートされていないブラウザです。');
+            }
+        }
     </script>
 
     <!-- Result Modal -->
