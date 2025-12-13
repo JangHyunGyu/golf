@@ -140,23 +140,27 @@ input:focus-visible {
 .site-nav__link {
   padding: 8px 16px;
   border-radius: 999px;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--color-muted);
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: all 0.2s ease;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .site-nav__link:is(:hover, :focus-visible) {
   color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
 .site-nav__link.is-active {
-  color: #fff;
-  background: rgba(255, 142, 97, 0.15);
-  border-color: rgba(255, 142, 97, 0.3);
-  font-weight: 600;
+  color: #05100e;
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
 }
 
 .page {
@@ -1224,29 +1228,30 @@ button.scroll-top::-moz-focus-inner {
 }
 
 .lang-link {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 600;
     padding: 0.4rem 0.8rem;
     border-radius: 20px;
     transition: all 0.2s;
-    border: 1px solid transparent;
-    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(10, 31, 24, 0.6);
     backdrop-filter: blur(4px);
 }
 
 .lang-link:hover {
     color: #fff;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(10, 31, 24, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
     transform: translateY(-1px);
 }
 
 .lang-link.active {
-    color: #fff;
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    color: #d4af37;
+    background: rgba(10, 31, 24, 0.9);
+    border-color: #d4af37;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
 }
 
 @media (max-width: 600px) {
