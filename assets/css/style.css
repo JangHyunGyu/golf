@@ -156,11 +156,11 @@ input:focus-visible {
 }
 
 .site-nav__link.is-active {
-  color: #05100e;
-  background: #ffd700;
-  border-color: #ffd700;
+  color: #ffd700;
+  background: #3a4a38;
+  border-color: #3a4a38;
   font-weight: 700;
-  box-shadow: 0 0 12px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 12px rgba(58, 74, 56, 0.4);
 }
 
 .page {
