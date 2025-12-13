@@ -116,6 +116,14 @@
       "description": "골프 스윙 모션 분석 및 자세 교정 서비스"
     }
     </script>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js');
+            });
+        }
+    </script>
 </head>
 
 <body>

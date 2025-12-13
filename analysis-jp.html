@@ -114,6 +114,14 @@
       "description": "ゴルフスイングモーション分析および姿勢矯正サービス"
     }
     </script>
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js');
+            });
+        }
+    </script>
 </head>
 
 <body>
