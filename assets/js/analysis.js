@@ -16,6 +16,7 @@ const detectBrowserLanguage = () => {
 
   const lowered = candidate.toLowerCase();
   if (lowered.startsWith("ko")) return "ko";
+  if (lowered.startsWith("ja")) return "ja";
   return "en";
 };
 
@@ -44,6 +45,8 @@ const detectBrowserLanguage = () => {
         // 브라우저 언어와 현재 페이지 언어가 다를 경우 타겟 파일 설정
         if (browserLang === "ko" && !docLang.startsWith("ko")) {
             targetFile = baseName + ".html";
+        } else if (browserLang === "ja" && !docLang.startsWith("ja")) {
+            targetFile = baseName + "-ja.html";
         } else if (browserLang === "en" && !docLang.startsWith("en")) {
             targetFile = baseName + "-en.html";
         }

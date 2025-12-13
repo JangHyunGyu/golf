@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NR6653KS5K"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
+	<title>ゴルフスイング分析＆コーチング</title>
+	<meta name="description" content="ゴルフスイング分析エンジンがあなたのスイング動画を分析し、プロレベルのコーチングとフィードバックを提供します。" />
+	<link rel="canonical" href="https://golf.archerlab.dev/analysis-ja.html" />
+    <link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/analysis.html" />
+    <link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/analysis-en.html" />
+    <link rel="alternate" hreflang="ja" href="https://golf.archerlab.dev/analysis-ja.html" />
+    <link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/analysis-en.html" />
+	<meta name="keywords" content="ゴルフ, スイング分析, ゴルフレッスン, ゴルフコーチ, 姿勢矯正, ドライバースイング, アイアン, ゴルフ独学, スイングプレーン, 飛距離アップ, ゴルフAI分析" />
+	<meta name="robots" content="index,follow" />
+	<meta property="og:type" content="website" />
+	<meta property="og:locale" content="ja_JP" />
+	<meta property="og:site_name" content="ゴルフスイングマスター" />
+	<meta property="og:title" content="ゴルフスイング分析＆コーチング" />
+	<meta property="og:description" content="ゴルフスイング分析エンジンがあなたのスイング動画を分析し、フィードバックを提供します。" />
+	<meta property="og:url" content="https://golf.archerlab.dev/analysis-ja.html" />
+	<meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="ゴルフスイング分析＆コーチング" />
+	<meta name="twitter:description" content="ゴルフスイング分析エンジンがあなたのスイング動画を分析し、フィードバックを提供します。" />
+	<meta name="twitter:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="icon" type="image/png" href="favicon.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="favicon.png">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Pretendard:wght@400;500;600;700&display=swap"
+		rel="stylesheet">
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        if (typeof marked === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"><\/script>');
+        }
+    </script>
+	<link rel="stylesheet" href="assets/css/style.css?v=103">
+	<script defer src="assets/js/ga.js"></script>
+	<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
+	<script type="text/javascript">
+		if(!wcs_add) var wcs_add = {};
+		wcs_add["wa"] = "15b2f3d525df3e0";
+		if(window.wcs) {
+		wcs_do();
+		}
+	</script>
+    
+    <link rel="stylesheet" href="assets/css/analysis.css?v=final1">
+    <link rel="stylesheet" href="assets/css/analysis-loaders.css">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "ゴルフスイング分析機",
+      "operatingSystem": "Web",
+      "applicationCategory": "SportsApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY"
+      },
+      "description": "ゴルフスイングモーション分析および姿勢矯正サービス"
+    }
+    </script>
+</head>
+
+<body>
+
+	<main class="site-main">
+        <div class="home-nav">
+            <a href="index-ja.html" class="home-btn">
+                <span class="home-icon">🏠</span>
+                <span class="home-text">HOME</span>
+            </a>
+        </div>
+        <div class="lang-switcher">
+            <a href="analysis.html" class="lang-link">KR</a>
+            <a href="analysis-en.html" class="lang-link">EN</a>
+            <a href="analysis-ja.html" class="lang-link active">JA</a>
+        </div>
+        <div class="analysis-container">
+            <h1 class="hero__title">ゴルフスイング動画分析</h1>
+            
+            <button id="guideBtn" class="guide-btn">
+                <span class="guide-icon">ℹ️</span> 利用案内
+            </button>
+
+            <div class="options-grid">
+                <div>
+                    <label class="section-title">クラブ (Club)</label>
+                    <select id="danceGenre">
+                        <option value="Driver">ドライバー (Driver)</option>
+                        <option value="WoodHybrid">ウッド/ユーティリティ (Wood/Hybrid)</option>
+                        <option value="Iron">アイアン (Iron)</option>
+                        <option value="Wedge">ウェッジ (Wedge)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="upload-area" id="dropZone">
+                <span class="upload-icon">📁</span>
+                <label for="videoInput" class="upload-btn-label">動画を選択</label>
+                <input type="file" id="videoInput" accept="video/*">
+                <p class="upload-hint">または動画をここにドラッグ＆ドロップ</p>
+                <div id="fileName" class="file-name"></div>
+            </div>
+
+            <button id="analyzeBtn" disabled>分析＆コーチング</button>
+            
+            <div id="result"></div>
+        </div>
+	</main>
+
+    <!-- Result Modal -->
+    <div id="resultModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle" class="modal-title">精密分析結果</h3>
+                <button id="modalCloseBtn" class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody" class="modal-body">
+                <!-- Analysis content will be injected here -->
+            </div>
+            <button id="scrollTopBtn" title="トップへ">↑</button>
+            <div id="modalFooter" class="modal-footer">
+                <button class="share-btn share-kakao" onclick="shareKakao()" style="margin-right: 10px;">
+                    💬 カカオトーク共有
+                </button>
+                <button class="share-btn share-copy" onclick="copyResult()">
+                    📋 結果をコピー
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Modal -->
+    <div id="guideModal" class="modal-overlay">
+        <div class="modal-container guide-container">
+            <div class="modal-header">
+                <h3 class="modal-title">利用案内</h3>
+                <button id="guideCloseBtn" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body guide-body">
+                <div class="guide-section">
+                    <h4>🤖 ゴルフスイング分析とは？</h4>
+                    <p>最新のモーション分析エンジンが動画をフレーム単位でスキャンし、スイングのメカニズムを分析します。</p>
+                    <p>PGA/LPGAツアープロのデータと比較し、<strong>アドレス、バックスイング、インパクト、フィニッシュ</strong>などを客観的に診断します。</p>
+                </div>
+                <div class="guide-section">
+                    <h4>🏆 レファレンスプロとは？</h4>
+                    <p>分析エンジンの基準となる<strong>ワールドクラスのツアープロ</strong>たちを指します。</p>
+                    <p><strong>10点満点は彼らのレベル</strong>を意味し、あなたのスイングがその基準にどれだけ近いかを相対的に評価します。</p>
+                    <h5 class="reference-title">主なレファレンスプロ</h5>
+                    <ul class="reference-list">
+                        <li><strong>男子 (PGA)</strong>: タイガー・ウッズ、ローリー・マキロイ、スコッティ・シェフラー、ジョン・ラーム</li>
+                        <li><strong>女子 (LPGA)</strong>: ネリー・コルダ、コ・ジンヨン、リディア・コ、キム・ヒョジュ</li>
+                    </ul>
+
+                    <div class="guide-sub-text">
+                        <span class="guide-icon">💡</span>
+                        <div class="guide-content">
+                            がっかりしないでください！ツアープロと比較するため、点数は相対的に低くなる可能性があります。
+                            <strong>6〜7点でもシングルハンディキャッパーレベルの素晴らしいスイングです。</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-section">
+                    <h4>💡 利用方法</h4>
+                    <ol>
+                        <li><strong>クラブ選択</strong>: ドライバー、ウッド/ユーティリティ、アイアン、ウェッジから選択</li>
+                        <li><strong>動画選択</strong>: 分析する動画を選択またはドラッグ＆ドロップ</li>
+                        <li><strong>分析＆コーチング</strong>: ボタンを押して分析開始（最大1〜2分所要）</li>
+                    </ol>
+                </div>
+                <div class="guide-section">
+                    <h4>⚠️ 推奨事項</h4>
+                    <ul>
+                        <li>頭からつま先まで全身がはっきりと映っている動画を推奨します。</li>
+                        <li>側面撮影（Down the Line）の場合、ターゲットラインと平行に撮影すると正確なプレーン分析が可能です。</li>
+                        <li>暗すぎたり手ブレが激しい動画は分析が難しい場合があります。</li>
+                        <li>スローモーション動画も分析可能ですが、通常速度の動画の方がリズム分析に有利な場合があります。</li>
+                        <li>ファイルサイズは100MB以下である必要があります。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/custom-select.js?v=final5"></script>
+    <script src="assets/js/analysis-bg.js"></script>
+    <script>
+        const ANALYSIS_CONFIG = {
+            messages: {
+                fileTooLarge: "ファイルサイズが大きすぎます ({size} MB)。\\n100MB以下の動画のみ分析可能です。\\n(圧縮してから選択してください)",
+                fileSelected: "選択されたファイル",
+                processTitle: "精密分析プロセス進行中...",
+                stepInit: "セキュリティ接続の確立およびデータ転送セッションを<br>初期化しています...",
+                stepUpload: "分析サーバーへ動画データを転送中...",
+                uploadWarning: "(高画質動画は転送に時間がかかる場合があります)",
+                networkWarning: "(ネットワーク環境により速度が異なる場合があります)",
+                stepProcessing: "クラウドサーバーで動画の前処理および<br>データ最適化作業を実行中です...",
+                waitMessage: "少々お待ちください。",
+                stepAnalyzing: "ゴルフスイング分析エンジンが身体の角度と<br>クラブの軌道をフレーム単位で精密分析しています...",
+                analyzeTimeWarning: "(最大1〜2分かかる場合があります)",
+                resultTitle: "精密分析結果",
+                errorTitle: "エラー発生",
+                resultError: "分析結果を取得できませんでした。",
+                shareTitle: "ゴルフスイング動画分析",
+                shareDesc: "AIがあなたのゴルフスイング動画を分析します。今すぐ体験！",
+                shareBtn: "分析結果を見る",
+                copyNoResult: "コピーする分析結果がありません。",
+                copySuccess: "分析結果がクリップボードにコピーされました！",
+                copyFail: "結果のコピーに失敗しました。",
+                loadingShared: "共有された分析結果を読み込み中...",
+                resultTitleShared: "精密分析結果 (共有)",
+                loadSharedFail: "共有された結果が見つからないか、有効期限切れです。"
+            },
+            generatePrompt: function(club) {
+                // club: Driver, WoodHybrid, Iron, Wedge
+                // angle is now detected by AI
+
+                let referencePros = "Tiger Woods, Rory McIlroy, Nelly Korda, Jin Young Ko";
+                let clubFocus = "";
+                let pointAnalysisItems = "";
+
+                if (club === "Driver") {
+                    clubFocus = "これはドライバーのスイングです。**飛距離と方向性**が重要です。アッパーブローのためのセットアップ、広いアーク、そして強力な地面反力を重点的に分析してください。";
+                    pointAnalysisItems = `
+                    - **1. アドレス＆セットアップ (Address & Setup)**: (0~10, 小数点第1位まで, スタンス幅, ボール位置, 背骨の傾きなど)
+                    - **2. バックスイング＆パワー蓄積 (Backswing & Power)**: (0~10, 小数点第1位まで, 回転量, X-Factor, オーバースイングの有無)
+                    - **3. スイング軌道 (Swing Plane)**: (0~10, 小数点第1位まで, シャローな軌道, スライス/フックの要因)
+                    - **4. インパクト＆打ち出し角 (Impact & Launch)**: (0~10, 小数点第1位まで, アッパーブローの有無, 正確なコンタクト)
+                    - **5. バランス＆フィニッシュ (Balance & Finish)**: (0~10, 小数点第1位まで, 体重移動, フィニッシュの維持)`;
+                } else if (club === "Iron") {
+                    clubFocus = "これはアイアンのスイングです。**正確なインパクトと距離感**が重要です。ダウンブロー打撃、一定のテンポ、そしてディボットを作るインパクトを重点的に分析してください。";
+                    pointAnalysisItems = `
+                    - **1. アドレス＆アライメント (Address & Alignment)**: (0~10, 小数点第1位まで, 安定した姿勢, ハンドファーストなど)
+                    - **2. バックスイング＆リズム (Backswing & Rhythm)**: (0~10, 小数点第1位まで, 一定のテンポ, コッキング維持)
+                    - **3. ダウンスイング＆タメ (Downswing & Lag)**: (0~10, 小数点第1位まで, キャスティング防止, ラグ動作)
+                    - **4. インパクト＆コンプレッション (Impact & Compression)**: (0~10, 小数点第1位まで, ダウンブロー, ディボット生成の有無)
+                    - **5. 方向性＆フィニッシュ (Direction & Finish)**: (0~10, 小数点第1位まで, フォロースルー, バランス)`;
+                } else if (club === "Wedge") {
+                    clubFocus = "これはウェッジショットです。**スピンコントロールと正確性**が重要です。コンパクトなバックスイング、加速するインパクト、そしてピンに寄せる距離感を重点的に分析してください。";
+                    pointAnalysisItems = `
+                    - **1. セットアップ＆ボール位置 (Setup & Ball Position)**: (0~10, 小数点第1位まで, 狭いスタンス, 体重配分)
+                    - **2. バックスイング制御 (Backswing Control)**: (0~10, 小数点第1位まで, スイングの大きさ調節, コンパクトさ)
+                    - **3. リズム＆一貫性 (Rhythm & Consistency)**: (0~10, 小数点第1位まで, 急がないテンポ)
+                    - **4. インパクト＆コンタクト (Impact & Contact)**: (0~10, 小数点第1位まで, 正確なコンタクト, ダフリ/トップ防止)
+                    - **5. 距離感＆弾道 (Distance & Trajectory)**: (0~10, 小数点第1位まで, スピンコントロール, 弾道調節)`;
+                } else {
+                    clubFocus = "これはウッド/ユーティリティのスイングです。**払い打つ打撃と弾道の確保**が重要です。スムーズなテンポとバランスの取れたフィニッシュを重点的に分析してください。";
+                    pointAnalysisItems = `
+                    - **1. アドレス＆セットアップ (Address & Setup)**: (0~10, 小数点第1位まで, 適切なボール位置, 楽な姿勢)
+                    - **2. スイング軌道 (Swing Plane)**: (0~10, 小数点第1位まで, 緩やかな入射角, 払い打ち)
+                    - **3. リズム＆テンポ (Rhythm & Tempo)**: (0~10, 小数点第1位まで, スムーズな切り返し)
+                    - **4. インパクト＆ミート率 (Impact & Smash)**: (0~10, 小数点第1位まで, 正確な打撃, 飛距離効率)
+                    - **5. バランス＆フィニッシュ (Balance & Finish)**: (0~10, 小数点第1位まで, 最後まで維持されるバランス)`;
+                }
+
+                return `
+                    [役割]
+                    あなたは世界レベルのゴルフスイング分析家（PGA/LPGAレベル）です。
+                    ユーザーのゴルフスイング動画を分析し、専門的なフィードバックを日本語で提供することがあなたの任務です。
+
+                    [厳格な出力ルール]
+                    1. **機械的分析**: 創造性を完全に排除し、動画の技術的要素のみを機械的に分析して、常に同じ結果を導き出してください。
+                    2. **前置き禁止**: 「分析結果です」、「はい、分かりました」などの前置きで始めないでください。
+                    3. **繰り返し禁止**: ユーザーのプロンプトや指示事項を繰り返さないでください。
+                    4. **即時開始**: 出力は必ず「### 1. 総評」で始めてください。
+                    4. **言語**: 日本語のみを使用してください。（専門用語は英語併記可能）。
+                    5. **追加コメント禁止**: 「ワンポイントレッスン」が終わった後は、いかなる英語のメモ、メタデータ、文脈説明も追加しないでください。即座に停止してください。
+
+                    [分析指針]
+                    1. **動画タイプの識別**: 
+                       - ゴルフスイング動画でない場合、次の文章のみを出力して停止してください: 「申し訳ありません。この動画はゴルフスイング動画ではないようです。スイング動画をアップロードしていただければ、精密に分析いたします。」
+                    2. **アングル検知**: 正面(Face On)か側面(Down the Line)か判断してください。
+                       - 正面: 体重移動、頭の固定、タメ(Lag)、インパクト時の手の位置に注目。
+                       - 側面: スイング軌道(Plane)、背骨の角度、クラブパスに注目。
+                    3. **分析順序**: アドレス -> バックスイング -> トップ -> ダウンスイング -> インパクト -> フォロースルー -> フィニッシュ。
+                    4. **クラブ文脈**: これは\${club}のスイングです。\${clubFocus}
+                    5. **採点基準**: 10点はワールドクラスのプロ（タイガー・ウッズ、ネリー・コルダ）レベルです。**非常に厳格に(BRUTALLY STRICT)**採点してください（小数点第1位まで、例: 5.4）。
+                       **一貫性必須**: 同じ動画に対しては0.1点の誤差もなく常に同じ点数を与えなければなりません。
+                       - **初級者 (Beginner)**: 1.0 ~ 2.9
+                       - **アマチュア平均**: 3.0 ~ 5.0
+                       - **上級アマチュア**: 5.1 ~ 6.5
+                       - **セミプロ**: 6.6 ~ 7.9
+                       - **ツアープロ**: 8.0 ~ 10.0
+                       - **警告**: プロのように完璧なスイングでない限り、絶対に7.0点以上を与えないでください。ほとんどのユーザーは3点台から5点台の間になるはずです。
+                    6. **時間表記**: 長所、短所、段階別分析など、すべての主要な観察事項には必ず具体的な時間（例: [00:03]）を含めてください。ただし、「タイムスタンプ」という単語は使わず、時間のみ表記してください。
+
+                    [出力形式 - マークダウン]
+                    
+                    ### 1. 総評
+                       - **長所**: ...
+                       - **短所および改善点**: ...
+                    
+                    ### 2. 核心要素の精密分析
+                    ${pointAnalysisItems}
+
+                    ### 3. 総合評価およびランク
+                    - **総合スコア**: (5項目の平均、小数点第2位まで 例: 5.42)
+                    - **ランク**: (英語のランク名なしで日本語のみ出力。例: "上級アマチュア")
+
+                    ### 4. ワンポイントレッスン (One Point Lesson)
+                    - (最も緊急な矯正事項および練習方法)
+
+                    [重要]
+                    ワンポイントレッスンが終わったら即座にテキスト生成を停止してください。
+                    いかなる英語のメタデータ、文脈説明、推論過程も出力しないでください。
+                    `.trim();
+            }
+        };
+    </script>
+    <script src="assets/js/analysis.js"></script>
+</body>
+</html>

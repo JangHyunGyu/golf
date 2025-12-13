@@ -18,4 +18,28 @@
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
+    <url>
+        <loc>https://golf.archerlab.dev/index-en.html</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://golf.archerlab.dev/analysis-en.html</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://golf.archerlab.dev/index-ja.html</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://golf.archerlab.dev/analysis-ja.html</loc>
+        <lastmod>2025-12-12</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
