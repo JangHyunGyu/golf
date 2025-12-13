@@ -84,7 +84,7 @@ body {
     width: 100%;
     height: 100%;
     gap: 2vh;
-    padding: 6vh 1.5rem 4vh 1.5rem;
+    padding: 4vh 1.5rem 4vh 1.5rem;
     box-sizing: border-box;
     perspective: 1000px;
 }
@@ -96,7 +96,7 @@ body {
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(212, 175, 55, 0.15); /* Subtle Gold Border */
     border-radius: 24px;
-    padding: 1.5vh 2rem;
+    padding: 1.2vh 2rem;
     width: 100%;
     max-width: 420px;
     text-decoration: none;
@@ -107,7 +107,7 @@ body {
     justify-content: center;
     flex: 0 0 auto;
     height: auto;
-    min-height: 18vh;
+    min-height: 14vh;
     position: relative;
     overflow: hidden;
     transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease;
@@ -130,8 +130,8 @@ body {
 
 .hub-icon {
     transform: translateZ(40px); /* Icon floats higher */
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
