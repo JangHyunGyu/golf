@@ -5,6 +5,45 @@
     <script>
         if (/KAKAOTALK/i.test(navigator.userAgent) && /Android/i.test(navigator.userAgent)) {
             location.href = 'intent://' + location.href.replace(/https?:\/\//i, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+        } else if (/KAKAOTALK/i.test(navigator.userAgent) && /iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            document.addEventListener('DOMContentLoaded', function() {
+                var overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100%';
+                overlay.style.height = '100%';
+                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+                overlay.style.zIndex = '9999';
+                overlay.style.display = 'flex';
+                overlay.style.flexDirection = 'column';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+                overlay.style.color = 'white';
+                overlay.style.textAlign = 'center';
+                overlay.style.fontSize = '18px';
+                
+                var message = document.createElement('p');
+                message.innerHTML = '이 페이지는 Safari 브라우저에서<br>정상적으로 작동합니다.<br><br>우측 하단의 <b>[ ··· ]</b> 버튼을 누르고<br><b>[Safari로 열기]</b>를 선택해주세요.';
+                message.style.marginBottom = '20px';
+                message.style.lineHeight = '1.5';
+                
+                var arrow = document.createElement('div');
+                arrow.innerHTML = '↘';
+                arrow.style.fontSize = '50px';
+                arrow.style.position = 'absolute';
+                arrow.style.bottom = '20px';
+                arrow.style.right = '20px';
+                arrow.style.animation = 'bounce 1s infinite';
+                
+                var style = document.createElement('style');
+                style.innerHTML = '@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }';
+                document.head.appendChild(style);
+                
+                overlay.appendChild(message);
+                overlay.appendChild(arrow);
+                document.body.appendChild(overlay);
+            });
         }
     </script>
     <!-- Google tag (gtag.js) -->
