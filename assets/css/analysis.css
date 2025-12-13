@@ -62,13 +62,17 @@ body {
 
 /* Home Navigation */
 .home-nav {
-    position: absolute;
+    position: fixed;
     top: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
     width: auto;
     margin: 0;
+}
+
+.lang-switcher {
+    position: fixed !important;
 }
 
 .home-btn {
