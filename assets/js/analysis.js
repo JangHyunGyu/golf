@@ -225,6 +225,9 @@ async function runAnalysis() {
             
             if (!initRes.ok) {
                 const text = await initRes.text();
+                if (text.includes("User location is not supported") || text.includes("FAILED_PRECONDITION")) {
+                    throw new Error("해당 IP가 Google 서비스 접속이 차단되었습니다.\n(VPN, Google One, 또는 보안 Wi-Fi를 끄고 시도해주세요)");
+                }
                 throw new Error(`Init failed (${initRes.status}): ${text}`);
             }
             const { uploadUrl } = await initRes.json();
