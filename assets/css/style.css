@@ -94,6 +94,7 @@ input:focus-visible {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  padding-top: env(safe-area-inset-top);
 }
 
 .site-header__inner {
@@ -1270,7 +1271,7 @@ button.scroll-top::-moz-focus-inner {
 /* Footer */
 .site-footer {
   margin-top: auto;
-  padding: 3rem 0 2rem;
+  padding: 3rem 0 calc(2rem + env(safe-area-inset-bottom));
   text-align: center;
   width: 100%;
   background: linear-gradient(to top, rgba(0,0,0,0.2), transparent);
