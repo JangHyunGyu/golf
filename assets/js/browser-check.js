@@ -7,6 +7,28 @@
     if (isKakao) {
         if (isAndroid) {
             location.href = 'intent://' + location.href.replace(/https?:\/\//i, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+            
+            // 인앱 브라우저에 남은 화면을 가려서 사용자가 오해하지 않도록 안내 문구를 띄웁니다.
+            setTimeout(function() {
+                document.body.style.backgroundColor = '#000';
+                document.body.innerHTML = '';
+                
+                var container = document.createElement('div');
+                container.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:white;padding:20px;box-sizing:border-box;';
+                
+                var icon = document.createElement('div');
+                icon.innerHTML = '🚀';
+                icon.style.fontSize = '48px';
+                icon.style.marginBottom = '20px';
+                
+                var text = document.createElement('p');
+                text.innerHTML = '<b>Chrome 브라우저</b>로 이동했습니다.<br>새로 열린 창에서 계속 이용해주세요.<br><br><span style="font-size:14px;color:#aaa;">이 창은 닫으셔도 됩니다.</span>';
+                text.style.lineHeight = '1.6';
+                
+                container.appendChild(icon);
+                container.appendChild(text);
+                document.body.appendChild(container);
+            }, 100);
         } else if (isIOS) {
             document.addEventListener('DOMContentLoaded', function() {
                 const lang = document.documentElement.lang || 'en';
