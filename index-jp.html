@@ -64,10 +64,64 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"@type": "WebSite",
-		"name": "ゴルフスイングマスター",
-		"url": "https://golf.archerlab.dev/index-jp.html",
-		"description": "ゴルフスイング分析およびコーチングサービスを提供するゴルフスイングマスターです。"
+		"@graph": [
+			{
+				"@type": "WebSite",
+				"name": "ゴルフスイングマスター",
+				"url": "https://golf.archerlab.dev/index-jp.html",
+				"description": "ゴルフスイング分析およびコーチングサービスを提供するゴルフスイングマスターです。"
+			},
+			{
+				"@type": "HowTo",
+				"name": "AIでゴルフスイングを分析する方法",
+				"description": "無料AIゴルフスイング分析サービスを利用して、スイングを診断・改善する方法です。",
+				"image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
+				"totalTime": "PT3M",
+				"tool": [
+					{
+						"@type": "HowToTool",
+						"name": "スマートフォンまたはカメラ"
+					}
+				],
+				"step": [
+					{
+						"@type": "HowToStep",
+						"name": "スイング動画を撮影",
+						"text": "正面または側面からゴルフスイング動画を撮影します。",
+						"position": 1
+					},
+					{
+						"@type": "HowToStep",
+						"name": "動画をアップロード",
+						"text": "ゴルフスイングマスターに動画をアップロードします。",
+						"position": 2
+					},
+					{
+						"@type": "HowToStep",
+						"name": "AI分析結果を確認",
+						"text": "AIが姿勢、クラブ軌道、バランスなどを分析した結果を確認します。",
+						"position": 3
+					},
+					{
+						"@type": "HowToStep",
+						"name": "改善点を練習に適用",
+						"text": "AIが提案する改善ポイントを練習に活かします。",
+						"position": 4
+					}
+				]
+			},
+			{
+				"@type": "SoftwareApplication",
+				"name": "ゴルフスイングマスター",
+				"applicationCategory": "SportsApplication",
+				"operatingSystem": "Web",
+				"offers": {
+					"@type": "Offer",
+					"price": "0",
+					"priceCurrency": "JPY"
+				}
+			}
+		]
 	}
 	</script>
 	<script defer src="assets/js/ga.js"></script>

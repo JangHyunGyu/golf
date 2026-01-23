@@ -67,10 +67,64 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"@type": "WebSite",
-		"name": "골프 스윙 마스터",
-		"url": "https://golf.archerlab.dev/",
-		"description": "골프 스윙 분석 및 코칭 서비스를 제공하는 골프 스윙 마스터입니다."
+		"@graph": [
+			{
+				"@type": "WebSite",
+				"name": "골프 스윙 마스터",
+				"url": "https://golf.archerlab.dev/",
+				"description": "골프 스윙 분석 및 코칭 서비스를 제공하는 골프 스윙 마스터입니다."
+			},
+			{
+				"@type": "HowTo",
+				"name": "AI로 골프 스윙 분석하는 방법",
+				"description": "무료 AI 골프 스윙 분석 서비스를 이용해 나의 스윙을 진단하고 교정하는 방법입니다.",
+				"image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
+				"totalTime": "PT3M",
+				"tool": [
+					{
+						"@type": "HowToTool",
+						"name": "스마트폰 또는 카메라"
+					}
+				],
+				"step": [
+					{
+						"@type": "HowToStep",
+						"name": "스윙 영상 촬영",
+						"text": "정면 또는 측면에서 나의 골프 스윙 영상을 촬영합니다.",
+						"position": 1
+					},
+					{
+						"@type": "HowToStep",
+						"name": "영상 업로드",
+						"text": "골프 스윙 마스터에 영상을 업로드합니다.",
+						"position": 2
+					},
+					{
+						"@type": "HowToStep",
+						"name": "AI 분석 결과 확인",
+						"text": "AI가 스윙 자세, 클럽 궤적, 밸런스 등을 분석한 결과를 확인합니다.",
+						"position": 3
+					},
+					{
+						"@type": "HowToStep",
+						"name": "교정 팝 적용",
+						"text": "AI가 제안하는 교정 포인트를 연습에 적용합니다.",
+						"position": 4
+					}
+				]
+			},
+			{
+				"@type": "SoftwareApplication",
+				"name": "골프 스윙 마스터",
+				"applicationCategory": "SportsApplication",
+				"operatingSystem": "Web",
+				"offers": {
+					"@type": "Offer",
+					"price": "0",
+					"priceCurrency": "KRW"
+				}
+			}
+		]
 	}
 	</script>
 	<script defer src="assets/js/ga.js?v=1.0.2"></script>

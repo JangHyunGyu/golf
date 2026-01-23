@@ -67,10 +67,64 @@
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
-		"@type": "WebSite",
-		"name": "Golf Swing Master",
-		"url": "https://golf.archerlab.dev/index-en.html",
-		"description": "Golf Swing Master provides golf swing analysis and coaching services."
+		"@graph": [
+			{
+				"@type": "WebSite",
+				"name": "Golf Swing Master",
+				"url": "https://golf.archerlab.dev/index-en.html",
+				"description": "Golf Swing Master provides golf swing analysis and coaching services."
+			},
+			{
+				"@type": "HowTo",
+				"name": "How to Analyze Your Golf Swing with AI",
+				"description": "Learn how to diagnose and improve your golf swing using our free AI golf swing analysis service.",
+				"image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
+				"totalTime": "PT3M",
+				"tool": [
+					{
+						"@type": "HowToTool",
+						"name": "Smartphone or Camera"
+					}
+				],
+				"step": [
+					{
+						"@type": "HowToStep",
+						"name": "Record Your Swing",
+						"text": "Record your golf swing video from the front or side angle.",
+						"position": 1
+					},
+					{
+						"@type": "HowToStep",
+						"name": "Upload Video",
+						"text": "Upload your video to Golf Swing Master.",
+						"position": 2
+					},
+					{
+						"@type": "HowToStep",
+						"name": "Review AI Analysis",
+						"text": "Check the AI analysis results including posture, club path, and balance.",
+						"position": 3
+					},
+					{
+						"@type": "HowToStep",
+						"name": "Apply Corrections",
+						"text": "Practice with the correction tips suggested by AI.",
+						"position": 4
+					}
+				]
+			},
+			{
+				"@type": "SoftwareApplication",
+				"name": "Golf Swing Master",
+				"applicationCategory": "SportsApplication",
+				"operatingSystem": "Web",
+				"offers": {
+					"@type": "Offer",
+					"price": "0",
+					"priceCurrency": "USD"
+				}
+			}
+		]
 	}
 	</script>
 	<script defer src="assets/js/ga.js?v=1.0.2"></script>
