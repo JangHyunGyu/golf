@@ -1,0 +1,20 @@
+{
+  "name": "golf-swing-master",
+  "version": "1.0.0",
+  "description": "AI 골프 스윙 분석 - 토스 미니앱",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "granite dev",
+    "build": "granite build",
+    "preview": "vite preview",
+    "deploy": "ait deploy"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1",
+    "vite-plugin-static-copy": "^3.2.0"
+  },
+  "dependencies": {
+    "@apps-in-toss/web-framework": "^1.11.2"
+  }
+}
