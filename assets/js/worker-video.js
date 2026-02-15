@@ -169,12 +169,41 @@ export default {
         }
 
         const data = await upstream.json();
-        const parts = data.candidates?.[0]?.content?.parts || [];
-        const responseText = parts.map(p => p.text).join("\n");
 
-        return new Response(JSON.stringify({
-          choices: [{ message: { role: "assistant", content: responseText } }]
-        }), {
+        // Gemini 응답에서 텍스트 파트만 추출 (thought 파트는 제외)
+        const parts = data.candidates?.[0]?.content?.parts || [];
+        const textParts = parts.filter(p => p.text && !p.thought).map(p => p.text);
+        let text = textParts.join("") || "";
+
+        // 응답이 비어있으면 thought 포함해서라도 반환 (fallback)
+        if (!text.trim()) {
+          text = parts.map(p => p.text || "").filter(Boolean).join("") || "";
+        }
+
+        // 코드블록 래핑 제거 (```json ... ``` → 순수 JSON)
+        text = text.replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
+
+        // JSON 유효성 검증 및 자동 복구
+        if (text) {
+          try {
+            JSON.parse(text);
+          } catch (e) {
+            let openBraces = (text.match(/\{/g) || []).length;
+            let closeBraces = (text.match(/\}/g) || []).length;
+            let openBrackets = (text.match(/\[/g) || []).length;
+            let closeBrackets = (text.match(/\]/g) || []).length;
+            while (closeBrackets < openBrackets) { text += ']'; closeBrackets++; }
+            while (closeBraces < openBraces) { text += '}'; closeBraces++; }
+            try { JSON.parse(text); } catch (_) { /* 클라이언트 fallback */ }
+          }
+        }
+
+        const openAIResponse = {
+          choices: [{ message: { role: "assistant", content: text } }]
+        };
+
+        return new Response(JSON.stringify(openAIResponse), {
+          status: 200,
           headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
         });
       }

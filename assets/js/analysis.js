@@ -88,6 +88,93 @@ let isAnalyzing = false;
 let latestAnalysisResult = "";
 let currentAnalysisId = null;
 
+// --- JSON Analysis Renderer ---
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = String(text);
+    return div.innerHTML;
+}
+
+function highlightText(text) {
+    let escaped = escapeHtml(text);
+    // Highlight timestamps [mm:ss] or [mm:ss~mm:ss] or [mm:ss - mm:ss]
+    escaped = escaped.replace(/\[(\d{2}:\d{2}(?:\s*[~\-]\s*\d{2}:\d{2})?)\]/g, '<span class="timestamp">[$1]</span>');
+    // Highlight scores
+    const unit = ANALYSIS_CONFIG.messages.scoreUnit || '점';
+    escaped = escaped.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})\\b(?!${unit})`, 'g'), `<span class="score">$1${unit}</span>`);
+    escaped = escaped.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})${unit}`, 'g'), `<span class="score">$1${unit}</span>`);
+    return escaped;
+}
+
+function renderJsonAnalysis(content) {
+    let data;
+    try {
+        data = JSON.parse(content);
+    } catch (e) {
+        return null; // Not JSON, fallback to markdown
+    }
+
+    if (!data || typeof data !== 'object') return null;
+
+    const msg = ANALYSIS_CONFIG.messages;
+    const unit = msg.scoreUnit || '점';
+
+    // Rejected
+    if (data.rejected) {
+        return `<p style="text-align:center; color:#ff9800; font-size:1.1rem; padding:2rem 1rem;">${escapeHtml(data.rejectMessage || '')}</p>`;
+    }
+
+    let html = '';
+
+    // 1. Summary
+    html += `<h3>1. ${escapeHtml(msg.sectionSummary || '총평')}</h3>`;
+    html += `<ul>`;
+    html += `<li><strong>${escapeHtml(msg.labelStrengths || '장점')}:</strong> ${highlightText(data.summary?.strengths || '')}</li>`;
+    html += `<li><strong>${escapeHtml(msg.labelWeaknesses || '단점 및 개선점')}:</strong> ${highlightText(data.summary?.weaknesses || '')}</li>`;
+    html += `</ul>`;
+
+    // 2. Detail Scores
+    html += `<h3>2. ${escapeHtml(msg.sectionDetail || '핵심 요소 정밀 분석')}</h3>`;
+    if (data.detailScores && Array.isArray(data.detailScores)) {
+        data.detailScores.forEach((item, i) => {
+            html += `<div style="margin-bottom:1.2rem;">`;
+            html += `<p style="margin:0 0 0.3rem 0;"><strong>${i + 1}. ${escapeHtml(item.name)}</strong>: <span class="score">${Number(item.score).toFixed(1)}${unit}</span></p>`;
+            html += `<p style="margin:0 0 0 1rem; line-height:1.7;">${highlightText(item.comment || '')}</p>`;
+            html += `</div>`;
+        });
+    }
+
+    // 3. Overall Score & Grade
+    html += `<h3>3. ${escapeHtml(msg.sectionOverall || '종합 평점 및 등급')}</h3>`;
+    html += `<ul>`;
+    html += `<li><strong>${escapeHtml(msg.labelScore || '종합 점수')}:</strong> <span class="score">${Number(data.overallScore || 0).toFixed(2)}${unit}</span></li>`;
+    html += `<li><strong>${escapeHtml(msg.labelGrade || '등급')}:</strong> ${escapeHtml(data.grade || '')}</li>`;
+    html += `</ul>`;
+
+    // 4. One Point Lesson
+    html += `<h3>4. ${escapeHtml(msg.sectionLesson || '원포인트 레슨')}</h3>`;
+    html += `<ul><li>${highlightText(data.onePointLesson || '')}</li></ul>`;
+
+    return html;
+}
+
+function renderMarkdownFallback(content) {
+    let formattedContent;
+    if (typeof marked !== 'undefined' && marked.parse) {
+        formattedContent = marked.parse(content);
+    } else {
+        formattedContent = content.replace(/\n/g, '<br>');
+    }
+    const unit = ANALYSIS_CONFIG.messages.scoreUnit || '점';
+    // Highlight timestamps
+    formattedContent = formattedContent.replace(/\[(\d{2}:\d{2}(?:\s*[~-]\s*\d{2}:\d{2})?)\]/g, '<span class="timestamp">[$1]</span>');
+    // Highlight scores
+    formattedContent = formattedContent.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})\\b(?!${unit})`, 'g'), `<span class="score">$1${unit}</span>`);
+    formattedContent = formattedContent.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})${unit}`, 'g'), `<span class="score">$1${unit}</span>`);
+    return formattedContent;
+}
+// --- End JSON Analysis Renderer ---
+
 // Cache for re-analysis
 let lastUploadedFileMetadata = null;
 let lastUploadedFileUri = null;
@@ -386,54 +473,6 @@ async function runAnalysis() {
         
         let content = data.choices?.[0]?.message?.content || ANALYSIS_CONFIG.messages.resultError;
         
-        // --- Client-side Filtering Logic ---
-        // Remove English preamble (if any)
-        const startMarker = "### 1. 총평";
-        // Use lastIndexOf to pick the FINAL output, ignoring any initial drafts or self-corrections
-        const startIndex = content.lastIndexOf(startMarker);
-        
-        if (startIndex !== -1) {
-            content = content.substring(startIndex);
-        } else {
-            // Fallback for old format or if AI ignores ###
-            const oldMarker = "1. **총평**:";
-            const oldIndex = content.lastIndexOf(oldMarker);
-            if (oldIndex !== -1) {
-                content = content.substring(oldIndex);
-            }
-        }
-
-        // Remove English postscript/metadata (if any)
-        const stopMarkers = [
-            "**Club Context**:",
-            "**Video Type**:",
-            "**Angle**:",
-            "**Scoring Standard Applied**:",
-            "**Timestamps Cited**:",
-            "**Language**:",
-            "**Output Format**:",
-            "**Start**:",
-            "**No Preamble**:",
-            "**Ready to generate output.**",
-            "**Wait, I need to double check",
-            "5. **클럽 정보**:",
-            "**참고**:",
-            "**주의**:",
-            "**면책 조항**:",
-            "(End of Output)",
-            "**Note**:"
-        ];
-
-        let cutIndex = content.length;
-        for (const marker of stopMarkers) {
-            const idx = content.indexOf(marker);
-            if (idx !== -1 && idx < cutIndex) {
-                cutIndex = idx;
-            }
-        }
-        content = content.substring(0, cutIndex).trim();
-        // -----------------------------------
-
         latestAnalysisResult = content;
 
         // Save Result
@@ -455,24 +494,11 @@ async function runAnalysis() {
             console.warn("Failed to save result for sharing:", saveErr);
         }
 
-        // Markdown Formatting
-        let formattedContent;
-        if (typeof marked !== 'undefined' && marked.parse) {
-             formattedContent = marked.parse(content);
-        } else {
-             console.warn("Marked library not found, displaying raw text.");
-             formattedContent = content.replace(/\n/g, '<br>');
+        // Render: try JSON first, fallback to markdown
+        let formattedContent = renderJsonAnalysis(content);
+        if (!formattedContent) {
+            formattedContent = renderMarkdownFallback(content);
         }
-
-        // Enhance formatting with regex
-        // 1. Highlight Timestamps [mm:ss] or [mm:ss~mm:ss] or [mm:ss - mm:ss]
-        formattedContent = formattedContent.replace(/\[(\d{2}:\d{2}(?:\s*[~-]\s*\d{2}:\d{2})?)\]/g, '<span class="timestamp">[$1]</span>');
-
-        // 2. Highlight Scores (e.g., 6.5, 6.00)
-        // Add '점' if not present, and wrap in span
-        formattedContent = formattedContent.replace(/\b([0-9]\.[0-9]{1,2})\b(?!점)/g, '<span class="score">$1점</span>');
-        // If '점' was already there (e.g. from AI), just wrap the number
-        formattedContent = formattedContent.replace(/\b([0-9]\.[0-9]{1,2})점/g, '<span class="score">$1점</span>');
 
         setModalStep('step-complete');
         modalTitle.textContent = ANALYSIS_CONFIG.messages.resultTitle;
@@ -599,12 +625,10 @@ window.addEventListener('DOMContentLoaded', async () => {
             const content = data.result;
             latestAnalysisResult = content;
 
-            let formattedContent;
-            if (typeof marked !== 'undefined' && marked.parse) {
-                 formattedContent = marked.parse(content);
-            } else {
-                 console.warn("Marked library not found, displaying raw text.");
-                 formattedContent = content.replace(/\n/g, '<br>');
+            // Render: try JSON first, fallback to markdown
+            let formattedContent = renderJsonAnalysis(content);
+            if (!formattedContent) {
+                formattedContent = renderMarkdownFallback(content);
             }
 
             setModalStep('step-complete'); // Success state (Green)

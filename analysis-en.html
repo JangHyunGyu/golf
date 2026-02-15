@@ -340,7 +340,16 @@
                 copyFail: "Failed to copy result.",
                 loadingShared: "Loading shared analysis result...",
                 resultTitleShared: "Precision Analysis Result (Shared)",
-                loadSharedFail: "Shared result not found or expired."
+                loadSharedFail: "Shared result not found or expired.",
+                sectionSummary: "Overall Review",
+                labelStrengths: "Pros",
+                labelWeaknesses: "Cons & Improvements",
+                sectionDetail: "Detailed Analysis of Key Elements",
+                sectionOverall: "Overall Score & Grade",
+                labelScore: "Overall Score",
+                labelGrade: "Grade",
+                sectionLesson: "One Point Lesson",
+                scoreUnit: "pts"
             },
             generatePrompt: function(club) {
                 // club: Driver, WoodHybrid, Iron, Wedge
@@ -352,36 +361,32 @@
 
                 if (club === "Driver") {
                     clubFocus = "This is a Driver swing. **Distance and Direction** are key. Focus on setup for Upper Blow, wide arc, and strong ground reaction force.";
-                    pointAnalysisItems = `
-                    - **1. Address & Setup**: (0~10, one decimal place, stance width, ball position, spine tilt, etc.)
-                    - **2. Backswing & Power**: (0~10, one decimal place, rotation amount, X-Factor, overswing check)
-                    - **3. Swing Plane**: (0~10, one decimal place, shallow plane, slice/hook factors)
-                    - **4. Impact & Launch**: (0~10, one decimal place, upper blow check, sweet spot contact)
-                    - **5. Balance & Finish**: (0~10, one decimal place, weight transfer, finish hold)`;
+                    pointAnalysisItems = `"Address & Setup" — stance width, ball position, spine tilt, etc.
+"Backswing & Power" — rotation amount, X-Factor, overswing check
+"Swing Plane" — shallow plane, slice/hook factors
+"Impact & Launch" — upper blow check, sweet spot contact
+"Balance & Finish" — weight transfer, finish hold`;
                 } else if (club === "Iron") {
                     clubFocus = "This is an Iron swing. **Precise Impact and Distance Control** are key. Focus on Down Blow impact, consistent tempo, and divot creation.";
-                    pointAnalysisItems = `
-                    - **1. Address & Alignment**: (0~10, one decimal place, stable posture, hand first, etc.)
-                    - **2. Backswing & Rhythm**: (0~10, one decimal place, consistent tempo, cocking maintenance)
-                    - **3. Downswing & Lag**: (0~10, one decimal place, anti-casting, lag motion)
-                    - **4. Impact & Compression**: (0~10, one decimal place, down blow, divot creation)
-                    - **5. Direction & Finish**: (0~10, one decimal place, follow through, balance)`;
+                    pointAnalysisItems = `"Address & Alignment" — stable posture, hand first, etc.
+"Backswing & Rhythm" — consistent tempo, cocking maintenance
+"Downswing & Lag" — anti-casting, lag motion
+"Impact & Compression" — down blow, divot creation
+"Direction & Finish" — follow through, balance`;
                 } else if (club === "Wedge") {
                     clubFocus = "This is a Wedge shot. **Spin Control and Accuracy** are key. Focus on compact backswing, accelerating impact, and distance feel.";
-                    pointAnalysisItems = `
-                    - **1. Setup & Ball Position**: (0~10, one decimal place, narrow stance, weight distribution)
-                    - **2. Backswing Control**: (0~10, one decimal place, swing size control, compactness)
-                    - **3. Rhythm & Consistency**: (0~10, one decimal place, unhurried tempo)
-                    - **4. Impact & Contact**: (0~10, one decimal place, clean contact, anti-duff/thin)
-                    - **5. Distance & Trajectory**: (0~10, one decimal place, spin control, trajectory control)`;
+                    pointAnalysisItems = `"Setup & Ball Position" — narrow stance, weight distribution
+"Backswing Control" — swing size control, compactness
+"Rhythm & Consistency" — unhurried tempo
+"Impact & Contact" — clean contact, anti-duff/thin
+"Distance & Trajectory" — spin control, trajectory control`;
                 } else {
                     clubFocus = "This is a Wood/Hybrid swing. **Sweeping Impact and Trajectory** are key. Focus on smooth tempo and balanced finish.";
-                    pointAnalysisItems = `
-                    - **1. Address & Setup**: (0~10, one decimal place, proper ball position, comfortable posture)
-                    - **2. Swing Plane**: (0~10, one decimal place, shallow angle of attack, sweeping motion)
-                    - **3. Rhythm & Tempo**: (0~10, one decimal place, smooth transition)
-                    - **4. Impact & Smash**: (0~10, one decimal place, precise contact, distance efficiency)
-                    - **5. Balance & Finish**: (0~10, one decimal place, balance maintained to the end)`;
+                    pointAnalysisItems = `"Address & Setup" — proper ball position, comfortable posture
+"Swing Plane" — shallow angle of attack, sweeping motion
+"Rhythm & Tempo" — smooth transition
+"Impact & Smash" — precise contact, distance efficiency
+"Balance & Finish" — balance maintained to the end`;
                 }
 
                 return `
@@ -393,13 +398,13 @@
                     1. **Mechanical Analysis**: Exclude creativity completely. Mechanically analyze only the technical elements of the video to derive the same result every time.
                     2. **No Intro**: Do not start with "Here is the analysis result", "Yes, I understand", etc.
                     3. **No Repetition**: Do not repeat the user's prompt or instructions.
-                    4. **Immediate Start**: Output must start immediately with "### 1. Overall Review".
+                    4. **Immediate Start**: Output must start immediately with a JSON object `{`.
                     4. **Language**: Use only English.
-                    5. **No Extra Comments**: Stop immediately after the "One Point Lesson" is finished. Do not add any English notes, metadata, or context explanations.
+                    5. **No Extra Comments**: Stop immediately after the JSON output is finished. Do not add any notes, metadata, or context explanations.
 
                     [Analysis Guidelines]
                     1. **Identify Video Type**: 
-                       - If it is not a golf swing video, output only this sentence and stop: "Sorry, this does not appear to be a golf swing video. Please upload a swing video for precision analysis."
+                       - If it is not a golf swing video, set rejected=true and put a rejection message in rejectMessage, output as JSON.
                     2. **Detect Angle**: Determine if it is Face On or Down the Line.
                        - Face On: Focus on weight transfer, head stability, lag, hand position at impact.
                        - Down the Line: Focus on Swing Plane, spine angle, club path.
@@ -415,24 +420,36 @@
                        - **Warning**: Unless it is a perfect pro swing, never give a score above 7.0. Most users should receive scores between 3.x and 5.x.
                     6. **Time Notation**: All key observations (Pros, Cons, Step-by-step) must include specific time (e.g., [00:03]). Do not use the word "Timestamp", just show the time.
 
-                    [Output Format - Markdown]
-                    
-                    ### 1. Overall Review
-                       - **Pros**: ...
-                       - **Cons & Improvements**: ...
-                    
-                    ### 2. Detailed Analysis of Key Elements
+                    [Output Format - JSON]
+                    Output pure JSON only, with no markdown or additional text.
+                    Follow this schema exactly:
+
+                    {
+                      "rejected": false,
+                      "rejectMessage": "",
+                      "summary": {
+                        "strengths": "Pros description (with timestamps, e.g., [00:03] ...)",
+                        "weaknesses": "Cons & improvements description (with timestamps)"
+                      },
+                      "detailScores": [
+                        { "name": "Item Name", "score": 0.0, "comment": "Evaluation (with timestamps)" }
+                      ],
+                      "overallScore": 0.00,
+                      "grade": "Grade Name",
+                      "onePointLesson": "Most urgent correction and practice method"
+                    }
+
+                    Rules:
+                    - If not a golf swing video: set rejected=true, put rejection message in rejectMessage, leave other fields empty.
+                    - detailScores array must contain these 5 items in order:
                     ${pointAnalysisItems}
-
-                    ### 3. Overall Score & Grade
-                    - **Overall Score**: (Average of 5 items, to two decimal places e.g., 5.42)
-                    - **Grade**: (e.g., "Advanced Amateur")
-
-                    ### 4. One Point Lesson
-                    - (Most urgent correction and practice method)
+                    - Each item's score: 0~10 range, one decimal place (e.g., 5.4)
+                    - overallScore: average of 5 items, two decimal places (e.g., 5.42)
+                    - grade: e.g., "Advanced Amateur"
+                    - Include timestamps [00:03] format in all text fields.
 
                     [Important]
-                    Stop text generation immediately after the One Point Lesson.
+                    Stop text generation immediately after the JSON output.
                     Do not output any metadata, context explanation, or reasoning process.
                     `.trim();
             }
