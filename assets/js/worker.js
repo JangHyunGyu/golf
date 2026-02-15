@@ -1,35 +1,57 @@
+// ===== Configuration =====
+// Cloudflare AI Gateway 설정 (User Location Error 방지)
+const ACCOUNT_ID = "f5ced3498c8b7674581b5c9987f31585";
+const GATEWAY_NAME = "archer-gateway";
+const GATEWAY_BASE = `https://gateway.ai.cloudflare.com/v1/${ACCOUNT_ID}/${GATEWAY_NAME}/google-ai-studio`;
+
 // ===== CORS =====
 const ALLOWED_ORIGINS = [
   "https://latindance.kr",
+  "https://golf.archerlab.dev",
+  "https://archerlab.dev",
   "http://localhost:3000",
   "http://localhost:8000",
   "http://127.0.0.1:5500",
+  "http://127.0.0.1:5501",
   "null",
 ];
 
+// 요청 Origin에 맞는 CORS 헤더를 만들어 반환합니다.
 const corsHeaders = (origin) => ({
+
+  // 허용 목록에 존재하면 해당 Origin을, 아니면 기본값을 사용합니다.
   "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0],
+
+  // 허용할 HTTP 메서드 목록입니다.
   "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization",
+
+  // 클라이언트가 보낼 수 있는 헤더를 명시합니다.
+  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Upload-Url, X-File-Name",
+
+  // 캐시가 Origin 헤더에 따라 달라짐을 알립니다.
   "Vary": "Origin",
+  
+  // [여기 추가됨!] 브라우저와 Cloudflare에게 "절대 저장하지 마"라고 명령합니다.
+  "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
 });
 
 // ===== Google File API Helpers =====
 
-// 1. 초기 업로드 URL 획득 (Resumable Upload 시작)
-async function initiateUpload(apiKey, file, mimeType) {
+async function initiateUpload(apiKey, mimeType, numBytes, displayName) {
   const url = `https://generativelanguage.googleapis.com/upload/v1beta/files?key=${apiKey}`;
+
+  //const url = `${GATEWAY_BASE}/upload/v1beta/files?key=${apiKey}`;
   
   const headers = {
     "X-Goog-Upload-Protocol": "resumable",
     "X-Goog-Upload-Command": "start",
-    "X-Goog-Upload-Header-Content-Length": file.size.toString(),
+    "X-Goog-Upload-Header-Content-Length": numBytes.toString(),
     "X-Goog-Upload-Header-Content-Type": mimeType,
     "Content-Type": "application/json",
   };
 
   const metadata = {
-    file: { display_name: file.name || "uploaded_video" }
+    file: { display_name: displayName || "uploaded_video" }
   };
 
   const response = await fetch(url, {
@@ -39,80 +61,25 @@ async function initiateUpload(apiKey, file, mimeType) {
   });
 
   if (!response.ok) {
-    throw new Error(`Upload initiation failed: ${response.statusText}`);
+    const errText = await response.text();
+    throw new Error(`Google Upload Init Failed (${response.status}): ${errText}`);
   }
 
-  // 업로드할 실제 URL은 헤더에 담겨 옴
   return response.headers.get("x-goog-upload-url");
 }
-
-// 2. 실제 파일 데이터 전송
-async function uploadBytes(uploadUrl, file) {
-  const headers = {
-    "Content-Length": file.size.toString(),
-    "X-Goog-Upload-Offset": "0",
-    "X-Goog-Upload-Command": "upload, finalize",
-  };
-
-  const response = await fetch(uploadUrl, {
-    method: "POST",
-    headers: headers,
-    body: file, // File 객체(Blob)를 그대로 전송
-  });
-
-  if (!response.ok) {
-    throw new Error(`File upload failed: ${response.statusText}`);
-  }
-
-  const result = await response.json();
-  return result.file.uri; // fileUri 반환
-}
-
-// 3. 파일 처리 상태 대기 (Polling)
-async function waitForFileActive(apiKey, fileUri) {
-  const name = fileUri.split("/").pop(); // uri에서 파일 이름 추출 (files/xxx -> xxx 아님, 전체 uri 사용 가능)
-  // API 호출 시에는 files/NAME 형식이 필요함. fileUri 자체가 그 형식임.
-  
-  const url = `https://generativelanguage.googleapis.com/v1beta/${fileUri}?key=${apiKey}`;
-
-  let attempts = 0;
-  while (attempts < 30) { // 최대 60초 대기 (2초 * 30회)
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (data.state === "ACTIVE") {
-      return; // 준비 완료
-    }
-    if (data.state === "FAILED") {
-      throw new Error("File processing failed");
-    }
-
-    // 2초 대기
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    attempts++;
-  }
-  throw new Error("File processing timed out");
-}
-
 
 // ===== Main Worker Logic =====
 export default {
   async fetch(req, env) {
     const origin = req.headers.get("Origin") ?? "null";
+    const url = new URL(req.url);
+    const action = url.searchParams.get("action");
 
     // Preflight
     if (req.method === "OPTIONS") {
-      const headers = corsHeaders(origin);
       return new Response(null, {
-        status: ALLOWED_ORIGINS.includes(origin) ? 204 : 403,
-        headers
-      });
-    }
-
-    if (req.method === "GET") {
-      return new Response(JSON.stringify({ ok: true, service: "latindance-video-analysis-api" }), {
-        status: 200,
-        headers: { ...corsHeaders(origin), "Content-Type": "application/json" },
+        status: 204,
+        headers: corsHeaders(origin)
       });
     }
 
@@ -121,93 +88,171 @@ export default {
     }
 
     if (!env?.GEMINI_API_KEY) {
-      return new Response(JSON.stringify({ error: "Missing GEMINI_API_KEY" }), { status: 500, headers: corsHeaders(origin) });
+      return new Response(JSON.stringify({ error: "Server Config Error: Missing GEMINI_API_KEY" }), { status: 500, headers: corsHeaders(origin) });
     }
 
     try {
-      const contentType = req.headers.get("content-type") || "";
-      let userMessage = "";
-      let fileUri = null;
-      let hasVideo = false;
-
-      // 1. 요청 파싱 (FormData 필수)
-      if (contentType.includes("multipart/form-data")) {
-        const formData = await req.formData();
-        userMessage = formData.get("message") || "이 춤 영상을 분석해줘. 동작의 정확성, 리듬감, 자세 교정할 점을 알려줘.";
-        const file = formData.get("file");
-
-        if (file && file instanceof File) {
-          hasVideo = true;
-          // A. 업로드 시작
-          const uploadUrl = await initiateUpload(env.GEMINI_API_KEY, file, file.type);
-          // B. 바이트 전송
-          fileUri = await uploadBytes(uploadUrl, file);
-          // C. 처리 대기
-          await waitForFileActive(env.GEMINI_API_KEY, fileUri);
-        } else {
-            throw new Error("No video file provided");
-        }
-      } else {
-        throw new Error("Content-Type must be multipart/form-data");
+      // 1. 초기화 (Upload URL 발급)
+      if (action === "init") {
+        const body = await req.json();
+        const { mimeType, numBytes, displayName } = body;
+        
+        const uploadUrl = await initiateUpload(env.GEMINI_API_KEY, mimeType, numBytes, displayName);
+        
+        return new Response(JSON.stringify({ uploadUrl }), {
+          headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
+        });
       }
 
-      // 2. Gemini 요청 구성
-      const contents = [
-        {
-          role: "user",
-          parts: [
-            { text: userMessage },
-            ...(fileUri ? [{ fileData: { fileUri: fileUri, mimeType: "video/mp4" } }] : [])
-          ]
-        }
-      ];
+      // 2. 업로드 (스트리밍 프록시)
+      if (action === "upload") {
+        const uploadUrl = req.headers.get("X-Upload-Url");
+        if (!uploadUrl) throw new Error("Missing X-Upload-Url header");
 
-      const geminiPayload = {
-        contents,
-        generationConfig: {
-          temperature: 1.0,
-          thinkingConfig: {
-            thinkingLevel: "HIGH", // 비디오 분석은 항상 HIGH
+        const contentLength = req.headers.get("Content-Length");
+
+        const googleResponse = await fetch(uploadUrl, {
+          method: "POST",
+          headers: {
+            "Content-Length": contentLength,
+            "X-Goog-Upload-Offset": "0",
+            "X-Goog-Upload-Command": "upload, finalize",
           },
-        },
-      };
+          body: req.body,
+        });
 
-      // 3. Gemini 호출 (Gemini 3 Pro Preview)
-      const model = "gemini-3-pro-preview"; // or gemini-1.5-pro-latest if preferred, but user asked for 3
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
+        if (!googleResponse.ok) {
+          const errText = await googleResponse.text();
+          throw new Error(`Google Upload Failed (${googleResponse.status}): ${errText}`);
+        }
 
-      const upstream = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(geminiPayload),
-      });
-
-      if (!upstream.ok) {
-        const errText = await upstream.text();
-        throw new Error(`Gemini API Error: ${upstream.status} ${errText}`);
+        const result = await googleResponse.json();
+        // fileUri와 fileName(resource name)을 모두 반환
+        return new Response(JSON.stringify({ 
+          fileUri: result.file.uri,
+          fileName: result.file.name 
+        }), {
+          headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
+        });
       }
 
-      const data = await upstream.json();
-      
-      // 4. 응답 추출
-      const parts = data.candidates?.[0]?.content?.parts || [];
-      const responseText = parts.map(p => p.text).join("\n");
+      // 3. 상태 확인 (Polling용)
+      if (action === "check_status") {
+        const body = await req.json();
+        const { fileName } = body; // e.g. "files/abc..."
 
-      // OpenAI 포맷으로 반환 (클라이언트 호환성)
-      const openAIResponse = {
-        choices: [
+        //const checkUrl = `https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${env.GEMINI_API_KEY}`;
+        const checkUrl = `${GATEWAY_BASE}/v1beta/${fileName}?key=${env.GEMINI_API_KEY}`;
+        const checkRes = await fetch(checkUrl);
+        
+        if (!checkRes.ok) {
+           throw new Error(`Status Check Failed: ${checkRes.status}`);
+        }
+        
+        const data = await checkRes.json();
+        return new Response(JSON.stringify({ state: data.state }), {
+          headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
+        });
+      }
+
+      // 4. 분석 (Gemini 호출)
+      if (action === "analyze") {
+        const body = await req.json();
+        const { fileUri, mimeType, userPrompt } = body;
+                  
+        // 여기서는 대기하지 않고 바로 요청 (클라이언트가 이미 ACTIVE 확인했음)
+        const contents = [
           {
-            message: {
-              role: "assistant",
-              content: responseText,
-            },
-          },
-        ],
-      };
+            role: "user",
+            parts: [
+              { text: userPrompt },
+              { fileData: { fileUri: fileUri, mimeType: mimeType || "video/mp4" } },
+            ]
+          }
+        ];
 
-      return new Response(JSON.stringify(openAIResponse), {
-        headers: { ...corsHeaders(origin), "Content-Type": "application/json" },
-      });
+        const model = "gemini-3-flash-preview";
+        //const model = "gemini-3-pro-preview";
+        //const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
+        const geminiUrl = `${GATEWAY_BASE}/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
+    
+
+        const upstream = await fetch(geminiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contents,
+            generationConfig: {
+              temperature: 0.0,
+              topK: 1, // [추가] 후보군을 1개로 강제하여 변수 차단
+            },
+          }),
+        });
+
+        if (!upstream.ok) {
+          const errText = await upstream.text();
+          throw new Error(`Gemini API Error (${upstream.status}): ${errText}`);
+        }
+
+        const data = await upstream.json();
+        const parts = data.candidates?.[0]?.content?.parts || [];
+        const responseText = parts.map(p => p.text).join("\n");
+
+        return new Response(JSON.stringify({
+          choices: [{ message: { role: "assistant", content: responseText } }]
+        }), {
+          headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
+        });
+      }
+
+      // 5. 결과 저장 (KV)
+      if (action === "save_result") {
+        if (!env.LATINDANCE_KV) {
+            return new Response(JSON.stringify({ error: "Server Config Error: KV not bound (LATINDANCE_KV)" }), { status: 500, headers: corsHeaders(origin) });
+        }
+        const body = await req.json();
+        const { result, genre, type } = body;
+        
+        // ID 생성
+        const id = crypto.randomUUID();
+        
+        // KV에 저장 (30일 보관)
+        await env.LATINDANCE_KV.put(id, JSON.stringify({ 
+            result, 
+            genre, 
+            type, 
+            createdAt: new Date().toISOString() 
+        }), { expirationTtl: 60 * 60 * 24 * 30 });
+        
+        return new Response(JSON.stringify({ id }), {
+            headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
+        });
+      }
+
+      // 6. 결과 조회 (KV)
+      if (action === "get_result") {
+        if (!env.LATINDANCE_KV) {
+            return new Response(JSON.stringify({ error: "Server Config Error: KV not bound (LATINDANCE_KV)" }), { status: 500, headers: corsHeaders(origin) });
+        }
+        const url = new URL(req.url);
+        const id = url.searchParams.get("id");
+        
+        if (!id) {
+            return new Response(JSON.stringify({ error: "Missing id" }), { status: 400, headers: corsHeaders(origin) });
+        }
+
+        const data = await env.LATINDANCE_KV.get(id);
+        
+        if (!data) {
+            return new Response(JSON.stringify({ error: "Result not found" }), { status: 404, headers: corsHeaders(origin) });
+        }
+        
+        return new Response(data, {
+            headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
+        });
+      }
+
+      throw new Error(`Invalid action: ${action}`);
 
     } catch (err) {
       return new Response(JSON.stringify({ error: err.message }), {
