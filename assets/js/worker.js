@@ -83,6 +83,13 @@ export default {
       });
     }
 
+    // Health check (action 없는 요청은 origin 검사 없이 통과)
+    if (!action) {
+      return new Response(JSON.stringify({ status: "ok", timestamp: new Date().toISOString() }), {
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+
     if (!ALLOWED_ORIGINS.includes(origin)) {
       return new Response(JSON.stringify({ error: "Forbidden origin" }), { status: 403, headers: corsHeaders(origin) });
     }

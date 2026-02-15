@@ -319,70 +319,106 @@ async function runAnalysis() {
             }
             const { uploadUrl } = await initRes.json();
 
-            // 2. Upload
+            // 2. Upload (with retry)
             console.log("Step 2: Upload");
-            setModalStep('step-upload');
-            modalBody.innerHTML = `
-                <div class="progress-status">${ANALYSIS_CONFIG.messages.stepUpload}</div>
-                <div class="progress-text" id="progressPercent" style="font-size: 2.2rem;">0%</div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="progressBar"></div>
-                </div>
-                <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); text-align:center; margin-top: 20px;">
-                    ${ANALYSIS_CONFIG.messages.uploadWarning}
-                    <br><span style="color: #ffcc00; font-size: 0.8rem;">${ANALYSIS_CONFIG.messages.networkWarning}</span>
-                </p>
-            `;
+            const MAX_UPLOAD_RETRIES = 3;
+            const uploadTimeoutMs = Math.min(Math.max(60000, (file.size / (1024 * 1024)) * 10000), 300000);
+            let uploadRes;
+            let currentUploadUrl = uploadUrl;
 
-            const progressBar = modalBody.querySelector('#progressBar');
-            const progressPercent = modalBody.querySelector('#progressPercent');
+            for (let attempt = 1; attempt <= MAX_UPLOAD_RETRIES; attempt++) {
+                setModalStep('step-upload');
+                const retryInfo = attempt > 1 ? `<p style="font-size: 0.85rem; color: #ffcc00; text-align:center; margin-bottom: 8px;">⟳ 재시도 ${attempt}/${MAX_UPLOAD_RETRIES}</p>` : '';
+                modalBody.innerHTML = `
+                    ${retryInfo}
+                    <div class="progress-status">${ANALYSIS_CONFIG.messages.stepUpload}</div>
+                    <div class="progress-text" id="progressPercent" style="font-size: 2.2rem;">0%</div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <p style="font-size: 0.85rem; color: rgba(255,255,255,0.5); text-align:center; margin-top: 20px;">
+                        ${ANALYSIS_CONFIG.messages.uploadWarning}
+                        <br><span style="color: #ffcc00; font-size: 0.8rem;">${ANALYSIS_CONFIG.messages.networkWarning}</span>
+                    </p>
+                `;
 
-            const uploadRes = await new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("POST", `${API_URL}?action=upload`);
-                xhr.setRequestHeader("X-Upload-Url", uploadUrl);
-                xhr.setRequestHeader("Content-Type", file.type);
+                const progressBar = modalBody.querySelector('#progressBar');
+                const progressPercent = modalBody.querySelector('#progressPercent');
 
-                let lastUpdate = 0;
-                let startTime = Date.now();
+                try {
+                    if (attempt > 1) {
+                        console.log(`Upload retry ${attempt}: re-initializing upload URL`);
+                        const retryInitRes = await fetch(`${API_URL}?action=init`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                mimeType: file.type,
+                                numBytes: file.size,
+                                displayName: file.name
+                            })
+                        });
+                        if (!retryInitRes.ok) throw new Error(`Re-init failed (${retryInitRes.status})`);
+                        const retryInitData = await retryInitRes.json();
+                        currentUploadUrl = retryInitData.uploadUrl;
+                    }
 
-                xhr.upload.onprogress = (e) => {
-                    if (e.lengthComputable) {
-                        const now = Date.now();
-                        // Throttle updates to every 100ms
-                        if (now - lastUpdate > 100 || e.loaded === e.total) {
-                            const percent = Math.round((e.loaded / e.total) * 100);
-                            
-                            // Calculate speed
-                            const timeDiff = (now - startTime) / 1000; // seconds
-                            const speed = timeDiff > 0 ? (e.loaded / 1024 / 1024) / timeDiff : 0; // MB/s
-                            
-                            if (progressBar && progressPercent) {
-                                requestAnimationFrame(() => {
-                                    progressBar.style.width = `${percent}%`;
-                                    progressPercent.textContent = `${percent}% (${speed.toFixed(1)} MB/s)`;
-                                });
+                    uploadRes = await new Promise((resolve, reject) => {
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("POST", `${API_URL}?action=upload`);
+                        xhr.setRequestHeader("X-Upload-Url", currentUploadUrl);
+                        xhr.setRequestHeader("Content-Type", file.type);
+                        xhr.timeout = uploadTimeoutMs;
+
+                        let lastUpdate = 0;
+                        let startTime = Date.now();
+
+                        xhr.upload.onprogress = (e) => {
+                            if (e.lengthComputable) {
+                                const now = Date.now();
+                                if (now - lastUpdate > 100 || e.loaded === e.total) {
+                                    const percent = Math.round((e.loaded / e.total) * 100);
+                                    const timeDiff = (now - startTime) / 1000;
+                                    const speed = timeDiff > 0 ? (e.loaded / 1024 / 1024) / timeDiff : 0;
+                                    if (progressBar && progressPercent) {
+                                        requestAnimationFrame(() => {
+                                            progressBar.style.width = `${percent}%`;
+                                            progressPercent.textContent = `${percent}% (${speed.toFixed(1)} MB/s)`;
+                                        });
+                                    }
+                                    lastUpdate = now;
+                                }
                             }
-                            lastUpdate = now;
-                        }
-                    }
-                };
+                        };
 
-                xhr.onload = () => {
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        try {
-                            resolve(JSON.parse(xhr.responseText));
-                        } catch (e) {
-                            reject(new Error("Invalid JSON response from upload"));
-                        }
-                    } else {
-                        reject(new Error(`Upload failed (${xhr.status}): ${xhr.responseText}`));
-                    }
-                };
+                        xhr.onload = () => {
+                            if (xhr.status >= 200 && xhr.status < 300) {
+                                try {
+                                    resolve(JSON.parse(xhr.responseText));
+                                } catch (e) {
+                                    reject(new Error("Invalid JSON response from upload"));
+                                }
+                            } else {
+                                reject(new Error(`Upload failed (${xhr.status}): ${xhr.responseText}`));
+                            }
+                        };
 
-                xhr.onerror = () => reject(new Error("Network error during upload"));
-                xhr.send(file);
-            });
+                        xhr.onerror = () => reject(new Error("Network error during upload"));
+                        xhr.ontimeout = () => reject(new Error("Upload timed out"));
+                        xhr.send(file);
+                    });
+                    break;
+                } catch (uploadErr) {
+                    console.warn(`Upload attempt ${attempt} failed:`, uploadErr.message);
+                    if (attempt === MAX_UPLOAD_RETRIES) {
+                        throw new Error(`업로드 실패 (${MAX_UPLOAD_RETRIES}회 시도)\n네트워크 연결을 확인하고 다시 시도해주세요.\n(${uploadErr.message})`);
+                    }
+                    const waitSec = Math.pow(2, attempt);
+                    if (progressPercent) {
+                        progressPercent.textContent = `${waitSec}초 후 재시도...`;
+                    }
+                    await new Promise(r => setTimeout(r, waitSec * 1000));
+                }
+            }
 
             fileUri = uploadRes.fileUri;
             fileName = uploadRes.fileName;
