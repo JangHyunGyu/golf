@@ -130,11 +130,11 @@
 	<script defer src="assets/js/ga.js?v=1.0.2"></script>
 	<script type="text/javascript" async src="//wcs.pstatic.net/wcslog.js"></script>
 	<script type="text/javascript">
-		if(!wcs_add) var wcs_add = {};
-		wcs_add["wa"] = "15b2f3d525df3e0";
-		if(window.wcs) {
-		wcs_do();
-		}
+		try {
+			if(!wcs_add) var wcs_add = {};
+			wcs_add["wa"] = "15b2f3d525df3e0";
+			if(window.wcs) { wcs_do(); }
+		} catch(e) {}
 	</script>
 
     <link rel="manifest" href="manifest-en.json">
@@ -178,9 +178,12 @@
 	</div>
 	<header class="site-header" role="banner">
 		<div class="site-header__inner">
-			<h1 style="margin:0; display:contents;"><a class="brand" href="index-en.html">
-				AI Golf Swing Analyzer
-			</a></h1>
+			<div class="site-header__left">
+				<a class="home-link" href="https://archerlab.dev" target="_blank" rel="noopener" title="archerlab.dev">🏹</a>
+				<h1 style="margin:0; display:contents;"><a class="brand" href="index-en.html">
+					AI Golf Swing Analyzer
+				</a></h1>
+			</div>
             <nav class="site-nav" aria-label="Language Selection">
                 <a class="site-nav__link" href="index.html">KR</a>
                 <a class="site-nav__link is-active" href="index-en.html">EN</a>

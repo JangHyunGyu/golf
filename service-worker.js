@@ -15,7 +15,3 @@ self.addEventListener("activate", (event) => {
       .then(() => self.clients.claim())
   );
 });
-
-self.addEventListener("fetch", () => {
-  // intentionally left blank: all requests go straight to the network
-});

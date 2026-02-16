@@ -127,11 +127,11 @@
 	<script defer src="assets/js/ga.js"></script>
 	<script type="text/javascript" async src="//wcs.pstatic.net/wcslog.js"></script>
 	<script type="text/javascript">
-		if(!wcs_add) var wcs_add = {};
-		wcs_add["wa"] = "15b2f3d525df3e0";
-		if(window.wcs) {
-		wcs_do();
-		}
+		try {
+			if(!wcs_add) var wcs_add = {};
+			wcs_add["wa"] = "15b2f3d525df3e0";
+			if(window.wcs) { wcs_do(); }
+		} catch(e) {}
 	</script>
 
     <link rel="manifest" href="manifest-jp.json">
@@ -167,11 +167,14 @@
 		</section>
 		<p>検索キーワード: ゴルフスイング分析, AIゴルフ, スイング矯正, ゴルフ姿勢, 無料ゴルフアプリ, ゴルフレッスン, ゴルフ練習, スライス改善</p>
 	</div>
-	<header class="site-header" role="banner">>
+	<header class="site-header" role="banner">
 		<div class="site-header__inner">
-			<h1 style="margin:0; display:contents;"><a class="brand" href="index-jp.html">
-				AIゴルフスイング診断
-			</a></h1>
+			<div class="site-header__left">
+				<a class="home-link" href="https://archerlab.dev" target="_blank" rel="noopener" title="archerlab.dev">🏹</a>
+				<h1 style="margin:0; display:contents;"><a class="brand" href="index-jp.html">
+					AIゴルフスイング診断
+				</a></h1>
+			</div>
             <nav class="site-nav" aria-label="言語選択">
                 <a class="site-nav__link" href="index.html">KR</a>
                 <a class="site-nav__link" href="index-en.html">EN</a>
