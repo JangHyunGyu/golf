@@ -8,12 +8,14 @@ const GATEWAY_BASE = `https://gateway.ai.cloudflare.com/v1/${ACCOUNT_ID}/${GATEW
 const ALLOWED_ORIGINS = [
   "https://latindance.kr",
   "https://golf.archerlab.dev",
+  /*
   "https://archerlab.dev",
   "http://localhost:3000",
   "http://localhost:8000",
   "http://127.0.0.1:5500",
   "http://127.0.0.1:5501",
   "null",
+  */
 ];
 
 // 요청 Origin에 맞는 CORS 헤더를 만들어 반환합니다.
@@ -179,22 +181,64 @@ export default {
         ];
 
         const model = "gemini-3-flash-preview";
-        //const model = "gemini-3-pro-preview";
-        //const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
-        const geminiUrl = `${GATEWAY_BASE}/v1beta/models/${model}:generateContent?key=${env.GEMINI_API_KEY}`;
-    
+        // 요청대로 무료키 경로 없이 유료키 직행
+        const paidKey = env.GEMINI_API_KEY;
+        const geminiPayload = {
+          contents,
+          generationConfig: {
+            temperature: 0.0,
+            topK: 1, // [추가] 후보군을 1개로 강제하여 변수 차단
+          },
+          thinkingConfig: {
+            /*
+            thinkingLevel: "low",
+            */
+            thinkingLevel: "minimal"
+          },
+        };
 
-        const upstream = await fetch(geminiUrl, {
+        const buildUrl = (key) => `${GATEWAY_BASE}/v1beta/models/${model}:generateContent?key=${key}`;
+        const fetchOpts = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents,
-            generationConfig: {
-              temperature: 0.0,
-              topK: 1, // [추가] 후보군을 1개로 강제하여 변수 차단
-            },
-          }),
-        });
+          body: JSON.stringify(geminiPayload),
+        };
+
+        const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504]);
+        const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+        async function requestWithBackoff(url, label) {
+          const maxAttempts = 3;
+
+          for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            try {
+              const res = await fetch(url, fetchOpts);
+
+              if (!RETRYABLE_STATUS.has(res.status) || attempt === maxAttempts - 1) {
+                return res;
+              }
+
+              const waitMs = (2 ** attempt) * 500 + Math.floor(Math.random() * 250);
+              console.warn(`[Worker] ${label} transient status ${res.status}, retrying in ${waitMs}ms (${attempt + 1}/${maxAttempts - 1})`);
+              await sleep(waitMs);
+            } catch (error) {
+              if (attempt === maxAttempts - 1) throw error;
+
+              const waitMs = (2 ** attempt) * 500 + Math.floor(Math.random() * 250);
+              console.warn(`[Worker] ${label} network error, retrying in ${waitMs}ms (${attempt + 1}/${maxAttempts - 1})`);
+              await sleep(waitMs);
+            }
+          }
+
+          throw new Error("Unreachable retry state");
+        }
+
+        let upstream;
+        try {
+          upstream = await requestWithBackoff(buildUrl(paidKey), `paid:${model}`);
+        } catch (error) {
+          throw new Error(`Gemini API Network Error: ${error?.message || String(error)}`);
+        }
 
         if (!upstream.ok) {
           const errText = await upstream.text();
