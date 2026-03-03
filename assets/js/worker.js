@@ -119,14 +119,24 @@ export default {
         if (!uploadUrl) throw new Error("Missing X-Upload-Url header");
 
         const contentLength = req.headers.get("Content-Length");
+        const contentType = req.headers.get("Content-Type");
+
+        const uploadHeaders = {
+          "X-Goog-Upload-Offset": "0",
+          "X-Goog-Upload-Command": "upload, finalize",
+        };
+
+        if (contentLength) {
+          uploadHeaders["Content-Length"] = contentLength;
+        }
+
+        if (contentType) {
+          uploadHeaders["Content-Type"] = contentType;
+        }
 
         const googleResponse = await fetch(uploadUrl, {
           method: "POST",
-          headers: {
-            "Content-Length": contentLength,
-            "X-Goog-Upload-Offset": "0",
-            "X-Goog-Upload-Command": "upload, finalize",
-          },
+          headers: uploadHeaders,
           body: req.body,
         });
 
@@ -188,12 +198,12 @@ export default {
           generationConfig: {
             temperature: 0.0,
             topK: 1, // [추가] 후보군을 1개로 강제하여 변수 차단
-          },
-          thinkingConfig: {
-            /*
-            thinkingLevel: "low",
-            */
-            thinkingLevel: "minimal"
+            thinkingConfig: {
+              /*
+              thinkingLevel: "low",
+              */
+              thinkingLevel: "minimal"
+            },
           },
         };
 
