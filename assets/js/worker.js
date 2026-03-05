@@ -196,6 +196,7 @@ export default {
         const geminiPayload = {
           contents,
           generationConfig: {
+            responseMimeType: "application/json",
             temperature: 0.0,
             topK: 1, // [추가] 후보군을 1개로 강제하여 변수 차단
             thinkingConfig: {
