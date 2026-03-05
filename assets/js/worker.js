@@ -96,8 +96,8 @@ export default {
       return new Response(JSON.stringify({ error: "Forbidden origin" }), { status: 403, headers: corsHeaders(origin) });
     }
 
-    if (!env?.GEMINI_API_KEY_FREE) {
-      return new Response(JSON.stringify({ error: "Server Config Error: Missing GEMINI_API_KEY_FREE" }), { status: 500, headers: corsHeaders(origin) });
+    if (!env?.GEMINI_API_KEY_FREE && !env?.GEMINI_API_KEY) {
+      return new Response(JSON.stringify({ error: "Server Config Error: Missing Gemini API Key" }), { status: 500, headers: corsHeaders(origin) });
     }
 
     try {
@@ -191,8 +191,8 @@ export default {
         ];
 
         const model = "gemini-3.1-flash-lite-preview";
-        // 요청대로 무료키 경로 없이 유료키 직행
-        const paidKey = env.GEMINI_API_KEY_FREE;
+        const freeKey = env.GEMINI_API_KEY_FREE;
+        const paidKey = env.GEMINI_API_KEY;
         const geminiPayload = {
           contents,
           generationConfig: {
@@ -245,15 +245,29 @@ export default {
         }
 
         let upstream;
-        try {
-          upstream = await requestWithBackoff(buildUrl(paidKey), `paid:${model}`);
-        } catch (error) {
-          throw new Error(`Gemini API Network Error: ${error?.message || String(error)}`);
+
+        // FREE 키로 먼저 시도
+        if (freeKey) {
+          try {
+            upstream = await requestWithBackoff(buildUrl(freeKey), `free:${model}`);
+            if (!upstream.ok) upstream = null;
+          } catch {
+            upstream = null;
+          }
         }
 
-        if (!upstream.ok) {
-          const errText = await upstream.text();
-          throw new Error(`Gemini API Error (${upstream.status}): ${errText}`);
+        // FREE 키 실패 시 유료 키로 재시도
+        if (!upstream && paidKey) {
+          try {
+            upstream = await requestWithBackoff(buildUrl(paidKey), `paid:${model}`);
+          } catch (error) {
+            throw new Error(`Gemini API Network Error: ${error?.message || String(error)}`);
+          }
+        }
+
+        if (!upstream || !upstream.ok) {
+          const errText = upstream ? await upstream.text() : "No API key available";
+          throw new Error(`Gemini API Error${upstream ? ` (${upstream.status})` : ""}: ${errText}`);
         }
 
         const data = await upstream.json();
