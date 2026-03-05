@@ -96,7 +96,7 @@ export default {
       return new Response(JSON.stringify({ error: "Forbidden origin" }), { status: 403, headers: corsHeaders(origin) });
     }
 
-    if (!env?.GEMINI_API_KEY_FREE && !env?.GEMINI_API_KEY) {
+    if (!env?.GOLF_GEMINI_API_KEY_FREE && !env?.LATIN_GEMINI_API_KEY_FREE && !env?.GEMINI_API_KEY) {
       return new Response(JSON.stringify({ error: "Server Config Error: Missing Gemini API Key" }), { status: 500, headers: corsHeaders(origin) });
     }
 
@@ -106,7 +106,8 @@ export default {
         const body = await req.json();
         const { mimeType, numBytes, displayName } = body;
         
-        const uploadUrl = await initiateUpload(env.GEMINI_API_KEY_FREE, mimeType, numBytes, displayName);
+        const primaryKey = [env.GOLF_GEMINI_API_KEY_FREE, env.LATIN_GEMINI_API_KEY_FREE, env.GEMINI_API_KEY].filter(Boolean)[0];
+        const uploadUrl = await initiateUpload(primaryKey, mimeType, numBytes, displayName);
         
         return new Response(JSON.stringify({ uploadUrl }), {
           headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
@@ -160,8 +161,9 @@ export default {
         const body = await req.json();
         const { fileName } = body; // e.g. "files/abc..."
 
-        //const checkUrl = `https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${env.GEMINI_API_KEY_FREE}`;
-        const checkUrl = `${GATEWAY_BASE}/v1beta/${fileName}?key=${env.GEMINI_API_KEY_FREE}`;
+        const statusKey = [env.GOLF_GEMINI_API_KEY_FREE, env.LATIN_GEMINI_API_KEY_FREE, env.GEMINI_API_KEY].filter(Boolean)[0];
+        //const checkUrl = `https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${statusKey}`;
+        const checkUrl = `${GATEWAY_BASE}/v1beta/${fileName}?key=${statusKey}`;
         const checkRes = await fetch(checkUrl);
         
         if (!checkRes.ok) {
@@ -191,8 +193,7 @@ export default {
         ];
 
         const model = "gemini-3.1-flash-lite-preview";
-        const freeKey = env.GEMINI_API_KEY_FREE;
-        const paidKey = env.GEMINI_API_KEY;
+        const apiKeys = [env.GOLF_GEMINI_API_KEY_FREE, env.LATIN_GEMINI_API_KEY_FREE, env.GEMINI_API_KEY].filter(Boolean);
         const geminiPayload = {
           contents,
           generationConfig: {
@@ -246,22 +247,16 @@ export default {
 
         let upstream;
 
-        // FREE 키로 먼저 시도
-        if (freeKey) {
+        for (let i = 0; i < apiKeys.length; i++) {
+          const key = apiKeys[i];
+          const isLast = i === apiKeys.length - 1;
           try {
-            upstream = await requestWithBackoff(buildUrl(freeKey), `free:${model}`);
-            if (!upstream.ok) upstream = null;
-          } catch {
+            upstream = await requestWithBackoff(buildUrl(key), `key${i + 1}:${model}`);
+            if (upstream.ok || isLast) break;
             upstream = null;
-          }
-        }
-
-        // FREE 키 실패 시 유료 키로 재시도
-        if (!upstream && paidKey) {
-          try {
-            upstream = await requestWithBackoff(buildUrl(paidKey), `paid:${model}`);
           } catch (error) {
-            throw new Error(`Gemini API Network Error: ${error?.message || String(error)}`);
+            if (isLast) throw new Error(`Gemini API Network Error: ${error?.message || String(error)}`);
+            upstream = null;
           }
         }
 
