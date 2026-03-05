@@ -96,8 +96,8 @@ export default {
       return new Response(JSON.stringify({ error: "Forbidden origin" }), { status: 403, headers: corsHeaders(origin) });
     }
 
-    if (!env?.GEMINI_API_KEY) {
-      return new Response(JSON.stringify({ error: "Server Config Error: Missing GEMINI_API_KEY" }), { status: 500, headers: corsHeaders(origin) });
+    if (!env?.GEMINI_API_KEY_FREE) {
+      return new Response(JSON.stringify({ error: "Server Config Error: Missing GEMINI_API_KEY_FREE" }), { status: 500, headers: corsHeaders(origin) });
     }
 
     try {
@@ -106,7 +106,7 @@ export default {
         const body = await req.json();
         const { mimeType, numBytes, displayName } = body;
         
-        const uploadUrl = await initiateUpload(env.GEMINI_API_KEY, mimeType, numBytes, displayName);
+        const uploadUrl = await initiateUpload(env.GEMINI_API_KEY_FREE, mimeType, numBytes, displayName);
         
         return new Response(JSON.stringify({ uploadUrl }), {
           headers: { ...corsHeaders(origin), "Content-Type": "application/json" }
@@ -160,8 +160,8 @@ export default {
         const body = await req.json();
         const { fileName } = body; // e.g. "files/abc..."
 
-        //const checkUrl = `https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${env.GEMINI_API_KEY}`;
-        const checkUrl = `${GATEWAY_BASE}/v1beta/${fileName}?key=${env.GEMINI_API_KEY}`;
+        //const checkUrl = `https://generativelanguage.googleapis.com/v1beta/${fileName}?key=${env.GEMINI_API_KEY_FREE}`;
+        const checkUrl = `${GATEWAY_BASE}/v1beta/${fileName}?key=${env.GEMINI_API_KEY_FREE}`;
         const checkRes = await fetch(checkUrl);
         
         if (!checkRes.ok) {
@@ -190,9 +190,9 @@ export default {
           }
         ];
 
-        const model = "gemini-3-flash-preview";
+        const model = "gemini-3.1-flash-lite-preview";
         // 요청대로 무료키 경로 없이 유료키 직행
-        const paidKey = env.GEMINI_API_KEY;
+        const paidKey = env.GEMINI_API_KEY_FREE;
         const geminiPayload = {
           contents,
           generationConfig: {
