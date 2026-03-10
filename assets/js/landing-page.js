@@ -19,7 +19,8 @@ const detectBrowserLanguage = () => {
     const browserLang = detectBrowserLanguage();
 
     // 검색 봇 감지 (SEO 문제 방지)
-    const isBot = /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+    if (/bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i.test(navigator.userAgent)) return;
+    const isBot = /bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i.test(navigator.userAgent);
     
     // 내부 이동 감지 (사이트 내에서 링크 클릭으로 이동한 경우 리다이렉트 방지)
     const referrer = document.referrer;
@@ -28,21 +29,21 @@ const detectBrowserLanguage = () => {
     // 봇이 아니고, 내부 이동이 아닐 때만(외부 유입/첫 진입) 브라우저 언어에 따라 리다이렉션합니다.
     if (browserLang && !isBot && !isInternal) {
         const currentPath = window.location.pathname;
-        const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1) || "index.html";
-        
-        // 현재 파일명에서 기본 이름 추출 (예: analysis-en.html -> analysis)
-        let baseName = currentFile.replace(/-en\.html$|-es\.html$|\.html$/, "");
+        const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1) || "";
+
+        // 현재 파일명에서 기본 이름 추출 (예: analysis-en -> analysis)
+        let baseName = currentFile.replace(/-en(\.html)?$|-jp(\.html)?$|(\.html)$/, "");
         if (!baseName || baseName === "index") baseName = "index";
 
         let targetFile = null;
-        
+
         // 브라우저 언어와 현재 페이지 언어가 다를 경우 타겟 파일 설정
         if (browserLang === "ko" && !docLang.startsWith("ko")) {
-            targetFile = baseName + ".html";
+            targetFile = baseName === "index" ? "/" : baseName;
         } else if (browserLang === "ja" && !docLang.startsWith("ja")) {
-            targetFile = baseName + "-jp.html";
+            targetFile = baseName + "-jp";
         } else if (browserLang === "en" && !docLang.startsWith("en")) {
-            targetFile = baseName + "-en.html";
+            targetFile = baseName + "-en";
         }
 
         // 타겟 파일이 존재하고 현재 파일과 다를 경우 이동
