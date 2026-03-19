@@ -1,0 +1,22 @@
+# Golf Swing Master - AI Golf Swing Analyzer
+> 100% free AI golf swing analysis — upload a video and get pro-level coaching, no app install needed.
+
+## About
+Golf Swing Master is a free AI-powered golf swing analysis tool. Simply upload your swing video in the browser and receive detailed coaching feedback. No app download required.
+
+## Features
+- AI-powered swing analysis from video
+- Driver slice correction tips
+- Distance improvement coaching
+- 100% browser-based — no app installation
+- Completely free
+
+## Links
+- Analyze now: https://golf.archerlab.dev
+- Developer: https://archerlab.dev
+
+## Language
+- Korean (한국어)
+
+## Category
+Golf, AI Sports Analysis, Swing Coaching, Free Golf Tool
