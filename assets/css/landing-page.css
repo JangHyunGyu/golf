@@ -72,17 +72,22 @@ body {
     gap: 12px;
 }
 .home-link {
-    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 4px 10px;
+    border-radius: 15px;
     text-decoration: none;
-    padding: 2px 4px;
-    border-radius: 6px;
+    font-size: 1rem;
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     transition: all 0.2s;
     line-height: 1;
-    filter: grayscale(0.5);
+    display: flex;
+    align-items: center;
 }
 .home-link:hover {
-    filter: grayscale(0);
-    transform: scale(1.15);
+    background: rgba(0, 0, 0, 0.6);
 }
 #main {
     flex: 1;
