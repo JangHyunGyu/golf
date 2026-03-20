@@ -94,6 +94,12 @@ body {
 .home-link:hover {
     background: rgba(0, 0, 0, 0.6);
 }
+@media (max-width: 768px) {
+    .home-link {
+        font-size: 0.78rem;
+        padding: 6px 14px;
+    }
+}
 #main {
     flex: 1;
     display: flex;
