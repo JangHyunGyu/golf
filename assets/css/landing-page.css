@@ -72,6 +72,10 @@ body {
     gap: 12px;
 }
 .home-link {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
     background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
