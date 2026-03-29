@@ -1306,36 +1306,6 @@ const initFooterDates = () => {
 
 initFooterDates();
 
-const cleanupServiceWorkers = () => {
-  if (!("serviceWorker" in navigator)) {
-    return;
-  }
-
-  if (window.location.protocol === "file:") {
-    return;
-  }
-
-  const unregisterAll = () => {
-    navigator.serviceWorker
-      .getRegistrations()
-      .then((registrations) => {
-        registrations.forEach((registration) => {
-          registration.unregister();
-        });
-      })
-      .catch(() => {
-        /* noop */
-      });
-  };
-
-  if (document.readyState === "complete") {
-    unregisterAll();
-  } else {
-    window.addEventListener("load", unregisterAll);
-  }
-};
-
-cleanupServiceWorkers();
 
 // ============================================================================
 // 【글로벌 에러 핸들러】 프론트엔드 에러를 D1에 기록
