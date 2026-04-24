@@ -204,3 +204,70 @@ body.is-mobile::after {
     z-index: -1;
     pointer-events: none;
 }
+
+/* Golf directory polish */
+body::before {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background:
+        linear-gradient(180deg, rgba(143, 181, 200, 0.14), transparent 46%),
+        linear-gradient(135deg, rgba(196, 161, 95, 0.12), transparent 38%),
+        repeating-linear-gradient(90deg, rgba(247, 243, 231, 0.026) 0 1px, transparent 1px 96px);
+}
+
+.venue-card {
+    border-color: rgba(247, 243, 231, 0.16);
+    transform-style: flat;
+    will-change: auto;
+    overflow: hidden;
+}
+
+.venue-card::before {
+    background: linear-gradient(90deg, rgba(33, 73, 50, 0.65), rgba(196, 161, 95, 0.46), rgba(143, 181, 200, 0.36));
+    opacity: 0.36;
+}
+
+.venue-card:hover::before {
+    opacity: 0.62;
+}
+
+.venue-card:hover {
+    box-shadow: 0 28px 78px rgba(0, 0, 0, 0.32);
+    border-color: rgba(196, 161, 95, 0.34);
+}
+
+.site-header .brand {
+    padding: 0;
+}
+
+.site-header .brand::before {
+    display: none;
+}
+
+.venue-card__media {
+    overflow: hidden !important;
+}
+
+.venue-card__media::before {
+    display: none;
+}
+
+.venue-card__media::after {
+    border-color: rgba(247, 243, 231, 0.14);
+}
+
+.venue-card:hover .venue-card__media::after {
+    border-color: rgba(196, 161, 95, 0.36);
+}
+
+body.is-mobile .venue-card {
+    border-color: rgba(247, 243, 231, 0.16);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.26);
+}
+
+body.is-mobile .venue-card__media::before,
+body.is-mobile::after {
+    display: none;
+}

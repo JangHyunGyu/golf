@@ -86,3 +86,26 @@
     0%, 100% { transform: scaleY(0.3); opacity: 0.5; }
     50% { transform: scaleY(1.0); opacity: 1; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); }
 }
+
+/* Refined loader colors */
+.loader-orbit {
+    border-top-color: #c4a15f;
+    filter: none;
+}
+
+.loader-orbit::before {
+    border-top-color: #214932;
+}
+
+.loader-orbit::after {
+    border-top-color: #8fb5c8;
+}
+
+.loader-wave div {
+    background: linear-gradient(to top, #214932, #c4a15f);
+}
+
+@keyframes wave {
+    0%, 100% { transform: scaleY(0.35); opacity: 0.55; }
+    50% { transform: scaleY(1); opacity: 1; box-shadow: none; }
+}
