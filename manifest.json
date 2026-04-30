@@ -10,12 +10,12 @@
   "description": "골프 스윙 분석 및 코칭 서비스를 제공하는 골프 스윙 마스터입니다.",
   "icons": [
     {
-      "src": "assets/images/kakao_golf.png",
+      "src": "assets/images/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/images/kakao_golf.png",
+      "src": "assets/images/favicon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }

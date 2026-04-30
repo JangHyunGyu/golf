@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Golf Swing Master favicon">
+  <defs>
+    <linearGradient id="bg" x1="58" y1="42" x2="452" y2="470" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e7fbff"/>
+      <stop offset="0.45" stop-color="#4ab3c8"/>
+      <stop offset="1" stop-color="#0c4b32"/>
+    </linearGradient>
+    <linearGradient id="green" x1="96" y1="270" x2="422" y2="444" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8ddf7a"/>
+      <stop offset="1" stop-color="#167045"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#063322" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="104" fill="url(#bg)"/>
+  <path d="M62 360c88-80 209-98 388-62v154H62Z" fill="url(#green)"/>
+  <path d="M103 397c100-44 204-48 316-16" fill="none" stroke="#e6ffe3" stroke-width="8" opacity="0.34"/>
+  <g filter="url(#shadow)">
+    <circle cx="246" cy="272" r="70" fill="#f8fff8"/>
+    <path d="M216 246h60M210 270h78M218 294h58" stroke="#cfe2d1" stroke-width="6" stroke-linecap="round"/>
+    <path d="M309 142c-60 10-108 48-128 102" fill="none" stroke="#ffffff" stroke-width="18" stroke-linecap="round"/>
+    <path d="M302 118l48 32-54 20Z" fill="#ffffff"/>
+    <path d="M294 318l76 76" stroke="#f7fbff" stroke-width="20" stroke-linecap="round"/>
+    <path d="M360 382l38 38" stroke="#d3dde0" stroke-width="28" stroke-linecap="round"/>
+  </g>
+</svg>
