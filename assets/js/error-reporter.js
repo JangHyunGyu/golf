@@ -8,6 +8,11 @@
   var lastError = "";
   var errorCount = 0;
 
+  function isIgnoredResourceError(source) {
+    var src = String(source || "");
+    return /googletagmanager\.com|google-analytics\.com|gtag\/js|wcs\.pstatic\.net\/wcslog\.js/i.test(src);
+  }
+
   function send(message, stack, source, type) {
     if (!message) return;
     var key = message + "|" + (source || "");
@@ -48,10 +53,12 @@
   window.addEventListener("error", function (event) {
     var target = event && event.target;
     if (target && target !== window && target !== document) {
+      var resourceSource = target.currentSrc || target.src || target.href || "";
+      if (isIgnoredResourceError(resourceSource)) return;
       send(
         "Resource load failed: " + (target.tagName || target.nodeName || "unknown"),
         "",
-        target.currentSrc || target.src || target.href || "",
+        resourceSource,
         "resource_error"
       );
       return;
