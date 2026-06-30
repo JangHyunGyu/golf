@@ -11,6 +11,7 @@ export default defineConfig({
         { src: 'assets/js/**/*', dest: 'assets/js' },
         { src: 'assets/css/**/*', dest: 'assets/css' },
         { src: 'assets/images/**/*', dest: 'assets/images' },
+        { src: 'assets/vendor/**/*', dest: 'assets/vendor' },
         { src: 'service-worker.js', dest: '.' },
         { src: 'manifest*.json', dest: '.' },
         { src: 'version.json', dest: '.' },

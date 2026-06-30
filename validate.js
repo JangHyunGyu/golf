@@ -75,6 +75,29 @@ if (fileExistsAt('service-worker.js')) {
 }
 
 // ============================================================
+// 2b. Build copies vendor assets referenced by HTML
+// ============================================================
+console.log('\n[2b] Build copies vendor assets referenced by HTML');
+
+if (fileExistsAt('assets/vendor/pretendard/pretendard.css')) {
+    pass('Pretendard CSS source exists');
+} else {
+    fail('Pretendard CSS source is MISSING');
+}
+
+if (fileExistsAt('assets/vendor/pretendard/PretendardVariable.woff2')) {
+    pass('Pretendard font source exists');
+} else {
+    fail('Pretendard font source is MISSING');
+}
+
+if (fileExistsAt('vite.config.js') && /assets\/vendor\/\*\*\//.test(readFile('vite.config.js').replace(/\\/g, '/'))) {
+    pass('vite build copies assets/vendor');
+} else {
+    fail('vite build does not copy assets/vendor');
+}
+
+// ============================================================
 // 3 & 5. HTML script/CSS references match actual files
 // ============================================================
 console.log('\n[3] HTML script/CSS/asset references resolve to actual files');
