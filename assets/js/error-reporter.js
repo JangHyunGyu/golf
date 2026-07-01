@@ -13,6 +13,17 @@
     return /googletagmanager\.com|google-analytics\.com|gtag\/js|wcs\.pstatic\.net\/wcslog\.js/i.test(src);
   }
 
+  function shouldProbeLocalResource(source) {
+    try {
+      if (!source) return false;
+      var url = new URL(source, location.href);
+      if (url.origin !== location.origin) return false;
+      return /\.(?:css|js|mjs|png|jpe?g|webp|avif|gif|svg|ico|woff2?|ttf|otf)(?:$|\?)/i.test(url.pathname + url.search);
+    } catch (_) {
+      return false;
+    }
+  }
+
   function send(message, stack, source, type) {
     if (!message) return;
     var key = message + "|" + (source || "");
@@ -55,12 +66,19 @@
     if (target && target !== window && target !== document) {
       var resourceSource = target.currentSrc || target.src || target.href || "";
       if (isIgnoredResourceError(resourceSource)) return;
-      send(
-        "Resource load failed: " + (target.tagName || target.nodeName || "unknown"),
-        "",
-        resourceSource,
-        "resource_error"
-      );
+      var message = "Resource load failed: " + (target.tagName || target.nodeName || "unknown");
+      if (shouldProbeLocalResource(resourceSource) && typeof fetch === "function") {
+        fetch(resourceSource, { method: "HEAD", cache: "no-store" })
+          .then(function (response) {
+            if (response && response.ok) return;
+            send(message, "", resourceSource, "resource_error");
+          })
+          .catch(function () {
+            send(message, "", resourceSource, "resource_error");
+          });
+        return;
+      }
+      send(message, "", resourceSource, "resource_error");
       return;
     }
     send(event.message, event.error && event.error.stack, (event.filename || "") + ":" + (event.lineno || 0) + ":" + (event.colno || 0), "error");
