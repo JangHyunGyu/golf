@@ -1,7 +1,9 @@
-// golf SEO 생성기 — 3 lang × 3 = 9 pages
+// golf SEO 생성기 — KO/EN/JA SEO landing pages
 const fs = require('fs'); const path = require('path');
-const SITE = 'https://golf.archerlab.dev'; const OUT = __dirname;
+const SITE = 'https://golf.archerlab.dev'; const OUT = __dirname; const LASTMOD = '2026-07-07';
 const HOME = { ko: '/', en: '/index-en', jp: '/index-jp' };
+const pageUrl = slug => `${SITE}/seo/${slug}`;
+const pagePath = slug => `/seo/${slug}`;
 
 const C = {
   ko: {
@@ -87,6 +89,7 @@ const PAGES = {
     { slug:'fix-driver-slice', h1:'Fix Your Driver Slice — From Root Cause to Drills', title:'Fix Driver Slice | AI Diagnosis + Drills 2026', meta:'A slice almost always comes from setup, swing path, or face control. The AI tells you which one from your video and gives you targeted drills.', intro:'You can watch 100 "fix your slice" videos and still slice. The reason: you don\'t know which root cause is yours. AI swing analysis pinpoints it in under a minute.' }
   ],
   jp: [
+    { slug:'golf-swing-shindan-muryo', h1:'ゴルフ スイング診断 無料 — 動画だけでAI解析', title:'ゴルフ スイング診断 無料 | AIスイング解析 2026', meta:'ゴルフ スイング診断を無料で。動画をアップロードするだけでAIがスイングを分析・解析し、スライス改善や飛距離アップのヒントを返します。', intro:'「ゴルフ スイング診断」「スイング 診断」「ゴルフ 無料診断」で探している人向けの無料AI診断です。アプリを入れず、ブラウザで動画をアップロードするだけでスイングの傾向を確認できます。' },
     { slug:'golf-swing-app-muryo', h1:'ゴルフ スイング 分析 アプリ 無料 — 動画だけでOK', title:'ゴルフ スイング 分析 アプリ 無料 | インストール不要 2026', meta:'アプリ不要・会員登録不要・課金なしで使えるゴルフスイング解析。動画をアップするだけでAIが姿勢・テンポ・インパクトを診断。', intro:'「ゴルフ スイング 分析 アプリ 無料」と検索すると、結局はアプリのインストールや会員登録、有料課金にたどり着きがち。ここは違います — ブラウザに動画をアップするだけです。' },
     { slug:'golf-dokugaku', h1:'ゴルフ 独学 — AI解析で一人でも上達できる', title:'ゴルフ 独学 ガイド | AIスイング解析で一人で上達 2026', meta:'レッスン費なしで始めるゴルフ独学ルート。動画撮影→AI解析→ドリル反復で1ヶ月でフォームを整える。', intro:'ゴルフ独学の最大の落とし穴は「自分が正しく出来ているかわからない」こと。AIスイング解析はそのフィードバックループを1分に短縮します。' },
     { slug:'driver-slice-naoshikata', h1:'ドライバー スライス 直し方 — 原因からドリルまで', title:'ドライバー スライス 直し方 | AIが原因を診断 2026', meta:'ドライバースライスの本当の原因はセットアップ・スイングパス・フェース制御の3つのいずれか。AIが動画から特定し、ドリルも提案。', intro:'「ドライバー スライス 直し方」の動画を100本見ても直らない理由は、自分のスイングの本当の原因がどれか分からないから。AIなら1分で特定できます。' }
@@ -98,9 +101,9 @@ const CSS = `*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smo
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function render(lang, page) {
-  const c = C[lang]; const url = `${SITE}/seo/${page.slug}.html`; const home = HOME[lang];
-  const altLinks = Object.keys(PAGES).map(L => `<link rel="alternate" hreflang="${L==='jp'?'ja':L}" href="${SITE}/seo/${PAGES[L][0].slug}.html">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${SITE}/seo/${PAGES.en[0].slug}.html">`;
-  const otherLangs = Object.keys(PAGES).filter(L=>L!==lang).map(L=>`<a href="/seo/${PAGES[L][0].slug}.html" hreflang="${L==='jp'?'ja':L}">${(L==='jp'?'JA':L.toUpperCase())}</a>`).join(' · ');
+  const c = C[lang]; const url = pageUrl(page.slug); const home = HOME[lang];
+  const altLinks = Object.keys(PAGES).map(L => `<link rel="alternate" hreflang="${L==='jp'?'ja':L}" href="${pageUrl(PAGES[L][0].slug)}">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${pageUrl(PAGES.en[0].slug)}">`;
+  const otherLangs = Object.keys(PAGES).filter(L=>L!==lang).map(L=>`<a href="${pagePath(PAGES[L][0].slug)}" hreflang="${L==='jp'?'ja':L}">${(L==='jp'?'JA':L.toUpperCase())}</a>`).join(' · ');
   const faqLd = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":c.faqs.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))};
   return `<!DOCTYPE html>
 <html lang="${c.htmlLang}">
@@ -149,9 +152,9 @@ const frag = all.map(u => {
   const isFirst = firstSlugs[u.lang] === u.slug;
   let alts = '';
   if (isFirst) {
-    alts = '\n' + Object.keys(PAGES).map(L => `    <xhtml:link rel="alternate" hreflang="${L==='jp'?'ja':L}" href="${SITE}/seo/${firstSlugs[L]}.html"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${SITE}/seo/${firstSlugs.en}.html"/>`;
+    alts = '\n' + Object.keys(PAGES).map(L => `    <xhtml:link rel="alternate" hreflang="${L==='jp'?'ja':L}" href="${pageUrl(firstSlugs[L])}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${pageUrl(firstSlugs.en)}"/>`;
   }
-  return `  <url><loc>${SITE}/seo/${u.slug}.html</loc>${alts}\n    <changefreq>monthly</changefreq><priority>0.7</priority></url>`;
+  return `  <url><loc>${pageUrl(u.slug)}</loc>\n    <lastmod>${LASTMOD}</lastmod>${alts}\n    <changefreq>monthly</changefreq><priority>${u.slug === 'golf-swing-shindan-muryo' ? '0.75' : '0.7'}</priority></url>`;
 }).join('\n');
 fs.writeFileSync(path.join(OUT, '_sitemap_fragment.xml'), frag, 'utf8');
 console.log(`✓ sitemap fragment written`);
