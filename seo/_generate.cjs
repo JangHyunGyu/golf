@@ -1,6 +1,6 @@
 // golf SEO 생성기 — KO/EN/JA SEO landing pages
 const fs = require('fs'); const path = require('path');
-const SITE = 'https://golf.archerlab.dev'; const OUT = __dirname; const LASTMOD = '2026-07-07';
+const SITE = 'https://golf.archerlab.dev'; const OUT = __dirname; const LASTMOD = '2026-07-10';
 const HOME = { ko: '/', en: '/index-en', jp: '/index-jp' };
 const pageUrl = slug => `${SITE}/seo/${slug}`;
 const pagePath = slug => `/seo/${slug}`;
@@ -79,37 +79,45 @@ const C = {
 
 const PAGES = {
   ko: [
-    { slug:'golf-swing-bunseok-muryo', h1:'골프 스윙 분석 무료 — 영상만 올리면 AI가 진단', title:'골프 스윙 분석 무료 | 앱 설치 없이 AI 코칭 2026', meta:'결제·앱 없이 영상만 올리면 AI가 자세·템포·임팩트를 분석. 드라이버·아이언 모두 지원하는 100% 무료 골프 스윙 분석.', intro:'"골프 스윙 분석 무료"를 검색하면 대부분 앱 설치·회원가입·유료 결제로 이어집니다. 여기는 다릅니다 — 브라우저에서 영상만 올리면 AI가 즉시 진단합니다.' },
-    { slug:'golf-dokak', h1:'골프 독학 — AI 코칭으로 혼자 시작하기', title:'골프 독학 가이드 | AI 스윙 분석으로 혼자 배우기 2026', meta:'레슨비 없이 시작하는 골프 독학 루트. 영상 촬영 → AI 분석 → 드릴 반복으로 입문 1개월 만에 자세 잡기.', intro:'골프 독학의 가장 큰 함정은 "내가 잘하고 있는지 알 수 없다"는 점입니다. AI 스윙 분석은 그 피드백 루프를 1분으로 줄여줍니다.' },
-    { slug:'driver-slice-gyojung', h1:'드라이버 슬라이스 교정 — 원인부터 드릴까지', title:'드라이버 슬라이스 교정 | AI가 진단해주는 원인과 드릴', meta:'드라이버 슬라이스의 진짜 원인은 셋업·스윙 패스·페이스 컨트롤 셋 중 하나. AI가 영상에서 어느 쪽인지 짚어주고 드릴까지 안내합니다.', intro:'"드라이버 슬라이스 교정"으로 영상 100개를 봐도 잘 안 고쳐지는 이유는, 내 스윙의 진짜 원인이 어디인지 모르기 때문입니다. AI가 그걸 1분 만에 짚어줍니다.' }
+    { group:'analysis', slug:'golf-swing-bunseok-muryo', h1:'골프 스윙 분석 무료 — 영상만 올리면 AI가 진단', title:'골프 스윙 분석 무료 | 앱 설치 없이 AI 코칭 2026', meta:'결제·앱 없이 영상만 올리면 AI가 자세·템포·임팩트를 분석. 드라이버·아이언 모두 지원하는 100% 무료 골프 스윙 분석.', intro:'"골프 스윙 분석 무료"를 검색하면 대부분 앱 설치·회원가입·유료 결제로 이어집니다. 여기는 다릅니다 — 브라우저에서 영상만 올리면 AI가 즉시 진단합니다.' },
+    { group:'self-study', slug:'golf-dokak', h1:'골프 독학 — AI 코칭으로 혼자 시작하기', title:'골프 독학 가이드 | AI 스윙 분석으로 혼자 배우기 2026', meta:'레슨비 없이 시작하는 골프 독학 루트. 영상 촬영 → AI 분석 → 드릴 반복으로 입문 1개월 만에 자세 잡기.', intro:'골프 독학의 가장 큰 함정은 "내가 잘하고 있는지 알 수 없다"는 점입니다. AI 스윙 분석은 그 피드백 루프를 1분으로 줄여줍니다.' },
+    { group:'slice', slug:'driver-slice-gyojung', h1:'드라이버 슬라이스 교정 — 원인부터 드릴까지', title:'드라이버 슬라이스 교정 | AI가 진단해주는 원인과 드릴', meta:'드라이버 슬라이스의 진짜 원인은 셋업·스윙 패스·페이스 컨트롤 셋 중 하나. AI가 영상에서 어느 쪽인지 짚어주고 드릴까지 안내합니다.', intro:'"드라이버 슬라이스 교정"으로 영상 100개를 봐도 잘 안 고쳐지는 이유는, 내 스윙의 진짜 원인이 어디인지 모르기 때문입니다. AI가 그걸 1분 만에 짚어줍니다.' }
   ],
   en: [
-    { slug:'free-golf-swing-analysis', h1:'Free Golf Swing Analysis — Upload a Video, Done', title:'Free Golf Swing Analysis | AI Coaching, No App 2026', meta:'Upload a swing video and let AI analyze posture, tempo, and impact. Works for driver and iron. 100% free, no app, no signup.', intro:'"Free golf swing analysis" usually means an app install, a signup, and a "premium" upsell. Not here — just upload a clip in your browser and the AI diagnoses your swing in under a minute.' },
-    { slug:'golf-swing-analyzer-online', h1:'Golf Swing Analyzer Online — In-Browser, Instant', title:'Golf Swing Analyzer Online | Instant AI Feedback 2026', meta:'A free online golf swing analyzer that runs in the browser. Frame-by-frame AI breakdown of posture, tempo, and impact.', intro:'Most "online golf swing analyzer" results are gated landing pages. This one actually runs in your browser, takes a video in any common format, and returns a detailed AI breakdown.' },
-    { slug:'fix-driver-slice', h1:'Fix Your Driver Slice — From Root Cause to Drills', title:'Fix Driver Slice | AI Diagnosis + Drills 2026', meta:'A slice almost always comes from setup, swing path, or face control. The AI tells you which one from your video and gives you targeted drills.', intro:'You can watch 100 "fix your slice" videos and still slice. The reason: you don\'t know which root cause is yours. AI swing analysis pinpoints it in under a minute.' }
+    { group:'analysis', slug:'free-golf-swing-analysis', h1:'Free Golf Swing Analysis — Upload a Video, Done', title:'Free Golf Swing Analysis | AI Coaching, No App 2026', meta:'Upload a swing video and let AI analyze posture, tempo, and impact. Works for driver and iron. 100% free, no app, no signup.', intro:'"Free golf swing analysis" usually means an app install, a signup, and a "premium" upsell. Not here — just upload a clip in your browser and the AI diagnoses your swing in under a minute.' },
+    { group:'online-analyzer', slug:'golf-swing-analyzer-online', h1:'Golf Swing Analyzer Online — In-Browser, Instant', title:'Golf Swing Analyzer Online | Instant AI Feedback 2026', meta:'A free online golf swing analyzer that runs in the browser. Frame-by-frame AI breakdown of posture, tempo, and impact.', intro:'Most "online golf swing analyzer" results are gated landing pages. This one actually runs in your browser, takes a video in any common format, and returns a detailed AI breakdown.' },
+    { group:'slice', slug:'fix-driver-slice', h1:'Fix Your Driver Slice — From Root Cause to Drills', title:'Fix Driver Slice | AI Diagnosis + Drills 2026', meta:'A slice almost always comes from setup, swing path, or face control. The AI tells you which one from your video and gives you targeted drills.', intro:'You can watch 100 "fix your slice" videos and still slice. The reason: you don\'t know which root cause is yours. AI swing analysis pinpoints it in under a minute.' }
   ],
   jp: [
-    { slug:'golf-swing-shindan-muryo', h1:'ゴルフ スイング診断 無料 — 動画だけでAI解析', title:'ゴルフ スイング診断 無料 | AIスイング解析 2026', meta:'ゴルフ スイング診断を無料で。動画をアップロードするだけでAIがスイングを分析・解析し、スライス改善や飛距離アップのヒントを返します。', intro:'「ゴルフ スイング診断」「スイング 診断」「ゴルフ 無料診断」で探している人向けの無料AI診断です。アプリを入れず、ブラウザで動画をアップロードするだけでスイングの傾向を確認できます。' },
-    { slug:'golf-swing-app-muryo', h1:'ゴルフ スイング 分析 アプリ 無料 — 動画だけでOK', title:'ゴルフ スイング 分析 アプリ 無料 | インストール不要 2026', meta:'アプリ不要・会員登録不要・課金なしで使えるゴルフスイング解析。動画をアップするだけでAIが姿勢・テンポ・インパクトを診断。', intro:'「ゴルフ スイング 分析 アプリ 無料」と検索すると、結局はアプリのインストールや会員登録、有料課金にたどり着きがち。ここは違います — ブラウザに動画をアップするだけです。' },
-    { slug:'golf-dokugaku', h1:'ゴルフ 独学 — AI解析で一人でも上達できる', title:'ゴルフ 独学 ガイド | AIスイング解析で一人で上達 2026', meta:'レッスン費なしで始めるゴルフ独学ルート。動画撮影→AI解析→ドリル反復で1ヶ月でフォームを整える。', intro:'ゴルフ独学の最大の落とし穴は「自分が正しく出来ているかわからない」こと。AIスイング解析はそのフィードバックループを1分に短縮します。' },
-    { slug:'driver-slice-naoshikata', h1:'ドライバー スライス 直し方 — 原因からドリルまで', title:'ドライバー スライス 直し方 | AIが原因を診断 2026', meta:'ドライバースライスの本当の原因はセットアップ・スイングパス・フェース制御の3つのいずれか。AIが動画から特定し、ドリルも提案。', intro:'「ドライバー スライス 直し方」の動画を100本見ても直らない理由は、自分のスイングの本当の原因がどれか分からないから。AIなら1分で特定できます。' }
+    { group:'analysis', slug:'golf-swing-shindan-muryo', h1:'ゴルフ スイング診断 無料 — 動画だけでAI解析', title:'ゴルフ スイング診断 無料 | AIスイング解析 2026', meta:'ゴルフ スイング診断を無料で。動画をアップロードするだけでAIがスイングを分析・解析し、スライス改善や飛距離アップのヒントを返します。', intro:'「ゴルフ スイング診断」「スイング 診断」「ゴルフ 無料診断」で探している人向けの無料AI診断です。アプリを入れず、ブラウザで動画をアップロードするだけでスイングの傾向を確認できます。' },
+    { group:'online-analyzer', slug:'golf-swing-app-muryo', h1:'ゴルフ スイング 分析 アプリ 無料 — 動画だけでOK', title:'ゴルフ スイング 分析 アプリ 無料 | インストール不要 2026', meta:'アプリ不要・会員登録不要・課金なしで使えるゴルフスイング解析。動画をアップするだけでAIが姿勢・テンポ・インパクトを診断。', intro:'「ゴルフ スイング 分析 アプリ 無料」と検索すると、結局はアプリのインストールや会員登録、有料課金にたどり着きがち。ここは違います — ブラウザに動画をアップするだけです。' },
+    { group:'self-study', slug:'golf-dokugaku', h1:'ゴルフ 独学 — AI解析で一人でも上達できる', title:'ゴルフ 独学 ガイド | AIスイング解析で一人で上達 2026', meta:'レッスン費なしで始めるゴルフ独学ルート。動画撮影→AI解析→ドリル反復で1ヶ月でフォームを整える。', intro:'ゴルフ独学の最大の落とし穴は「自分が正しく出来ているかわからない」こと。AIスイング解析はそのフィードバックループを1分に短縮します。' },
+    { group:'slice', slug:'driver-slice-naoshikata', h1:'ドライバー スライス 直し方 — 原因からドリルまで', title:'ドライバー スライス 直し方 | AIが原因を診断 2026', meta:'ドライバースライスの本当の原因はセットアップ・スイングパス・フェース制御の3つのいずれか。AIが動画から特定し、ドリルも提案。', intro:'「ドライバー スライス 直し方」の動画を100本見ても直らない理由は、自分のスイングの本当の原因がどれか分からないから。AIなら1分で特定できます。' }
   ]
 };
 
 const CSS = `*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,"Noto Sans KR","Noto Sans JP",sans-serif;line-height:1.65;color:#1a2a1a;background:linear-gradient(180deg,#f1f8e9 0%,#fff 40%);min-height:100vh}.wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}header{text-align:center;padding:24px 0 8px}h1{font-size:28px;line-height:1.3;margin-bottom:16px;color:#2e7d32}h2{font-size:20px;margin:36px 0 12px;color:#1b5e20;border-bottom:2px solid #c8e6c9;padding-bottom:6px}p{margin-bottom:14px}ul{margin:12px 0 18px 22px}li{margin-bottom:8px}.intro{font-size:17px;color:#444;background:#fff;border-left:4px solid #43a047;padding:14px 18px;border-radius:6px;margin:18px 0 8px}.cta-box{text-align:center;margin:36px 0;padding:28px 20px;background:linear-gradient(135deg,#43a047,#1b5e20);border-radius:14px;box-shadow:0 8px 24px rgba(67,160,71,.25)}.cta{display:inline-block;background:#fff;color:#1b5e20;font-weight:700;font-size:18px;padding:14px 32px;border-radius:50px;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.12)}.cta:hover{transform:translateY(-2px)}.pick{background:#fff;border:1px solid #c8e6c9;border-radius:10px;padding:16px 18px;margin-bottom:14px}.pick h3{font-size:17px;color:#1b5e20;margin-bottom:6px}.pick .badge{display:inline-block;background:#c8e6c9;color:#1b5e20;font-size:12px;padding:2px 8px;border-radius:10px;margin-left:6px;vertical-align:middle}.pick p{font-size:14px;color:#555;margin:0}.faq{margin-bottom:14px}.faq summary{cursor:pointer;font-weight:600;padding:10px 0;color:#444}.faq p{padding:6px 0 4px;color:#555;font-size:15px}footer{margin-top:48px;padding-top:20px;border-top:1px solid #c8e6c9;text-align:center;font-size:13px;color:#888}.langs{margin-top:14px;font-size:13px}.langs a{color:#2e7d32;margin:0 6px;text-decoration:none}@media(max-width:520px){h1{font-size:23px}h2{font-size:18px}.intro{font-size:15px}.cta{font-size:16px;padding:12px 26px}}`;
 
 const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const hreflangFor = lang => lang === 'jp' ? 'ja' : lang;
+const alternatesFor = page => Object.keys(PAGES)
+  .map(lang => ({ lang, page: PAGES[lang].find(candidate => candidate.group === page.group) }))
+  .filter(item => item.page);
 
 function render(lang, page) {
   const c = C[lang]; const url = pageUrl(page.slug); const home = HOME[lang];
-  const altLinks = Object.keys(PAGES).map(L => `<link rel="alternate" hreflang="${L==='jp'?'ja':L}" href="${pageUrl(PAGES[L][0].slug)}">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${pageUrl(PAGES.en[0].slug)}">`;
-  const otherLangs = Object.keys(PAGES).filter(L=>L!==lang).map(L=>`<a href="${pagePath(PAGES[L][0].slug)}" hreflang="${L==='jp'?'ja':L}">${(L==='jp'?'JA':L.toUpperCase())}</a>`).join(' · ');
+  const alternates = alternatesFor(page);
+  const defaultAlternate = alternates.find(item => item.lang === 'en') || alternates[0];
+  const altLinks = alternates.map(item => `<link rel="alternate" hreflang="${hreflangFor(item.lang)}" href="${pageUrl(item.page.slug)}">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${pageUrl(defaultAlternate.page.slug)}">`;
+  const otherLangs = Object.keys(PAGES).filter(otherLang => otherLang !== lang).map(otherLang => `<a href="${pagePath(PAGES[otherLang][0].slug)}" hreflang="${hreflangFor(otherLang)}">${hreflangFor(otherLang).toUpperCase()}</a>`).join(' · ');
   const faqLd = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":c.faqs.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))};
   return `<!DOCTYPE html>
 <html lang="${c.htmlLang}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="/assets/js/ga.js?v=1.0.2" defer></script>
+  <script src="/assets/js/ga-engagement.js?v=20260618-engagement" defer></script>
   <title>${esc(page.title)}</title>
   <meta name="description" content="${esc(page.meta)}">
   <link rel="canonical" href="${url}">
@@ -143,18 +151,25 @@ function render(lang, page) {
 let n = 0; const all = [];
 for (const lang of Object.keys(PAGES)) for (const p of PAGES[lang]) {
   fs.writeFileSync(path.join(OUT, `${p.slug}.html`), render(lang, p), 'utf8');
-  all.push({ lang, slug: p.slug }); n++;
+  all.push({ lang, slug: p.slug, group: p.group }); n++;
 }
 console.log(`✓ ${n} pages generated`);
 
-const firstSlugs = Object.fromEntries(Object.keys(PAGES).map(L => [L, PAGES[L][0].slug]));
 const frag = all.map(u => {
-  const isFirst = firstSlugs[u.lang] === u.slug;
-  let alts = '';
-  if (isFirst) {
-    alts = '\n' + Object.keys(PAGES).map(L => `    <xhtml:link rel="alternate" hreflang="${L==='jp'?'ja':L}" href="${pageUrl(firstSlugs[L])}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${pageUrl(firstSlugs.en)}"/>`;
-  }
+  const page = PAGES[u.lang].find(candidate => candidate.slug === u.slug);
+  const alternates = alternatesFor(page);
+  const defaultAlternate = alternates.find(item => item.lang === 'en') || alternates[0];
+  const alts = '\n' + alternates.map(item => `    <xhtml:link rel="alternate" hreflang="${hreflangFor(item.lang)}" href="${pageUrl(item.page.slug)}"/>`).join('\n') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${pageUrl(defaultAlternate.page.slug)}"/>`;
   return `  <url><loc>${pageUrl(u.slug)}</loc>\n    <lastmod>${LASTMOD}</lastmod>${alts}\n    <changefreq>monthly</changefreq><priority>${u.slug === 'golf-swing-shindan-muryo' ? '0.75' : '0.7'}</priority></url>`;
 }).join('\n');
 fs.writeFileSync(path.join(OUT, '_sitemap_fragment.xml'), frag, 'utf8');
 console.log(`✓ sitemap fragment written`);
+
+const sitemapPath = path.join(OUT, '..', 'sitemap.xml');
+if (fs.existsSync(sitemapPath)) {
+  let sitemap = fs.readFileSync(sitemapPath, 'utf8');
+  sitemap = sitemap.replace(/\s*<url>\s*<loc>https:\/\/golf\.archerlab\.dev\/seo\/[\s\S]*?<\/url>/g, '');
+  sitemap = sitemap.replace(/\s*<\/urlset>\s*$/m, `\n${frag}\n</urlset>\n`);
+  fs.writeFileSync(sitemapPath, sitemap, 'utf8');
+  console.log('✓ root sitemap updated');
+}
