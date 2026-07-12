@@ -8,6 +8,8 @@
     "dev": "granite dev",
     "build": "granite build",
     "preview": "vite preview",
+    "validate": "node validate.js && node validate-seo.js",
+    "validate:dist": "node validate-seo.js --dist",
     "deploy": "ait deploy"
   },
   "devDependencies": {

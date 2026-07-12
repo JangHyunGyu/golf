@@ -1,0 +1,29 @@
+# Keep Cloudflare preview and default Pages domains out of search results.
+https://golf-3xe.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://:version.golf-3xe.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+# Repository and build inputs are public assets in the current root deployment,
+# but they are not search content.
+/seo/_*
+  X-Robots-Tag: noindex, nofollow
+
+/package.json
+  X-Robots-Tag: noindex, nofollow
+
+/package-lock.json
+  X-Robots-Tag: noindex, nofollow
+
+/validate.js
+  X-Robots-Tag: noindex, nofollow
+
+/vite.config.js
+  X-Robots-Tag: noindex, nofollow
+
+/granite.config.ts
+  X-Robots-Tag: noindex, nofollow
+
+/swing-ai.ait
+  X-Robots-Tag: noindex, nofollow
