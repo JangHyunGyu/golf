@@ -1,7 +1,10 @@
 // golf SEO 생성기 — KO/EN/JA SEO landing pages
 const fs = require('fs'); const path = require('path');
-const SITE = 'https://golf.archerlab.dev'; const OUT = __dirname; const LASTMOD = '2026-07-10';
+const SITE = 'https://golf.archerlab.dev'; const OUT = __dirname; const LASTMOD = '2026-07-12';
 const HOME = { ko: '/', en: '/index-en', jp: '/index-jp' };
+const ANALYZE = { ko: '/analysis', en: '/analysis-en', jp: '/analysis-jp' };
+const OG_LOCALE = { ko: 'ko_KR', en: 'en_US', jp: 'ja_JP' };
+const SITE_NAME = { ko: '골프 스윙 마스터', en: 'Golf Swing Master', jp: 'ゴルフスイングマスター' };
 const pageUrl = slug => `${SITE}/seo/${slug}`;
 const pagePath = slug => `/seo/${slug}`;
 
@@ -105,12 +108,26 @@ const alternatesFor = page => Object.keys(PAGES)
   .filter(item => item.page);
 
 function render(lang, page) {
-  const c = C[lang]; const url = pageUrl(page.slug); const home = HOME[lang];
+  const c = C[lang]; const url = pageUrl(page.slug); const analyze = ANALYZE[lang];
   const alternates = alternatesFor(page);
   const defaultAlternate = alternates.find(item => item.lang === 'en') || alternates[0];
   const altLinks = alternates.map(item => `<link rel="alternate" hreflang="${hreflangFor(item.lang)}" href="${pageUrl(item.page.slug)}">`).join('\n  ') + `\n  <link rel="alternate" hreflang="x-default" href="${pageUrl(defaultAlternate.page.slug)}">`;
-  const otherLangs = Object.keys(PAGES).filter(otherLang => otherLang !== lang).map(otherLang => `<a href="${pagePath(PAGES[otherLang][0].slug)}" hreflang="${hreflangFor(otherLang)}">${hreflangFor(otherLang).toUpperCase()}</a>`).join(' · ');
-  const faqLd = {"@context":"https://schema.org","@type":"FAQPage","mainEntity":c.faqs.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))};
+  const otherLangs = Object.keys(PAGES).filter(otherLang => otherLang !== lang).map(otherLang => {
+    const counterpart = PAGES[otherLang].find(candidate => candidate.group === page.group);
+    const href = counterpart ? pagePath(counterpart.slug) : HOME[otherLang];
+    const languageHint = counterpart ? ` hreflang="${hreflangFor(otherLang)}"` : '';
+    return `<a href="${href}"${languageHint}>${hreflangFor(otherLang).toUpperCase()}</a>`;
+  }).join(' · ');
+  const faqLd = {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "@id":`${url}#faq`,
+    "url":url,
+    "name":page.title,
+    "description":page.meta,
+    "inLanguage":c.htmlLang,
+    "mainEntity":c.faqs.map(([q,a])=>({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}}))
+  };
   return `<!DOCTYPE html>
 <html lang="${c.htmlLang}">
 <head>
@@ -120,12 +137,22 @@ function render(lang, page) {
   <script src="/assets/js/ga-engagement.js?v=20260618-engagement" defer></script>
   <title>${esc(page.title)}</title>
   <meta name="description" content="${esc(page.meta)}">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
   <link rel="canonical" href="${url}">
+  <link rel="sitemap" type="application/xml" href="${SITE}/sitemap.xml">
   ${altLinks}
+  <meta property="og:locale" content="${OG_LOCALE[lang]}">
+  <meta property="og:site_name" content="${esc(SITE_NAME[lang])}">
   <meta property="og:title" content="${esc(page.title)}">
   <meta property="og:description" content="${esc(page.meta)}">
   <meta property="og:url" content="${url}">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="${SITE}/assets/images/kakao_golf.png">
+  <meta property="og:image:alt" content="${esc(SITE_NAME[lang])}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${esc(page.title)}">
+  <meta name="twitter:description" content="${esc(page.meta)}">
+  <meta name="twitter:image" content="${SITE}/assets/images/kakao_golf.png">
   <link rel="icon" href="/favicon.png">
   <style>${CSS}</style>
   <script type="application/ld+json">${JSON.stringify(faqLd)}</script>
@@ -133,7 +160,7 @@ function render(lang, page) {
 <body><div class="wrap">
   <header><h1>${esc(page.h1)}</h1></header>
   <p class="intro">${esc(page.intro)}</p>
-  <div class="cta-box"><a class="cta" href="${home}">${esc(c.cta)}</a></div>
+  <div class="cta-box"><a class="cta" href="${analyze}">${esc(c.cta)}</a></div>
   <h2>${esc(c.why_title)}</h2>
   <ul>${c.why.map(w=>`<li>${esc(w)}</li>`).join('')}</ul>
   <h2>${esc(c.picks_title)}</h2>
@@ -141,7 +168,7 @@ function render(lang, page) {
   <div class="pick"><h3>${esc(c.sec_name)} <span class="badge">${esc(c.sec_label)}</span></h3><p>${esc(c.sec_desc)}</p></div>
   <h2>${esc(c.how_title)}</h2>
   <ul>${c.how.map(h=>`<li>${esc(h)}</li>`).join('')}</ul>
-  <div class="cta-box"><a class="cta" href="${home}">${esc(c.cta)}</a></div>
+  <div class="cta-box"><a class="cta" href="${analyze}">${esc(c.cta)}</a></div>
   <h2>${esc(c.faq_title)}</h2>
   ${c.faqs.map(([q,a])=>`<details class="faq"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}
   <footer><div>${esc(c.footer)}</div><div class="langs"><span>${esc(c.other_langs_label)}:</span> ${otherLangs}</div></footer>
