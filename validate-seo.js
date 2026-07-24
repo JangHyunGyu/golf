@@ -128,10 +128,22 @@ for (const [file, expectedUrl] of expectedUrls) {
 
   const jsonLdScripts = (html.match(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi) || []);
   check(jsonLdScripts.length > 0, `${file}: JSON-LD exists`);
+  const structuredTypes = new Set();
   for (let index = 0; index < jsonLdScripts.length; index++) {
     const json = jsonLdScripts[index].replace(/^<script\b[^>]*>/i, '').replace(/<\/script>$/i, '').trim();
     try {
-      JSON.parse(json);
+      const data = JSON.parse(json);
+      const collectTypes = value => {
+        if (!value || typeof value !== 'object') return;
+        if (Array.isArray(value)) {
+          value.forEach(collectTypes);
+          return;
+        }
+        const types = Array.isArray(value['@type']) ? value['@type'] : [value['@type']];
+        types.filter(Boolean).forEach(type => structuredTypes.add(type));
+        Object.values(value).forEach(collectTypes);
+      };
+      collectTypes(data);
       pass(`${file}: JSON-LD ${index + 1} parses`);
     } catch (error) {
       fail(`${file}: JSON-LD ${index + 1} invalid (${error.message})`);
@@ -144,6 +156,14 @@ for (const [file, expectedUrl] of expectedUrls) {
     const href = attr(anchor, 'href');
     const absoluteHref = href && href.startsWith('/') ? `${SITE}${href}` : href;
     check(alternates.get(code) === absoluteHref, `${file}: body ${code} language link matches head alternate`);
+  }
+  if (file.startsWith('seo/')) {
+    check(structuredTypes.has('WebPage') && structuredTypes.has('WebApplication') && structuredTypes.has('FAQPage'), `${file}: structured data describes the page, app, and visible FAQ`);
+    const contextualLinks = tags(body, 'a').filter(tag => {
+      const href = attr(tag, 'href') || '';
+      return !attr(tag, 'hreflang') && href.startsWith('/seo/') && href !== `/${file.replace(/\.html$/, '')}`;
+    });
+    check(contextualLinks.length > 0, `${file}: has a contextual crawlable link to related SEO content`);
   }
 
   pagesByUrl.set(expectedUrl, { file, html, canonical, language, alternates });
