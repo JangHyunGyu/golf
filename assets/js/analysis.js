@@ -249,7 +249,7 @@ function handleFileSelect() {
     if (file) {
         const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
         
-        if (file.size > 24 * 1024 * 1024) { // 24MB limit for MiMo base64 video input
+        if (file.size > 100 * 1024 * 1024) { // R2 direct upload limit
             alert(ANALYSIS_CONFIG.messages.fileTooLarge.replace('{size}', sizeInMB));
             videoInput.value = "";
             fileNameDiv.textContent = "";
@@ -318,14 +318,14 @@ async function runAnalysis() {
                 }
                 throw new Error(`Init failed (${initRes.status}): ${text}`);
             }
-            const { uploadUrl } = await initRes.json();
+            let uploadSession = await initRes.json();
 
             // 2. Upload (with retry)
             console.log("Step 2: Upload");
             const MAX_UPLOAD_RETRIES = 3;
             const uploadTimeoutMs = Math.min(Math.max(60000, (file.size / (1024 * 1024)) * 10000), 300000);
             let uploadRes;
-            let currentUploadUrl = uploadUrl;
+            let currentUploadUrl = uploadSession.uploadUrl;
 
             for (let attempt = 1; attempt <= MAX_UPLOAD_RETRIES; attempt++) {
                 setModalStep('step-upload');
@@ -359,15 +359,14 @@ async function runAnalysis() {
                             })
                         });
                         if (!retryInitRes.ok) throw new Error(`Re-init failed (${retryInitRes.status})`);
-                        const retryInitData = await retryInitRes.json();
-                        currentUploadUrl = retryInitData.uploadUrl;
+                        uploadSession = await retryInitRes.json();
+                        currentUploadUrl = uploadSession.uploadUrl;
                     }
 
                     uploadRes = await new Promise((resolve, reject) => {
                         const xhr = new XMLHttpRequest();
-                        xhr.open("POST", `${API_URL}?action=upload`);
-                        xhr.setRequestHeader("X-Upload-Url", currentUploadUrl);
-                        xhr.setRequestHeader("Content-Type", file.type);
+                        xhr.open(uploadSession.uploadMethod || "PUT", currentUploadUrl);
+                        xhr.setRequestHeader("Content-Type", uploadSession.mimeType || file.type || "video/mp4");
                         xhr.timeout = uploadTimeoutMs;
 
                         let lastUpdate = 0;
@@ -393,11 +392,10 @@ async function runAnalysis() {
 
                         xhr.onload = () => {
                             if (xhr.status >= 200 && xhr.status < 300) {
-                                try {
-                                    resolve(JSON.parse(xhr.responseText));
-                                } catch (e) {
-                                    reject(new Error("Invalid JSON response from upload"));
-                                }
+                                resolve({
+                                    fileUri: uploadSession.fileUri,
+                                    fileName: uploadSession.fileName
+                                });
                             } else {
                                 reject(new Error(`Upload failed (${xhr.status}): ${xhr.responseText}`));
                             }
