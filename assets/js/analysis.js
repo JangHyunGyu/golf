@@ -249,7 +249,7 @@ function handleFileSelect() {
     if (file) {
         const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
         
-        if (file.size > 100 * 1024 * 1024) { // 100MB limit
+        if (file.size > 24 * 1024 * 1024) { // 24MB limit for MiMo base64 video input
             alert(ANALYSIS_CONFIG.messages.fileTooLarge.replace('{size}', sizeInMB));
             videoInput.value = "";
             fileNameDiv.textContent = "";
