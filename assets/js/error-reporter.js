@@ -10,7 +10,7 @@
 
   function isIgnoredResourceError(source) {
     var src = String(source || "");
-    return /googletagmanager\.com|google-analytics\.com|gtag\/js|wcs\.pstatic\.net\/wcslog\.js/i.test(src);
+    return /googletagmanager\.com|google-analytics\.com|gtag\/js|wcs\.pstatic\.net\/wcslog\.js|ssl\.pstatic\.net\/melona\/libs\/gfp-nac-module\/synchronizer\.js/i.test(src);
   }
 
   function shouldProbeLocalResource(source) {

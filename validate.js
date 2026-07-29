@@ -97,6 +97,28 @@ if (fileExistsAt('vite.config.js') && /assets\/vendor\/\*\*\//.test(readFile('vi
     fail('vite build does not copy assets/vendor');
 }
 
+const errorReporterVersion = '20260729-external-synchronizer-filter';
+const errorReporterPath = 'assets/js/error-reporter.js';
+if (fileExistsAt(errorReporterPath)) {
+    const reporter = readFile(errorReporterPath);
+    if (reporter.includes('ssl\\.pstatic\\.net\\/melona\\/libs\\/gfp-nac-module\\/synchronizer\\.js')) {
+        pass('optional Naver synchronizer resource failure is filtered');
+    } else {
+        fail('optional Naver synchronizer resource filter is missing');
+    }
+} else {
+    fail(`${errorReporterPath} is MISSING`);
+}
+
+for (const file of expectedHtmlFiles) {
+    if (!fileExistsAt(file)) continue;
+    if (readFile(file).includes(`error-reporter.js?v=${errorReporterVersion}`)) {
+        pass(`${file} uses current error reporter cache version`);
+    } else {
+        fail(`${file} uses a stale error reporter cache version`);
+    }
+}
+
 // ============================================================
 // 3 & 5. HTML script/CSS references match actual files
 // ============================================================
