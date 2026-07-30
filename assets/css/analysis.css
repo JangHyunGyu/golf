@@ -1685,3 +1685,62 @@ select:focus,
 .file-name:empty {
     display: none;
 }
+/* Compact, crawlable help below the analyzer. Kept visually subordinate so
+   the existing upload flow remains the primary interface. */
+.analysis-resource-guide {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    text-align: left;
+}
+
+.analysis-resource-guide h2 {
+    margin: 0 0 10px;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.analysis-resource-guide details {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.analysis-resource-guide summary {
+    padding: 11px 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.analysis-resource-guide details p {
+    margin: 0;
+    padding: 0 0 12px;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 0.8rem;
+    line-height: 1.65;
+}
+
+.analysis-resource-guide a,
+.policy-links a {
+    color: inherit;
+    text-underline-offset: 3px;
+}
+
+.analysis-resources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    padding-top: 13px;
+    font-size: 0.8rem;
+}
+
+.analysis-resources a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.policy-links {
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.48);
+    font-size: 0.72rem;
+}

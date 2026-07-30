@@ -67,7 +67,7 @@
             document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"><\/script>');
         }
     </script>
-	<link rel="stylesheet" href="assets/css/style.css?v=1.0.0">
+	<link rel="stylesheet" href="assets/css/style.css?v=20260730-seo">
 	<script defer src="assets/js/ga.js?v=1.0.0"></script>
 	<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
 	<script type="text/javascript">
@@ -78,7 +78,7 @@
 		}
 	</script>
     
-    <link rel="stylesheet" href="assets/css/analysis.css?v=final1">
+    <link rel="stylesheet" href="assets/css/analysis.css?v=20260730-seo">
     <link rel="stylesheet" href="assets/css/analysis-loaders.css">
     <script type="application/ld+json">
     {
@@ -127,7 +127,7 @@
             <a href="analysis-jp" class="lang-link">JP</a>
         </div>
         <div class="analysis-container">
-            <h1 class="hero__title">Golf Swing Analysis</h1>
+            <h1 class="hero__title">Free AI Golf Swing Analyzer</h1>
             
             <button id="guideBtn" class="guide-btn">
                 <span class="guide-icon">ℹ️</span> User Guide
@@ -156,6 +156,25 @@
             <button id="analyzeBtn" disabled>Analysis & Coaching</button>
             
             <div id="result"></div>
+
+            <section class="analysis-resource-guide" aria-labelledby="analysisGuideTitle">
+                <h2 id="analysisGuideTitle">Before you analyze</h2>
+                <details>
+                    <summary>What the analyzer reviews</summary>
+                    <p>AI reviews visible checkpoints around setup, backswing, transition, impact, and balance. Scores are relative estimates affected by filming conditions—not a handicap or skill certification.</p>
+                </details>
+                <details>
+                    <summary>How to film a useful swing video</summary>
+                    <p>Keep your full body and club in frame, use good light, and hold the camera steady. A face-on or down-the-line view gives the analyzer more visible checkpoints.</p>
+                </details>
+                <details>
+                    <summary>How are videos and shared results handled?</summary>
+                    <p>Your video is uploaded temporarily for analysis and deleted after processing. The analysis-result text is retained for 30 days to provide a share link. See the <a href="/privacy-en">privacy notice</a> for details.</p>
+                </details>
+                <nav class="analysis-resources" aria-label="Golf practice resources">
+                    <a href="/seo/fix-driver-slice">Driver slice guide</a>
+                </nav>
+            </section>
             
             <footer class="site-footer">
                 <div class="site-footer__inner">
@@ -167,7 +186,8 @@
                             <span class="contact-icon">⬇️</span> Install App
                         </button>
                     </div>
-                    <p class="copyright">© 2025 ArcherLab. All rights reserved.</p>
+                    <p class="copyright">© 2026 ArcherLab. All rights reserved.</p>
+                    <p class="policy-links"><a href="/privacy-en">Privacy</a><span aria-hidden="true"> · </span><a href="/terms-en">Terms</a></p>
                 </div>
             </footer>
         </div>
@@ -281,24 +301,16 @@
             <div class="modal-body guide-body">
                 <div class="guide-section">
                     <h4>🤖 What is Golf Swing Analysis?</h4>
-                    <p>Our advanced motion analysis engine scans your video frame-by-frame to analyze the mechanics of your swing.</p>
-                    <p>It compares your data with PGA/LPGA Tour Pros to objectively diagnose your <strong>Address, Backswing, Impact, Finish</strong>, and more.</p>
+                    <p>A multimodal AI reviews visible frames and organizes checkpoints for your <strong>address, backswing, impact phase, and finish</strong>.</p>
+                    <p>Results can vary with camera angle, light, and frame rate. The service does not directly measure hidden club or ball-flight data.</p>
                 </div>
                 <div class="guide-section">
-                    <h4>🏆 What are Reference Pros?</h4>
-                    <p>These are <strong>World Class Tour Pros</strong> whose data is used as the standard for the analysis engine.</p>
-                    <p><strong>A perfect score of 10 represents their level</strong>, and your swing is evaluated relative to this high standard.</p>
-                    <h5 class="reference-title">Key Reference Pros</h5>
-                    <ul class="reference-list">
-                        <li><strong>Men (PGA)</strong>: Tiger Woods, Rory McIlroy, Scottie Scheffler, Jon Rahm</li>
-                        <li><strong>Women (LPGA)</strong>: Nelly Korda, Jin Young Ko, Lydia Ko, Hyo Joo Kim</li>
-                    </ul>
-
+                    <h4>📊 How should I read the score?</h4>
+                    <p>The score is a <strong>relative AI estimate</strong> summarizing posture and balance visible in one video. It is not an official metric, a handicap, or a substitute for a professional lesson.</p>
                     <div class="guide-sub-text">
                         <span class="guide-icon">💡</span>
                         <div class="guide-content">
-                            Don't be disappointed! Since you are compared to Tour Pros, your score might be lower than expected.
-                            <strong>A score of 6-7 is considered excellent, at the level of a single handicapper.</strong>
+                            Film repeated attempts from the same angle and lighting, then compare one movement change at a time.
                         </div>
                     </div>
                 </div>
@@ -325,7 +337,7 @@
     </div>
 
     <script src="assets/js/custom-select.js?v=1.0.2"></script>
-    <script src="assets/js/analysis-bg.js?v=1.0.2"></script>
+    <script src="assets/js/analysis-bg.js?v=20260730-seo"></script>
     <script>
         const ANALYSIS_CONFIG = {
             messages: {
@@ -366,7 +378,6 @@
                 // club: Driver, WoodHybrid, Iron, Wedge
                 // angle is now detected by AI
 
-                let referencePros = "Tiger Woods, Rory McIlroy, Nelly Korda, Jin Young Ko";
                 let clubFocus = "";
                 let pointAnalysisItems = "";
 
@@ -402,11 +413,11 @@
 
                 return `
                     [Role]
-                    You are a world-class Golf Swing Analyst (PGA/LPGA level).
-                    Your mission is to analyze the user's golf swing video and provide professional feedback in English.
+                    You are an AI assistant that helps users observe a golf swing video.
+                    Provide English feedback grounded only in details that are actually visible in the video.
 
                     [Strict Output Rules]
-                    1. **Mechanical Analysis**: Exclude creativity completely. Mechanically analyze only the technical elements of the video to derive the same result every time.
+                    1. **Evidence-based Analysis**: Analyze only visible motion. Do not pretend to measure hidden club-face angle, ball flight, exact joint angles, or force.
                     2. **No Intro**: Do not start with "Here is the analysis result", "Yes, I understand", etc.
                     3. **No Repetition**: Do not repeat the user's prompt or instructions.
                     4. **Immediate Start**: Output must start immediately with a JSON object { .
@@ -421,14 +432,14 @@
                        - Down the Line: Focus on Swing Plane, spine angle, club path.
                     3. **Analysis Order**: Address -> Backswing -> Top -> Downswing -> Impact -> Follow-through -> Finish.
                     4. **Club Context**: This is a \${club} swing. \${clubFocus}
-                    5. **Scoring Criteria**: 10 is World Class Pro (Tiger Woods, Nelly Korda) level. **Grade BRUTALLY STRICTLY** (to one decimal place, e.g., 5.4).
-                       **Consistency Required**: You must give the exact same score for the same video with 0.0 margin of error.
-                       - **Beginner**: 1.0 ~ 2.9
-                       - **Average Amateur**: 3.0 ~ 5.0
-                       - **Advanced Amateur**: 5.1 ~ 6.5
-                       - **Semi-Pro**: 6.6 ~ 7.9
-                       - **Tour Pro**: 8.0 ~ 10.0
-                       - **Warning**: Unless it is a perfect pro swing, never give a score above 7.0. Most users should receive scores between 3.x and 5.x.
+                    5. **Scoring Criteria**: The score is a relative summary of posture, sequence, and balance visible in this video (one decimal place, e.g., 5.4).
+                       Treat it conservatively; it does not certify skill, handicap, or professional level.
+                       - **Foundation Needed**: 1.0 ~ 2.9
+                       - **Developing**: 3.0 ~ 5.0
+                       - **Stable**: 5.1 ~ 6.5
+                       - **Strong**: 6.6 ~ 7.9
+                       - **Very Stable**: 8.0 ~ 10.0
+                       - **Uncertainty**: If a needed phase is blurred or outside the frame, state that limitation in the comment.
                     6. **Time Notation**: All key observations (Pros, Cons, Step-by-step) must include specific time (e.g., [00:03]). Do not use the word "Timestamp", just show the time.
 
                     [Output Format - JSON]
@@ -456,7 +467,7 @@
                     ${pointAnalysisItems}
                     - Each item's score: 0~10 range, one decimal place (e.g., 5.4)
                     - overallScore: average of 5 items, two decimal places (e.g., 5.42)
-                    - grade: e.g., "Advanced Amateur"
+                    - grade: e.g., "Stable"
                     - Include timestamps [00:03] format in all text fields.
 
                     [Important]

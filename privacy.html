@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>개인정보 처리방침 | Golf Swing Master</title>
+  <meta name="description" content="Golf Swing Master의 영상 업로드, AI 분석, 공유 결과, 분석 도구 및 기술 로그 처리 방식을 안내합니다.">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://golf.archerlab.dev/privacy">
+  <link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/privacy">
+  <link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/privacy-en">
+  <link rel="alternate" hreflang="ja" href="https://golf.archerlab.dev/privacy-jp">
+  <link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/privacy-en">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="Golf Swing Master">
+  <meta property="og:title" content="개인정보 처리방침 | Golf Swing Master">
+  <meta property="og:description" content="영상 업로드, AI 분석, 공유 결과 및 기술 데이터 처리 방식을 안내합니다.">
+  <meta property="og:url" content="https://golf.archerlab.dev/privacy">
+  <meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/legal.css">
+</head>
+<body>
+  <div class="legal-shell">
+    <header class="legal-topbar">
+      <a class="legal-brand" href="/">Golf Swing Master</a>
+      <nav class="language-links" aria-label="언어 선택">
+        <a href="/privacy" lang="ko" aria-current="page">KO</a>
+        <a href="/privacy-en" lang="en">EN</a>
+        <a href="/privacy-jp" lang="ja">JA</a>
+      </nav>
+    </header>
+
+    <main>
+      <article class="legal-document">
+        <header class="legal-hero">
+          <p class="legal-eyebrow">Privacy</p>
+          <h1>개인정보 처리방침</h1>
+          <p class="legal-summary">이 문서는 Golf Swing Master가 스윙 영상을 분석하고 결과를 제공하는 과정에서 어떤 데이터를 처리하는지 설명합니다.</p>
+          <p class="legal-effective">시행일: <time datetime="2026-07-30">2026년 7월 30일</time></p>
+        </header>
+
+        <div class="legal-content">
+          <aside class="legal-notice">
+            <strong>먼저 확인해 주세요.</strong> 계정 가입은 필요하지 않지만, 원본 영상은 분석을 위해 외부 저장소와 AI 처리 서비스로 전송됩니다. 얼굴·차량 번호·집 내부 등 식별 가능한 정보나 민감한 정보가 담긴 영상은 업로드하지 않는 것을 권장합니다.
+          </aside>
+
+          <section class="legal-section">
+            <h2>1. 적용 범위와 운영자</h2>
+            <p>본 방침은 <strong>golf.archerlab.dev</strong>에서 제공하는 Golf Swing Master 웹 서비스에 적용됩니다. 서비스 운영 관련 문의는 <a class="legal-contact" href="mailto:hyungyu@archerlab.dev">hyungyu@archerlab.dev</a>로 보낼 수 있습니다.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>2. 처리하는 데이터</h2>
+            <p>서비스는 별도 회원 계정을 만들지 않습니다. 기능 제공과 안정적인 운영을 위해 다음 데이터를 처리할 수 있습니다.</p>
+            <ul>
+              <li>사용자가 선택한 원본 골프 스윙 영상</li>
+              <li>파일 이름, 파일 형식, 파일 크기 등 업로드에 필요한 메타데이터</li>
+              <li>선택한 클럽 종류와 AI가 생성한 분석 결과 텍스트</li>
+              <li>공유 결과 식별자와 생성 시각</li>
+              <li>접속 페이지, 기기·브라우저 정보, 화면 크기, 이용 이벤트 등 Google 및 Naver 분석 도구가 수집하는 정보</li>
+              <li>오류 메시지, 오류 스택, 오류가 발생한 URL·경로, 온라인 상태와 화면 크기 등 기술 로그</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>3. 원본 영상의 처리와 삭제</h2>
+            <ol>
+              <li>선택한 영상은 분석을 위해 Cloudflare R2에 임시 업로드됩니다.</li>
+              <li>영상은 OpenRouter와 분석 시점에 선택된 현재의 하위 AI 모델 제공자를 통해 처리됩니다.</li>
+              <li>분석이 성공적으로 진행되면 AI 제공자의 응답을 받은 뒤 서버가 임시 원본 영상 삭제를 시도합니다.</li>
+              <li>업로드가 완료되지 않았거나 분석이 실패해 정상 삭제 흐름을 마치지 못한 객체는 업로드 시작 후 30분이 지나면 정리 대상이 되며, 예약된 정리 작업이 이를 삭제합니다.</li>
+            </ol>
+            <p>30분은 정리 대상이 되는 시점이며 정확한 삭제 완료 시각은 예약 작업의 실행 시점에 따라 그 이후가 될 수 있습니다. 공유 결과를 저장할 때 원본 영상은 함께 저장하지 않습니다.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>4. 공유 결과 보관</h2>
+            <p>분석 결과 텍스트는 공유 링크 기능을 제공하기 위해 Cloudflare KV에 30일 동안 보관됩니다. 공유 결과에는 원본 영상이 포함되지 않습니다.</p>
+            <p>공유 링크에는 별도 로그인이나 접근 암호가 없습니다. 링크를 알고 있는 사람은 30일의 보관 기간 동안 결과를 열람할 수 있으므로 공개 채널에 링크를 게시할 때 주의해 주세요.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>5. 이용 목적</h2>
+            <ul>
+              <li>영상 업로드, AI 스윙 분석, 결과 표시 및 공유 기능 제공</li>
+              <li>오류 확인, 장애 대응, 보안 점검 및 서비스 품질 개선</li>
+              <li>방문·이용 흐름에 대한 통계 분석</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>6. 외부 서비스 제공자</h2>
+            <div class="legal-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>제공자</th>
+                    <th>역할</th>
+                    <th>처리될 수 있는 데이터</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Cloudflare</td>
+                    <td>웹 호스팅, 임시 영상 저장(R2), 공유 결과 저장(KV), 네트워크 처리</td>
+                    <td>원본 영상, 업로드 메타데이터, 결과 텍스트, 접속·네트워크 정보</td>
+                  </tr>
+                  <tr>
+                    <td>OpenRouter 및 현재 하위 AI 모델 제공자</td>
+                    <td>영상 기반 AI 분석</td>
+                    <td>원본 영상과 분석 지시, 선택한 클럽 정보</td>
+                  </tr>
+                  <tr>
+                    <td>Google Analytics, Naver Analytics</td>
+                    <td>방문 및 이용 통계</td>
+                    <td>페이지 이용 이벤트, 브라우저·기기 및 접속 관련 정보</td>
+                  </tr>
+                  <tr>
+                    <td>기술 로그 처리 서비스</td>
+                    <td>오류 수집과 장애 진단</td>
+                    <td>오류 메시지·스택, URL, 경로, 화면 크기 등 기술 정보</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>외부 제공자는 각자의 약관과 개인정보 처리방침에 따라 데이터를 처리할 수 있으며, 처리 지역은 사용자의 거주 국가와 다를 수 있습니다.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>7. 사용자의 선택과 주의사항</h2>
+            <ul>
+              <li>영상 업로드는 선택 사항이며, 업로드하지 않으면 영상 분석은 시작되지 않습니다.</li>
+              <li>본인에게 권리가 있거나 영상에 등장하는 사람에게 필요한 동의를 받은 영상만 업로드해 주세요.</li>
+              <li>식별 가능한 얼굴, 제3자, 위치 정보, 차량 번호, 개인 문서나 민감한 정보가 담긴 영상은 피하거나 업로드 전에 가려 주세요.</li>
+              <li>공유 링크는 필요한 사람에게만 전달하고, 더 이상 필요하지 않은 링크는 재배포하지 마세요.</li>
+            </ul>
+            <p>공유 결과나 기술 로그 관련 문의를 할 때는 확인 가능한 공유 링크 또는 발생 시각을 함께 보내면 처리에 도움이 됩니다.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>8. 보안과 한계</h2>
+            <p>서비스는 전송 암호화와 제한된 식별자 등 합리적인 보호 조치를 사용하려고 노력합니다. 다만 인터넷 전송이나 외부 서비스 이용에 절대적인 보안을 보장할 수는 없습니다. 따라서 민감한 영상을 업로드하지 않는 것이 가장 안전합니다.</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>9. 방침 변경 및 문의</h2>
+            <p>기능, 제공자 또는 관련 법적 요구가 변경되면 본 방침을 수정할 수 있습니다. 중요한 변경 사항은 이 페이지의 시행일을 갱신해 알립니다.</p>
+            <p>개인정보 관련 문의: <a class="legal-contact" href="mailto:hyungyu@archerlab.dev">hyungyu@archerlab.dev</a></p>
+          </section>
+        </div>
+      </article>
+    </main>
+
+    <footer class="legal-footer">
+      <nav aria-label="법적 고지">
+        <a href="/privacy" aria-current="page">개인정보 처리방침</a>
+        <a href="/terms">이용약관</a>
+        <a href="/analysis">분석 도구로 돌아가기</a>
+      </nav>
+      <p>© 2026 ArcherLab. Golf Swing Master.</p>
+    </footer>
+  </div>
+</body>
+</html>

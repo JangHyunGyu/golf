@@ -1672,3 +1672,13 @@ body::before {
   color: var(--color-text);
   box-shadow: none;
 }
+.policy-links {
+    margin: 6px 0 0;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.72rem;
+}
+
+.policy-links a {
+    color: inherit;
+    text-underline-offset: 3px;
+}

@@ -67,7 +67,7 @@
             document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"><\/script>');
         }
     </script>
-	<link rel="stylesheet" href="assets/css/style.css?v=1.0.0">
+	<link rel="stylesheet" href="assets/css/style.css?v=20260730-seo">
 	<script defer src="assets/js/ga.js?v=1.0.0"></script>
 	<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
 	<script type="text/javascript">
@@ -78,7 +78,7 @@
 		}
 	</script>
     
-    <link rel="stylesheet" href="assets/css/analysis.css?v=final1">
+    <link rel="stylesheet" href="assets/css/analysis.css?v=20260730-seo">
     <link rel="stylesheet" href="assets/css/analysis-loaders.css">
     <script type="application/ld+json">
     {
@@ -127,7 +127,7 @@
             <a href="analysis-jp" class="lang-link active">JP</a>
         </div>
         <div class="analysis-container">
-            <h1 class="hero__title">ゴルフスイング動画分析</h1>
+            <h1 class="hero__title">無料AIゴルフスイング診断</h1>
             
             <button id="guideBtn" class="guide-btn">
                 <span class="guide-icon">ℹ️</span> 利用案内
@@ -156,6 +156,26 @@
             <button id="analyzeBtn" disabled>分析＆コーチング</button>
             
             <div id="result"></div>
+
+            <section class="analysis-resource-guide" aria-labelledby="analysisGuideTitle">
+                <h2 id="analysisGuideTitle">解析前にご確認ください</h2>
+                <details>
+                    <summary>解析するポイントと結果の見方</summary>
+                    <p>AIは動画で見えるアドレス、バックスイング、切り返し、インパクト区間、バランスを確認します。スコアは撮影条件にも左右される相対的な推定値で、実力やハンディキャップの認定ではありません。</p>
+                </details>
+                <details>
+                    <summary>解析しやすい動画の撮り方</summary>
+                    <p>全身とクラブが画面に入るよう、明るい場所でカメラを固定してください。正面または後方（ダウン・ザ・ライン）から撮ると確認できるポイントが増えます。</p>
+                </details>
+                <details>
+                    <summary>動画と共有結果はどう扱われますか？</summary>
+                    <p>動画は解析のため一時的にアップロードされ、処理後に削除されます。解析結果のテキストは共有リンク機能のため30日間保存されます。詳しくは<a href="/privacy-jp">プライバシー案内</a>をご覧ください。</p>
+                </details>
+                <nav class="analysis-resources" aria-label="ゴルフ練習ガイド">
+                    <a href="/seo/golf-dokugaku">独学チェックリスト</a>
+                    <a href="/seo/driver-slice-naoshikata">スライスの直し方</a>
+                </nav>
+            </section>
             
             <footer class="site-footer">
                 <div class="site-footer__inner">
@@ -167,7 +187,8 @@
                             <span class="contact-icon">⬇️</span> アプリインストール
                         </button>
                     </div>
-                    <p class="copyright">© 2025 ArcherLab. All rights reserved.</p>
+                    <p class="copyright">© 2026 ArcherLab. All rights reserved.</p>
+                    <p class="policy-links"><a href="/privacy-jp">プライバシー</a><span aria-hidden="true"> · </span><a href="/terms-jp">利用規約</a></p>
                 </div>
             </footer>
         </div>
@@ -281,24 +302,16 @@
             <div class="modal-body guide-body">
                 <div class="guide-section">
                     <h4>🤖 ゴルフスイング分析とは？</h4>
-                    <p>最新のモーション分析エンジンが動画をフレーム単位でスキャンし、スイングのメカニズムを分析します。</p>
-                    <p>PGA/LPGAツアープロのデータと比較し、<strong>アドレス、バックスイング、インパクト、フィニッシュ</strong>などを客観的に診断します。</p>
+                    <p>マルチモーダルAIが動画で確認できるフレームを見て、<strong>アドレス、バックスイング、インパクト区間、フィニッシュ</strong>の観察ポイントを整理します。</p>
+                    <p>カメラ角度、明るさ、フレームレートによって結果は変わります。映っていないクラブや球筋のデータを直接測定するものではありません。</p>
                 </div>
                 <div class="guide-section">
-                    <h4>🏆 レファレンスプロとは？</h4>
-                    <p>分析エンジンの基準となる<strong>ワールドクラスのツアープロ</strong>たちを指します。</p>
-                    <p><strong>10点満点は彼らのレベル</strong>を意味し、あなたのスイングがその基準にどれだけ近いかを相対的に評価します。</p>
-                    <h5 class="reference-title">主なレファレンスプロ</h5>
-                    <ul class="reference-list">
-                        <li><strong>男子 (PGA)</strong>: タイガー・ウッズ、ローリー・マキロイ、スコッティ・シェフラー、ジョン・ラーム</li>
-                        <li><strong>女子 (LPGA)</strong>: ネリー・コルダ、コ・ジンヨン、リディア・コ、キム・ヒョジュ</li>
-                    </ul>
-
+                    <h4>📊 スコアはどう見ればよいですか？</h4>
+                    <p>スコアは1本の動画で見える姿勢とバランスをまとめた<strong>相対的なAI推定値</strong>です。公式指標、ハンディキャップ、プロレッスンの診断ではありません。</p>
                     <div class="guide-sub-text">
                         <span class="guide-icon">💡</span>
                         <div class="guide-content">
-                            がっかりしないでください！ツアープロと比較するため、点数は相対的に低くなる可能性があります。
-                            <strong>6〜7点でもシングルハンディキャッパーレベルの素晴らしいスイングです。</strong>
+                            同じ角度と明るさで繰り返し撮影し、一度に一つの動きの変化を比較する用途にご利用ください。
                         </div>
                     </div>
                 </div>
@@ -325,7 +338,7 @@
     </div>
 
     <script src="assets/js/custom-select.js?v=1.0.2"></script>
-    <script src="assets/js/analysis-bg.js?v=1.0.2"></script>
+    <script src="assets/js/analysis-bg.js?v=20260730-seo"></script>
     <script>
         const ANALYSIS_CONFIG = {
             messages: {
@@ -366,7 +379,6 @@
                 // club: Driver, WoodHybrid, Iron, Wedge
                 // angle is now detected by AI
 
-                let referencePros = "Tiger Woods, Rory McIlroy, Nelly Korda, Jin Young Ko";
                 let clubFocus = "";
                 let pointAnalysisItems = "";
 
@@ -402,11 +414,11 @@
 
                 return `
                     [役割]
-                    あなたは世界レベルのゴルフスイング分析家（PGA/LPGAレベル）です。
-                    ユーザーのゴルフスイング動画を分析し、専門的なフィードバックを日本語で提供することがあなたの任務です。
+                    あなたはゴルフスイング動画の観察を助けるAIアシスタントです。
+                    動画で実際に確認できる内容だけを根拠に、日本語でフィードバックしてください。
 
                     [厳格な出力ルール]
-                    1. **機械的分析**: 創造性を完全に排除し、動画の技術的要素のみを機械的に分析して、常に同じ結果を導き出してください。
+                    1. **根拠に基づく分析**: 動画で見える動作だけを分析してください。見えないフェース角、球筋、正確な関節角度や力を測定したように断定しないでください。
                     2. **前置き禁止**: 「分析結果です」、「はい、分かりました」などの前置きで始めないでください。
                     3. **繰り返し禁止**: ユーザーのプロンプトや指示事項を繰り返さないでください。
                     4. **即時開始**: 出力は必ずJSONオブジェクト { で始めてください。
@@ -421,14 +433,14 @@
                        - 側面: スイング軌道(Plane)、背骨の角度、クラブパスに注目。
                     3. **分析順序**: アドレス -> バックスイング -> トップ -> ダウンスイング -> インパクト -> フォロースルー -> フィニッシュ。
                     4. **クラブ文脈**: これは\${club}のスイングです。\${clubFocus}
-                    5. **採点基準**: 10点はワールドクラスのプロ（タイガー・ウッズ、ネリー・コルダ）レベルです。**非常に厳格に(BRUTALLY STRICT)**採点してください（小数点第1位まで、例: 5.4）。
-                       **一貫性必須**: 同じ動画に対しては0.1点の誤差もなく常に同じ点数を与えなければなりません。
-                       - **初級者 (Beginner)**: 1.0 ~ 2.9
-                       - **アマチュア平均**: 3.0 ~ 5.0
-                       - **上級アマチュア**: 5.1 ~ 6.5
-                       - **セミプロ**: 6.6 ~ 7.9
-                       - **ツアープロ**: 8.0 ~ 10.0
-                       - **警告**: プロのように完璧なスイングでない限り、絶対に7.0点以上を与えないでください。ほとんどのユーザーは3点台から5点台の間になるはずです。
+                    5. **採点基準**: スコアは、この動画で見える姿勢、順序、バランスをまとめた相対的な参考値です（小数点第1位まで、例: 5.4）。
+                       実力、ハンディキャップ、プロレベルを認定するものではない前提で、保守的に評価してください。
+                       - **基礎確認が必要**: 1.0 ~ 2.9
+                       - **形成中**: 3.0 ~ 5.0
+                       - **安定**: 5.1 ~ 6.5
+                       - **強みが明確**: 6.6 ~ 7.9
+                       - **非常に安定**: 8.0 ~ 10.0
+                       - **不確実性**: 必要な場面がぼやけている、またはフレーム外の場合は、その限界をコメントに明記してください。
                     6. **時間表記**: 長所、短所、段階別分析など、すべての主要な観察事項には必ず具体的な時間（例: [00:03]）を含めてください。ただし、「タイムスタンプ」という単語は使わず、時間のみ表記してください。
 
                     [出力形式 - JSON]
@@ -456,7 +468,7 @@
                     ${pointAnalysisItems}
                     - 各項目のscore: 0~10範囲、小数点第1位まで (例: 5.4)
                     - overallScore: 5項目の平均、小数点第2位まで (例: 5.42)
-                    - grade: 日本語のみ (例: "上級アマチュア")
+                    - grade: 日本語のみ (例: "安定")
                     - すべてのテキストフィールドにタイムスタンプ [00:03] 形式を積極的に含めてください。
 
                     [重要]

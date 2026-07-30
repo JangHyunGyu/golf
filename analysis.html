@@ -29,8 +29,8 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
-	<title>AI 골프 스윙 진단 & 코칭</title>
-	<meta name="description" content="AI 골프 스윙 분석 엔진이 당신의 스윙 영상을 진단하여 프로 수준의 코칭 및 피드백을 무료로 제공합니다." />
+	<title>무료 AI 골프 스윙 분석 | 영상 업로드 온라인 진단</title>
+	<meta name="description" content="스윙 영상을 업로드하면 AI가 자세, 템포, 임팩트 구간과 슬라이스 징후를 살펴보고 개선 연습을 제안하는 무료 온라인 골프 스윙 분석입니다." />
 	<link rel="canonical" href="https://golf.archerlab.dev/analysis" />
     <link rel="sitemap" type="application/xml" href="https://golf.archerlab.dev/sitemap.xml" />
     <link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/analysis" />
@@ -41,13 +41,13 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="ko_KR" />
 	<meta property="og:site_name" content="골프 스윙 마스터" />
-	<meta property="og:title" content="AI 골프 스윙 진단 & 코칭" />
-	<meta property="og:description" content="AI 골프 스윙 분석 엔진이 당신의 스윙 영상을 진단하여 피드백을 제공합니다." />
+	<meta property="og:title" content="무료 AI 골프 스윙 분석" />
+	<meta property="og:description" content="영상으로 자세, 템포, 임팩트 구간과 슬라이스 징후를 확인하고 개선 연습을 받아보세요." />
 	<meta property="og:url" content="https://golf.archerlab.dev/analysis" />
 	<meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="골프 스윙 분석 & 코칭" />
-	<meta name="twitter:description" content="골프 스윙 분석 엔진이 당신의 스윙 영상을 분석하여 피드백을 제공합니다." />
+	<meta name="twitter:title" content="무료 AI 골프 스윙 분석" />
+	<meta name="twitter:description" content="영상을 올리고 AI 스윙 피드백과 개선 연습을 확인하세요." />
 	<meta name="twitter:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
 	
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
             document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"><\/script>');
         }
     </script>
-	<link rel="stylesheet" href="assets/css/style.css?v=1.0.0">
+	<link rel="stylesheet" href="assets/css/style.css?v=20260730-seo">
 	<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script> -->
 	<script defer src="assets/js/ga.js?v=1.0.0"></script>
 	<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
@@ -78,14 +78,14 @@
 		}
 	</script>
     
-    <link rel="stylesheet" href="assets/css/analysis.css?v=final1">
+    <link rel="stylesheet" href="assets/css/analysis.css?v=20260730-seo">
     <link rel="stylesheet" href="assets/css/analysis-loaders.css">
     <!-- <link rel="stylesheet" href="assets/css/custom-select.css"> -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "골프 스윙 분석기",
+      "name": "무료 AI 골프 스윙 분석기",
       "url": "https://golf.archerlab.dev/analysis",
       "image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
       "operatingSystem": "Web",
@@ -97,7 +97,7 @@
         "price": "0",
         "priceCurrency": "KRW"
       },
-      "description": "골프 스윙 모션 분석 및 자세 교정 서비스"
+      "description": "업로드 영상의 보이는 동작을 바탕으로 자세, 템포, 임팩트 구간과 연습 방향을 제안하는 무료 AI 골프 스윙 분석 서비스"
     }
     </script>
     <link rel="manifest" href="manifest.json">
@@ -126,7 +126,7 @@
             <a href="analysis-jp" class="lang-link">JP</a>
         </div>
         <div class="analysis-container">
-            <h1 class="hero__title">골프 스윙 영상 분석</h1>
+            <h1 class="hero__title">무료 AI 골프 스윙 분석</h1>
             
             <button id="guideBtn" class="guide-btn">
                 <span class="guide-icon">ℹ️</span> 이용 안내
@@ -158,6 +158,26 @@
             <!-- Loading div removed, moved to modal -->
             
             <div id="result"></div>
+
+            <section class="analysis-resource-guide" aria-labelledby="analysisGuideTitle">
+                <h2 id="analysisGuideTitle">분석 전 확인해 주세요</h2>
+                <details>
+                    <summary>분석 항목과 결과 해석</summary>
+                    <p>AI는 영상에 보이는 어드레스, 백스윙, 전환, 임팩트 구간, 균형을 살펴봅니다. 점수는 촬영 조건에도 영향을 받는 상대적 참고값이며 실력·핸디캡 인증이 아닙니다.</p>
+                </details>
+                <details>
+                    <summary>정확도를 높이는 촬영 방법</summary>
+                    <p>전신과 클럽이 프레임 안에 들어오도록 밝은 곳에서 촬영하세요. 정면 또는 타깃 라인 뒤쪽 영상을 흔들림 없이 찍으면 관찰 가능한 구간이 늘어납니다.</p>
+                </details>
+                <details>
+                    <summary>영상과 공유 결과는 어떻게 처리되나요?</summary>
+                    <p>영상은 분석을 위해 임시 업로드되고 처리 후 삭제됩니다. 분석 결과 텍스트는 공유 링크 제공을 위해 30일간 보관됩니다. 자세한 내용은 <a href="/privacy">개인정보 처리 안내</a>에서 확인할 수 있습니다.</p>
+                </details>
+                <nav class="analysis-resources" aria-label="골프 연습 자료">
+                    <a href="/seo/golf-dokak">골프 독학 체크리스트</a>
+                    <a href="/seo/driver-slice-gyojung">드라이버 슬라이스 교정</a>
+                </nav>
+            </section>
             
             <footer class="site-footer">
                 <div class="site-footer__inner">
@@ -169,7 +189,8 @@
                             <span class="contact-icon">⬇️</span> 앱 설치
                         </button>
                     </div>
-                    <p class="copyright">© 2025 ArcherLab. All rights reserved.</p>
+                    <p class="copyright">© 2026 ArcherLab. All rights reserved.</p>
+                    <p class="policy-links"><a href="/privacy">개인정보 처리 안내</a><span aria-hidden="true"> · </span><a href="/terms">이용약관</a></p>
                 </div>
             </footer>
         </div>
@@ -283,24 +304,16 @@
             <div class="modal-body guide-body">
                 <div class="guide-section">
                     <h4>🤖 골프 스윙 분석이란?</h4>
-                    <p>최신 모션 분석 엔진이 영상을 프레임 단위로 정밀하게 스캔하여 스윙의 메커니즘을 분석합니다.</p>
-                    <p>PGA/LPGA 투어 프로들의 데이터와 비교하여 <strong>어드레스, 백스윙, 임팩트, 피니시</strong> 등을 객관적으로 진단해 드립니다.</p>
+                    <p>멀티모달 AI가 영상에서 확인 가능한 프레임을 살펴보고 <strong>어드레스, 백스윙, 임팩트 구간, 피니시</strong>의 관찰 포인트를 정리합니다.</p>
+                    <p>카메라 각도, 조명, 프레임 속도에 따라 결과가 달라질 수 있으며 보이지 않는 클럽·볼 데이터는 직접 측정하지 않습니다.</p>
                 </div>
                 <div class="guide-section">
-                    <h4>🏆 레퍼런스 프로란?</h4>
-                    <p>분석 엔진 가이드 영상 소스로 수집된 <strong>월드 클래스 투어 프로</strong>들을 의미합니다.</p>
-                    <p><strong>10점 만점은 이들의 수준</strong>을 의미하며, 여러분의 스윙이 그 기준에 얼마나 근접했는지를 상대적으로 평가합니다.</p>
-                    <h5 class="reference-title">주요 레퍼런스 프로</h5>
-                    <ul class="reference-list">
-                        <li><strong>남자 (PGA)</strong>: 타이거 우즈, 로리 맥길로이, 스코티 셰플러, 존 람</li>
-                        <li><strong>여자 (LPGA)</strong>: 넬리 코다, 고진영, 리디아 고, 김효주</li>
-                    </ul>
-
+                    <h4>📊 점수는 어떻게 봐야 하나요?</h4>
+                    <p>점수는 한 영상 안에서 관찰된 자세와 균형을 요약한 <strong>상대적 AI 추정치</strong>입니다. 공인 지표나 프로 레슨의 진단, 핸디캡을 대신하지 않습니다.</p>
                     <div class="guide-sub-text">
                         <span class="guide-icon">💡</span>
                         <div class="guide-content">
-                            실망하지 마세요! 투어 프로들과 비교하므로 점수가 상대적으로 낮게 나올 수 있습니다. 
-                            <strong>6~7점만 되어도 싱글 핸디캡퍼 수준의 훌륭한 스윙입니다.</strong>
+                            같은 각도와 조명으로 반복 촬영한 뒤 한 번에 한 가지 동작의 변화를 비교하는 용도로 활용해 보세요.
                         </div>
                     </div>
                 </div>
@@ -327,7 +340,7 @@
     </div>
 
     <script src="assets/js/custom-select.js?v=1.0.2"></script>
-    <script src="assets/js/analysis-bg.js?v=1.0.2"></script>
+    <script src="assets/js/analysis-bg.js?v=20260730-seo"></script>
     <script>
         const ANALYSIS_CONFIG = {
             messages: {
@@ -368,7 +381,6 @@
                 // club: Driver, WoodHybrid, Iron, Wedge
                 // angle is now detected by AI
 
-                let referencePros = "Tiger Woods, Rory McIlroy, Nelly Korda, Jin Young Ko";
                 let clubFocus = "";
                 let pointAnalysisItems = "";
 
@@ -404,11 +416,11 @@
 
                 return `
                     [역할]
-                    당신은 세계적인 수준의 골프 스윙 분석가(PGA/LPGA 레벨)입니다.
-                    사용자의 골프 스윙 영상을 분석하고 전문적인 피드백을 한국어로 제공하는 것이 당신의 임무입니다.
+                    당신은 골프 스윙 영상 관찰을 돕는 AI 분석 도우미입니다.
+                    영상에서 실제로 확인 가능한 내용만 근거로 한국어 피드백을 제공하는 것이 임무입니다.
 
                     [엄격한 출력 규칙]
-                    1. **기계적 분석**: 창의성을 완전히 배제하고, 오직 영상의 기술적 요소만을 기계적으로 분석하여 언제나 동일한 결과를 도출하십시오.
+                    1. **근거 중심 분석**: 영상에서 보이는 동작만 분석하십시오. 보이지 않는 클럽 페이스 각도, 볼 비행, 정확한 관절 각도나 힘을 측정한 것처럼 단정하지 마십시오.
                     2. **서론 금지**: "분석 결과입니다", "네, 알겠습니다" 등의 서론으로 시작하지 마십시오.
                     3. **반복 금지**: 사용자의 프롬프트나 지시사항을 반복하지 마십시오.
                     4. **즉시 시작**: 출력은 반드시 JSON 객체 { 로 시작해야 합니다.
@@ -423,14 +435,14 @@
                        - 측면: 스윙 궤도(Plane), 척추 각도, 클럽 패스에 집중.
                     3. **분석 순서**: 어드레스 -> 백스윙 -> 탑 -> 다운스윙 -> 임팩트 -> 팔로우스루 -> 피니시.
                     4. **클럽 문맥**: 이것은 \${club} 스윙입니다. \${clubFocus}
-                    5. **채점 기준**: 10점은 월드 클래스 프로(타이거 우즈, 넬리 코다) 수준입니다. **매우 엄격하게(BRUTALLY STRICT)** 채점하십시오(소수점 첫째 자리까지, 예: 5.4).
-                       **일관성 필수**: 동일한 영상에 대해서는 0.1점의 오차도 없이 항상 똑같은 점수를 부여해야 합니다.
-                       - **초급자 (Beginner)**: 1.0 ~ 2.9
-                       - **아마추어 평균**: 3.0 ~ 5.0
-                       - **상급 아마추어**: 5.1 ~ 6.5
-                       - **세미 프로**: 6.6 ~ 7.9
-                       - **투어 프로**: 8.0 ~ 10.0
-                       - **경고**: 프로처럼 완벽한 스윙이 아니라면 절대 7.0점 이상을 주지 마십시오. 대부분의 사용자는 3점대에서 5점대 사이를 받아야 합니다.
+                    5. **채점 기준**: 점수는 이 영상에서 관찰 가능한 자세, 순서, 균형을 요약한 상대적 참고값입니다(소수점 첫째 자리까지, 예: 5.4).
+                       점수가 실력, 핸디캡, 프로 등급을 인증하지 않는다는 점을 전제로 보수적으로 평가하십시오.
+                       - **기초 점검 필요**: 1.0 ~ 2.9
+                       - **형성 중**: 3.0 ~ 5.0
+                       - **안정적**: 5.1 ~ 6.5
+                       - **강점 뚜렷**: 6.6 ~ 7.9
+                       - **매우 안정적**: 8.0 ~ 10.0
+                       - **불확실성**: 필요한 장면이 흐리거나 프레임 밖이면 해당 한계를 코멘트에 명시하십시오.
                     6. **시간 표기**: 장점, 단점, 단계별 분석 등 모든 주요 관찰 사항에는 반드시 구체적인 시간(예: [00:03])을 포함해야 합니다. 단, "타임스탬프"라는 단어는 쓰지 말고 시간만 표기하십시오.
 
                     [출력 형식 - JSON]
@@ -458,7 +470,7 @@
                     ${pointAnalysisItems}
                     - 각 항목의 score는 0~10 범위, 소수점 첫째 자리까지 (예: 5.4)
                     - overallScore는 5개 항목의 평균, 소수점 둘째 자리까지 (예: 5.42)
-                    - grade는 영어 등급명 없이 한국어로만 출력 (예: "상급 아마추어")
+                    - grade는 영어 등급명 없이 한국어로만 출력 (예: "안정적")
                     - 모든 텍스트 필드에 타임스탬프 [00:03] 형식을 적극 포함하세요.
 
                     [중요]

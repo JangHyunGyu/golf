@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>プライバシーポリシー | Golf Swing Master</title>
+  <meta name="description" content="Golf Swing Masterにおけるスイング動画のアップロード、AI解析、共有結果、アクセス解析および技術ログの取扱いを説明します。">
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="https://golf.archerlab.dev/privacy-jp">
+  <link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/privacy">
+  <link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/privacy-en">
+  <link rel="alternate" hreflang="ja" href="https://golf.archerlab.dev/privacy-jp">
+  <link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/privacy-en">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:site_name" content="Golf Swing Master">
+  <meta property="og:title" content="プライバシーポリシー | Golf Swing Master">
+  <meta property="og:description" content="動画アップロード、AI解析、共有結果および技術データの取扱いを説明します。">
+  <meta property="og:url" content="https://golf.archerlab.dev/privacy-jp">
+  <meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/legal.css">
+</head>
+<body>
+  <div class="legal-shell">
+    <header class="legal-topbar">
+      <a class="legal-brand" href="/analysis-jp">Golf Swing Master</a>
+      <nav class="language-links" aria-label="言語を選択">
+        <a href="/privacy" lang="ko">KO</a>
+        <a href="/privacy-en" lang="en">EN</a>
+        <a href="/privacy-jp" lang="ja" aria-current="page">JA</a>
+      </nav>
+    </header>
+
+    <main>
+      <article class="legal-document">
+        <header class="legal-hero">
+          <p class="legal-eyebrow">Privacy</p>
+          <h1>プライバシーポリシー</h1>
+          <p class="legal-summary">Golf Swing Masterがスイング動画を解析し、AIによる結果を提供する際に取り扱うデータについて説明します。</p>
+          <p class="legal-effective">施行日：<time datetime="2026-07-30">2026年7月30日</time></p>
+        </header>
+
+        <div class="legal-content">
+          <aside class="legal-notice">
+            <strong>最初にご確認ください。</strong> アカウント登録は不要ですが、解析のために元動画が外部ストレージおよびAI処理サービスへ送信されます。顔、車両番号、自宅内など、個人を特定できる情報や機微な情報が映った動画はアップロードしないことをおすすめします。
+          </aside>
+
+          <section class="legal-section">
+            <h2>1. 適用範囲と運営者</h2>
+            <p>本ポリシーは、<strong>golf.archerlab.dev</strong>で提供するGolf Swing Masterウェブサービスに適用されます。サービスまたは本ポリシーに関するお問い合わせは、<a class="legal-contact" href="mailto:hyungyu@archerlab.dev">hyungyu@archerlab.dev</a>までお送りください。</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>2. 取り扱うデータ</h2>
+            <p>本サービスはユーザーアカウントを作成しません。機能の提供と安定運用のため、次のデータを取り扱う場合があります。</p>
+            <ul>
+              <li>ユーザーが選択したゴルフスイングの元動画</li>
+              <li>ファイル名、メディア形式、ファイルサイズなど、アップロードに必要なメタデータ</li>
+              <li>選択したクラブの種類とAIが生成した解析結果テキスト</li>
+              <li>共有結果の識別子と作成時刻</li>
+              <li>GoogleおよびNaverのアクセス解析によって収集されるページ、ブラウザ、端末、画面サイズ、利用イベントなどの情報</li>
+              <li>エラーメッセージやスタック、エラー発生時のURL・パス、オンライン状態、画面サイズなどの技術ログ</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>3. 元動画の処理と削除</h2>
+            <ol>
+              <li>選択した動画は、解析のためCloudflare R2へ一時的にアップロードされます。</li>
+              <li>動画は、OpenRouterおよび解析時点で選択される現在の下流AIモデル提供者を通じて処理されます。</li>
+              <li>解析が正常に行われた場合、AI提供者から応答を受信した後、サーバーは一時保存した元動画の削除を試みます。</li>
+              <li>アップロードが未完了、または通常の削除処理まで進まず解析が失敗した場合、そのオブジェクトはアップロード開始から30分後にクリーンアップ対象となり、定期実行される処理によって削除されます。</li>
+            </ol>
+            <p>30分はクリーンアップ対象となる時点です。実際の削除完了は定期処理の実行時刻により、それより後になる場合があります。共有結果とともに元動画を保存することはありません。</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>4. 共有結果の保存期間</h2>
+            <p>共有リンク機能を提供するため、解析結果のテキストをCloudflare KVに30日間保存します。共有結果に元動画は含まれません。</p>
+            <p>共有リンクには別途ログインやアクセス用パスワードがありません。リンクを知っている人は、30日の保存期間中、その結果を閲覧できます。公開チャンネルへ投稿する際は十分にご注意ください。</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>5. 利用目的</h2>
+            <ul>
+              <li>動画のアップロード、AIスイング解析、結果表示および結果共有機能の提供</li>
+              <li>エラー調査、障害対応、セキュリティ確認およびサービス品質の改善</li>
+              <li>訪問数や機能利用状況の統計的な把握</li>
+            </ul>
+          </section>
+
+          <section class="legal-section">
+            <h2>6. 外部サービス提供者</h2>
+            <div class="legal-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>提供者</th>
+                    <th>役割</th>
+                    <th>取り扱われる可能性があるデータ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Cloudflare</td>
+                    <td>ウェブホスティング、一時動画保存（R2）、共有結果保存（KV）、ネットワーク配信</td>
+                    <td>元動画、アップロードメタデータ、結果テキスト、接続・ネットワーク情報</td>
+                  </tr>
+                  <tr>
+                    <td>OpenRouterおよび現在の下流AIモデル提供者</td>
+                    <td>動画に基づくAI解析</td>
+                    <td>元動画、解析指示、選択したクラブの種類</td>
+                  </tr>
+                  <tr>
+                    <td>Google Analytics、Naver Analytics</td>
+                    <td>訪問・利用状況の計測</td>
+                    <td>ページイベント、ブラウザ・端末・接続に関する情報</td>
+                  </tr>
+                  <tr>
+                    <td>技術ログ処理サービス</td>
+                    <td>エラー収集と障害診断</td>
+                    <td>エラーメッセージ・スタック、URL、パス、画面サイズなどの技術情報</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>各提供者は、それぞれの規約およびプライバシーポリシーに基づき、ユーザーの居住国とは異なる国でデータを処理する場合があります。</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>7. ユーザーの選択と注意事項</h2>
+            <ul>
+              <li>動画のアップロードは任意です。ファイルを選択して解析を開始しない限り、動画解析は行われません。</li>
+              <li>利用する権利がある動画、または映っている人から必要な同意を得た動画のみアップロードしてください。</li>
+              <li>識別可能な顔、第三者、位置情報、車両番号、個人文書、機微な情報は避けるか、アップロード前に隠してください。</li>
+              <li>共有リンクは必要な相手だけに送り、不要になったリンクを再配布しないでください。</li>
+            </ul>
+            <p>共有結果や技術ログについてお問い合わせいただく際は、該当する共有リンクまたはおおよその発生時刻を添えると、確認しやすくなります。</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>8. セキュリティと限界</h2>
+            <p>本サービスは、通信の暗号化や推測しにくい識別子など、合理的な保護措置の利用に努めます。ただし、インターネット通信や外部サービスの完全な安全性を保証することはできません。機微な動画をアップロードしないことが最も安全です。</p>
+          </section>
+
+          <section class="legal-section">
+            <h2>9. 変更とお問い合わせ</h2>
+            <p>機能、提供者または関連する要件が変わった場合、本ポリシーを改定することがあります。重要な変更は、このページの施行日を更新してお知らせします。</p>
+            <p>プライバシーに関するお問い合わせ：<a class="legal-contact" href="mailto:hyungyu@archerlab.dev">hyungyu@archerlab.dev</a></p>
+          </section>
+        </div>
+      </article>
+    </main>
+
+    <footer class="legal-footer">
+      <nav aria-label="法的情報">
+        <a href="/privacy-jp" aria-current="page">プライバシー</a>
+        <a href="/terms-jp">利用規約</a>
+        <a href="/analysis-jp">解析ツールに戻る</a>
+      </nav>
+      <p>© 2026 ArcherLab. Golf Swing Master.</p>
+    </footer>
+  </div>
+</body>
+</html>

@@ -109,6 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.style.opacity = '0.8';
     document.body.appendChild(canvas);
 
+    // The current visual design hides this canvas. Avoid a permanent animation
+    // loop when it cannot be seen, and respect reduced-motion preferences.
+    if (getComputedStyle(canvas).display === 'none' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        canvas.remove();
+        return;
+    }
+
     const ctx = canvas.getContext('2d');
     let width, height;
     

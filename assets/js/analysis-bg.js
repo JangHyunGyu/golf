@@ -11,6 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.style.opacity = '1'; 
     document.body.prepend(canvas);
 
+    // The stylesheet currently hides this canvas. Do not keep painting frames
+    // in the background when there is nothing for the user to see.
+    if (getComputedStyle(canvas).display === 'none' || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        canvas.remove();
+        return;
+    }
+
     const ctx = canvas.getContext('2d');
     let width, height;
     
