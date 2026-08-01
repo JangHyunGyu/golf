@@ -317,6 +317,29 @@ for (const file of expectedHtmlFiles) {
 }
 
 // ============================================================
+// 7. Retired Latin-dance directory assets stay out of the golf bundle
+// ============================================================
+console.log('\n[7] Golf bundle excludes retired directory assets');
+
+const retiredDirectoryAssets = [
+    'assets/js/clubs-wow.js',
+    'assets/js/constants.js',
+    'assets/js/main.js',
+    'assets/js/structured-data.js',
+    'assets/js/venues.js',
+    'assets/js/utils/filter-utils.js',
+    'assets/js/data'
+];
+
+for (const retiredAsset of retiredDirectoryAssets) {
+    if (fileExistsAt(retiredAsset)) {
+        fail(`${retiredAsset} is unrelated to the golf analyzer and must not ship`);
+    } else {
+        pass(`${retiredAsset} is excluded`);
+    }
+}
+
+// ============================================================
 // Summary
 // ============================================================
 console.log('\n' + '='.repeat(60));
