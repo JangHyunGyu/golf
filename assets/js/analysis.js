@@ -59,6 +59,95 @@ const detectBrowserLanguage = () => {
     }
 })();
 
+const ANALYSIS_LANGUAGE = (() => {
+    const language = (document.documentElement.lang || "en").toLowerCase().split("-")[0];
+    return ["ko", "en", "ja"].includes(language) ? language : "en";
+})();
+
+const ANALYSIS_CLIENT_MESSAGES = ({
+    ko: {
+        rejection: "업로드한 영상에서 골프 스윙을 확인할 수 없어 분석을 진행할 수 없습니다. 골프 스윙 영상으로 다시 시도해 주세요.",
+        initFailed: "영상 업로드 준비에 실패했습니다.",
+        uploadPartFailed: "영상 {part}번째 조각 업로드에 실패했습니다.",
+        uploadNetwork: "영상 {part}번째 조각을 업로드하는 중 네트워크 오류가 발생했습니다.",
+        uploadTimeout: "영상 {part}번째 조각 업로드 시간이 초과되었습니다.",
+        uploadCompletionFailed: "영상 업로드 완료 처리에 실패했습니다.",
+        statusCheckFailed: "영상 처리 상태를 확인하지 못했습니다.",
+        processingFailed: "서버에서 영상을 처리하지 못했습니다.",
+        processingTimeout: "영상 처리 대기 시간이 초과되었습니다.",
+        analysisFailed: "영상 분석에 실패했습니다.",
+        emptyResponse: "서버에서 빈 분석 결과를 반환했습니다.",
+        invalidResponse: "서버 분석 결과 형식이 올바르지 않습니다.",
+        resultNotFound: "공유된 분석 결과를 찾을 수 없습니다.",
+    },
+    en: {
+        rejection: "We couldn't identify a golf swing in the uploaded video, so it can't be analyzed. Please try again with a golf swing video.",
+        initFailed: "Failed to prepare the video upload.",
+        uploadPartFailed: "Failed to upload video part {part}.",
+        uploadNetwork: "A network error occurred while uploading video part {part}.",
+        uploadTimeout: "The upload of video part {part} timed out.",
+        uploadCompletionFailed: "Failed to complete the video upload.",
+        statusCheckFailed: "Failed to check the video processing status.",
+        processingFailed: "The server could not process the video.",
+        processingTimeout: "Video processing timed out.",
+        analysisFailed: "Video analysis failed.",
+        emptyResponse: "The server returned an empty analysis result.",
+        invalidResponse: "The server returned an invalid analysis result.",
+        resultNotFound: "The shared analysis result was not found.",
+    },
+    ja: {
+        rejection: "アップロードされた動画でゴルフスイングを確認できなかったため、分析できません。ゴルフスイングの動画でもう一度お試しください。",
+        initFailed: "動画アップロードの準備に失敗しました。",
+        uploadPartFailed: "動画のパート{part}のアップロードに失敗しました。",
+        uploadNetwork: "動画のパート{part}のアップロード中にネットワークエラーが発生しました。",
+        uploadTimeout: "動画のパート{part}のアップロードがタイムアウトしました。",
+        uploadCompletionFailed: "動画アップロードの完了処理に失敗しました。",
+        statusCheckFailed: "動画の処理状況を確認できませんでした。",
+        processingFailed: "サーバーで動画を処理できませんでした。",
+        processingTimeout: "動画処理がタイムアウトしました。",
+        analysisFailed: "動画の分析に失敗しました。",
+        emptyResponse: "サーバーから空の分析結果が返されました。",
+        invalidResponse: "サーバーから無効な分析結果が返されました。",
+        resultNotFound: "共有された分析結果が見つかりません。",
+    },
+})[ANALYSIS_LANGUAGE];
+
+function analysisMessage(key, values = {}) {
+    return Object.entries(values).reduce(
+        (message, [name, value]) => message.replaceAll(`{${name}}`, String(value)),
+        ANALYSIS_CLIENT_MESSAGES[key] || ANALYSIS_CLIENT_MESSAGES.analysisFailed
+    );
+}
+
+function analysisApiUrl(baseUrl, action, params = {}) {
+    const url = new URL(baseUrl);
+    url.searchParams.set("action", action);
+    url.searchParams.set("lang", ANALYSIS_LANGUAGE);
+    Object.entries(params).forEach(([name, value]) => url.searchParams.set(name, String(value)));
+    return url.toString();
+}
+
+function xhrApiError(xhr, fallbackKey, values = {}) {
+    try {
+        const payload = JSON.parse(xhr.responseText || "{}");
+        if (typeof payload.error === "string" && payload.error.trim()) return payload.error;
+    } catch (_) {
+        // Use the localized client fallback below.
+    }
+    return `${analysisMessage(fallbackKey, values)} (${xhr.status || 0})`;
+}
+
+async function responseApiError(response, fallbackKey) {
+    const text = await response.text();
+    try {
+        const payload = JSON.parse(text);
+        if (typeof payload.error === "string" && payload.error.trim()) return payload.error;
+    } catch (_) {
+        // Use the localized client fallback below.
+    }
+    return `${analysisMessage(fallbackKey)} (${response.status})`;
+}
+
 // Kakao SDK Init
 try {
     Kakao.init('41684f8ded61c7e396e37031d51bbc3c'); 
@@ -122,7 +211,7 @@ function renderJsonAnalysis(content) {
 
     // Rejected
     if (data.rejected) {
-        return `<p style="text-align:center; color:#ff9800; font-size:1.1rem; padding:2rem 1rem;">${escapeHtml(data.rejectMessage || '')}</p>`;
+        return `<p style="text-align:center; color:#ff9800; font-size:1.1rem; padding:2rem 1rem;">${escapeHtml(ANALYSIS_CLIENT_MESSAGES.rejection)}</p>`;
     }
 
     let html = '';
@@ -279,7 +368,7 @@ async function uploadVideoInChunks(apiUrl, file, session, onProgress) {
             try {
                 await new Promise((resolve, reject) => {
                     const xhr = new XMLHttpRequest();
-                    xhr.open("POST", `${apiUrl}?action=upload_part`);
+                    xhr.open("POST", analysisApiUrl(apiUrl, "upload_part"));
                     xhr.setRequestHeader("Content-Type", session.mimeType || file.type || "video/mp4");
                     xhr.setRequestHeader("X-Upload-Token", session.uploadToken);
                     xhr.setRequestHeader("X-Part-Number", String(partNumber));
@@ -298,10 +387,10 @@ async function uploadVideoInChunks(apiUrl, file, session, onProgress) {
                     };
                     xhr.onload = () => {
                         if (xhr.status >= 200 && xhr.status < 300) resolve();
-                        else reject(new Error(`Part ${partNumber} upload failed (${xhr.status}): ${xhr.responseText}`));
+                        else reject(new Error(xhrApiError(xhr, "uploadPartFailed", { part: partNumber })));
                     };
-                    xhr.onerror = () => reject(new Error(`Network error while uploading part ${partNumber}`));
-                    xhr.ontimeout = () => reject(new Error(`Part ${partNumber} upload timed out`));
+                    xhr.onerror = () => reject(new Error(analysisMessage("uploadNetwork", { part: partNumber })));
+                    xhr.ontimeout = () => reject(new Error(analysisMessage("uploadTimeout", { part: partNumber })));
                     xhr.send(chunk);
                 });
                 uploaded = true;
@@ -312,7 +401,7 @@ async function uploadVideoInChunks(apiUrl, file, session, onProgress) {
         }
     }
 
-    const completeRes = await fetch(`${apiUrl}?action=complete_upload`, {
+    const completeRes = await fetch(analysisApiUrl(apiUrl, "complete_upload"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -321,7 +410,7 @@ async function uploadVideoInChunks(apiUrl, file, session, onProgress) {
         body: "{}",
     });
     if (!completeRes.ok) {
-        throw new Error(`Upload completion failed (${completeRes.status}): ${await completeRes.text()}`);
+        throw new Error(await responseApiError(completeRes, "uploadCompletionFailed"));
     }
     onProgress({ percent: 100, speed: file.size / 1024 / 1024 / Math.max((Date.now() - startedAt) / 1000, 0.1), partNumber: partCount, partCount, attempt: 1 });
     return completeRes.json();
@@ -363,7 +452,7 @@ async function runAnalysis() {
             console.log("Step 1: Init");
             setModalStep('step-init');
             modalBody.innerHTML = `<p>${ANALYSIS_CONFIG.messages.stepInit}</p>`;
-            const initRes = await fetch(`${API_URL}?action=init`, {
+            const initRes = await fetch(analysisApiUrl(API_URL, "init"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -374,11 +463,7 @@ async function runAnalysis() {
             });
             
             if (!initRes.ok) {
-                const text = await initRes.text();
-                if (text.includes("User location is not supported") || text.includes("FAILED_PRECONDITION")) {
-                    throw new Error("해당 IP가 Google 서비스 접속이 차단되었습니다.\n(VPN, Google One, 또는 보안 Wi-Fi를 끄고 시도해주세요)");
-                }
-                throw new Error(`Init failed (${initRes.status}): ${text}`);
+                throw new Error(await responseApiError(initRes, "initFailed"));
             }
             const uploadSession = await initRes.json();
 
@@ -428,13 +513,13 @@ async function runAnalysis() {
         
         let isReady = false;
         for (let i = 0; i < 60; i++) { // Max 2 mins
-            const checkRes = await fetch(`${API_URL}?action=check_status`, {
+            const checkRes = await fetch(analysisApiUrl(API_URL, "check_status"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ fileName })
             });
             
-            if (!checkRes.ok) throw new Error("Status check failed");
+            if (!checkRes.ok) throw new Error(await responseApiError(checkRes, "statusCheckFailed"));
             const statusData = await checkRes.json();
             
             if (statusData.state === "ACTIVE") {
@@ -442,14 +527,14 @@ async function runAnalysis() {
                 break;
             }
             if (statusData.state === "FAILED") {
-                throw new Error("Video processing failed at server side");
+                throw new Error(analysisMessage("processingFailed"));
             }
             
             // Wait 2s
             await new Promise(r => setTimeout(r, 2000));
         }
         
-        if (!isReady) throw new Error("Video processing timed out");
+        if (!isReady) throw new Error(analysisMessage("processingTimeout"));
 
         // 4. Analyze
         console.log("Step 4: Analyze");
@@ -469,7 +554,7 @@ async function runAnalysis() {
         // Generate Prompt using the function injected from HTML
         const prompt = ANALYSIS_CONFIG.generatePrompt(genre);
 
-        const analyzeRes = await fetch(`${API_URL}?action=analyze`, {
+        const analyzeRes = await fetch(analysisApiUrl(API_URL, "analyze"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -482,18 +567,17 @@ async function runAnalysis() {
         });
 
         if (!analyzeRes.ok) {
-            const text = await analyzeRes.text();
-            throw new Error(`Analysis failed (${analyzeRes.status}): ${text}`);
+            throw new Error(await responseApiError(analyzeRes, "analysisFailed"));
         }
         
         const text = await analyzeRes.text();
-        if (!text) throw new Error("Empty response from server");
+        if (!text) throw new Error(analysisMessage("emptyResponse"));
         
         let data;
         try {
             data = JSON.parse(text);
         } catch (e) {
-            throw new Error(`Invalid JSON response: ${text.substring(0, 100)}...`);
+            throw new Error(analysisMessage("invalidResponse"));
         }
         
         let content = data.choices?.[0]?.message?.content || ANALYSIS_CONFIG.messages.resultError;
@@ -502,7 +586,7 @@ async function runAnalysis() {
 
         // Save Result
         try {
-            const saveRes = await fetch(`${API_URL}?action=save_result`, {
+            const saveRes = await fetch(analysisApiUrl(API_URL, "save_result"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -535,7 +619,7 @@ async function runAnalysis() {
         setModalStep('step-error');
         alert(`${ANALYSIS_CONFIG.messages.errorTitle}: ${error.message}`);
         modalTitle.textContent = ANALYSIS_CONFIG.messages.errorTitle;
-        modalBody.innerHTML = `<p style="color:red">${error.message}</p>`;
+        modalBody.innerHTML = `<p style="color:red">${escapeHtml(error.message)}</p>`;
         modalFooter.style.display = 'none';
     } finally {
         // MiMo 분석이 끝나면 서버가 임시 동영상을 삭제하므로 업로드 캐시도 폐기합니다.
@@ -647,8 +731,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         modalCloseBtn.style.display = 'block';
 
         try {
-            const res = await fetch(`${API_URL}?action=get_result&id=${sharedId}`);
-            if (!res.ok) throw new Error("Result not found");
+            const res = await fetch(analysisApiUrl(API_URL, "get_result", { id: sharedId }), { method: "POST" });
+            if (!res.ok) throw new Error(await responseApiError(res, "resultNotFound"));
             
             const data = await res.json();
             const content = data.result;
@@ -669,7 +753,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             console.error(err);
             setModalStep('step-error'); // Error state (Red)
             modalTitle.textContent = ANALYSIS_CONFIG.messages.errorTitle;
-            modalBody.innerHTML = `<p>${ANALYSIS_CONFIG.messages.loadSharedFail}<br>(${err.message})</p>`;
+            modalBody.innerHTML = `<p>${escapeHtml(ANALYSIS_CONFIG.messages.loadSharedFail)}<br>(${escapeHtml(err.message)})</p>`;
         }
     }
 });
