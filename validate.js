@@ -63,6 +63,18 @@ for (const file of expectedHtmlFiles) {
     }
 }
 
+const koAnalysisPrompt = readFile('analysis.html');
+if (koAnalysisPrompt.includes('[한국어 원문체]') && koAnalysisPrompt.includes('처음부터 한국어로 쓴 글')) {
+    pass('한국어 영상 분석 프롬프트에 im not ai 원문체 가드 포함');
+} else {
+    fail('한국어 영상 분석 프롬프트의 im not ai 원문체 가드 누락');
+}
+if (koAnalysisPrompt.includes('JSON 키·구조·고정값은 바꾸지')) {
+    pass('한국어 원문체 가드가 분석 JSON 계약을 보존');
+} else {
+    fail('한국어 원문체 가드의 분석 JSON 보존 지침 누락');
+}
+
 // ============================================================
 // 2. service-worker.js exists
 // ============================================================
