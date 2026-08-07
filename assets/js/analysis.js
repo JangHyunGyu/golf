@@ -622,7 +622,7 @@ async function runAnalysis() {
         modalBody.innerHTML = `<p style="color:red">${escapeHtml(error.message)}</p>`;
         modalFooter.style.display = 'none';
     } finally {
-        // MiMo 분석이 끝나면 서버가 임시 동영상을 삭제하므로 업로드 캐시도 폐기합니다.
+        // Gemma 분석이 끝나면 서버가 임시 동영상을 삭제하므로 업로드 캐시도 폐기합니다.
         lastUploadedFileMetadata = null;
         lastUploadedFileUri = null;
         lastUploadedServerFileName = null;
