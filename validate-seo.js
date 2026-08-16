@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SITE = 'https://golf.archerlab.dev';
-const TODAY = '2026-07-30';
+const TODAY = '2026-08-16';
 const CHECK_DIST = process.argv.includes('--dist');
 
 const INDEXABLE = new Map([
@@ -88,6 +88,16 @@ const INDEXABLE = new Map([
       ja: `${SITE}/seo/driver-slice-naoshikata`,
       'x-default': `${SITE}/seo/fix-driver-slice`,
     },
+  }],
+  ['seo/golf-swing-video-checklist.html', {
+    url: `${SITE}/seo/golf-swing-video-checklist.html`,
+    lang: 'ko',
+    alternates: {},
+  }],
+  ['seo/online-golf-swing-analysis-guide.html', {
+    url: `${SITE}/seo/online-golf-swing-analysis-guide.html`,
+    lang: 'ko',
+    alternates: {},
   }],
 ]);
 
@@ -214,9 +224,16 @@ for (const [file, expected] of INDEXABLE) {
 
   const types = structuredData(html, file);
   if (file.startsWith('seo/')) {
-    check(types.has('WebPage') && types.has('Article') && types.has('WebApplication'), `${file}: guide structured data`);
-    check(!types.has('FAQPage'), `${file}: no obsolete FAQ rich-result markup`);
-    check(/\/privacy(?:-en|-jp)?/.test(html) && /\/terms(?:-en|-jp)?/.test(html), `${file}: trust links`);
+    const isIntentGuide = file === 'seo/golf-swing-video-checklist.html'
+      || file === 'seo/online-golf-swing-analysis-guide.html';
+    if (isIntentGuide) {
+      check(types.has('WebPage') && types.has('FAQPage'), `${file}: page and visible FAQ structured data`);
+      check(/href="\/analysis"/.test(html), `${file}: crawlable analyzer CTA`);
+    } else {
+      check(types.has('WebPage') && types.has('Article') && types.has('WebApplication'), `${file}: guide structured data`);
+      check(!types.has('FAQPage'), `${file}: no obsolete FAQ rich-result markup`);
+      check(/\/privacy(?:-en|-jp)?/.test(html) && /\/terms(?:-en|-jp)?/.test(html), `${file}: trust links`);
+    }
   }
   if (file.startsWith('analysis')) {
     check(html.includes('analysis-resource-guide'), `${file}: crawlable analysis guide`);
@@ -355,7 +372,7 @@ const expectedGuides = [...INDEXABLE.keys()]
   .filter(file => file.startsWith('seo/'))
   .map(file => path.basename(file))
   .sort();
-check(JSON.stringify(generatedGuides) === JSON.stringify(expectedGuides), 'only five intended SEO guides exist');
+check(JSON.stringify(generatedGuides) === JSON.stringify(expectedGuides), 'only intended SEO guides exist');
 
 section('unsupported claims');
 const claimFiles = [...INDEXABLE.keys(), ...UTILITY.keys()];

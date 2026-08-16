@@ -84,4 +84,18 @@
     <xhtml:link rel="alternate" hreflang="ja" href="https://golf.archerlab.dev/seo/driver-slice-naoshikata"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/seo/fix-driver-slice"/>
   </url>
+<!-- traffic-pages:start -->
+  <url>
+    <loc>https://golf.archerlab.dev/seo/golf-swing-video-checklist.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://golf.archerlab.dev/seo/online-golf-swing-analysis-guide.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+<!-- traffic-pages:end -->
 </urlset>
