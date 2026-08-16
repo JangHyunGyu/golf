@@ -90,12 +90,12 @@ const INDEXABLE = new Map([
     },
   }],
   ['seo/golf-swing-video-checklist.html', {
-    url: `${SITE}/seo/golf-swing-video-checklist.html`,
+    url: `${SITE}/seo/golf-swing-video-checklist`,
     lang: 'ko',
     alternates: {},
   }],
   ['seo/online-golf-swing-analysis-guide.html', {
-    url: `${SITE}/seo/online-golf-swing-analysis-guide.html`,
+    url: `${SITE}/seo/online-golf-swing-analysis-guide`,
     lang: 'ko',
     alternates: {},
   }],
