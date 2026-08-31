@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SITE = 'https://golf.archerlab.dev';
-const TODAY = '2026-08-16';
+const TODAY = '2026-08-31';
 const CHECK_DIST = process.argv.includes('--dist');
 
 const INDEXABLE = new Map([
@@ -236,8 +236,14 @@ for (const [file, expected] of INDEXABLE) {
     }
   }
   if (file.startsWith('analysis')) {
+    check(types.has('Organization') && types.has('WebSite') && types.has('WebPage') &&
+      types.has('SoftwareApplication'), `${file}: connected site, page, publisher, and app schema`);
     check(html.includes('analysis-resource-guide'), `${file}: crawlable analysis guide`);
     check(/\/privacy(?:-en|-jp)?/.test(html), `${file}: privacy link`);
+  }
+  if (file === 'index.html') {
+    check(types.has('Organization') && types.has('WebSite') && types.has('WebPage'),
+      `${file}: connected publisher, website, and page schema`);
   }
   pagesByUrl.set(expected.url, { file, alternates, lang: expected.lang });
 }
@@ -357,6 +363,8 @@ check(!/Disallow:\s*\/seo\/\s*$/m.test(robotsTxt), 'retired SEO URLs remain craw
 const headers = read('_headers');
 check(headers.includes('https://golf-3xe.pages.dev/*') &&
   headers.includes('X-Robots-Tag: noindex, nofollow'), 'Pages alias is noindex');
+check(headers.includes('/index-en*') && headers.includes('/index-jp*') &&
+  headers.includes('X-Robots-Tag: noindex, follow'), 'localized utility hubs send noindex headers');
 
 const vite = read('vite.config.js').replace(/\\/g, '/');
 for (const required of ["'_redirects'", "'_headers'", "'seo/*.html'", "'privacy*.html'", "'terms*.html'"]) {

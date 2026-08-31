@@ -352,6 +352,41 @@ for (const retiredAsset of retiredDirectoryAssets) {
 }
 
 // ============================================================
+// 8. Cloudflare Pages is the only application deployment target
+// ============================================================
+console.log('\n[8] Cloudflare Pages deployment configuration');
+
+const packageConfig = JSON.parse(readFile('package.json'));
+const packageLock = readFile('package-lock.json');
+const wranglerConfig = fileExistsAt('wrangler.toml') ? readFile('wrangler.toml') : '';
+
+if (packageConfig.scripts?.dev === 'vite' && packageConfig.scripts?.build === 'vite build') {
+    pass('Vite owns local development and production builds');
+} else {
+    fail('development and build scripts must use Vite directly');
+}
+
+if (/wrangler pages deploy dist\/web --project-name golf --branch main/.test(packageConfig.scripts?.deploy || '')) {
+    pass('deployment targets the golf Cloudflare Pages production branch');
+} else {
+    fail('deployment script must target Cloudflare Pages project golf on main');
+}
+
+if (/name\s*=\s*"golf"/.test(wranglerConfig) &&
+    /pages_build_output_dir\s*=\s*"\.\/dist\/web"/.test(wranglerConfig)) {
+    pass('Wrangler project and build output are explicit');
+} else {
+    fail('wrangler.toml must declare project golf and dist/web output');
+}
+
+if (!fileExistsAt('granite.config.ts') && !fileExistsAt('swing-ai.ait') &&
+    !/@apps-in-toss|@granite-js|@toss\//i.test(packageLock)) {
+    pass('Toss and Granite deployment artifacts are absent');
+} else {
+    fail('Toss and Granite deployment artifacts must not ship');
+}
+
+// ============================================================
 // Summary
 // ============================================================
 console.log('\n' + '='.repeat(60));

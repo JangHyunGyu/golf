@@ -1,27 +1,31 @@
-# Golf Swing Master - AI Golf Swing Analyzer
-> 100% free AI golf swing analysis — upload a video and get pro-level coaching, no app install needed.
+# Golf Swing Master
+> Free browser-based AI golf swing analysis from an uploaded video, with no app installation required.
 
 ## About
-Golf Swing Master is a free AI-powered golf swing analysis tool. Simply upload your swing video in the browser and receive detailed coaching feedback. No app download required.
+Golf Swing Master is an ArcherLab web tool that reviews visible checkpoints in an uploaded golf swing video. It provides relative feedback on posture, tempo, impact phases, balance, and practice priorities.
 
-## Features
-- AI-powered swing analysis from video
-- Driver slice correction tips
-- Distance improvement coaching
-- 100% browser-based — no app installation
-- Completely free
+## Analysis Tools
+- Korean: https://golf.archerlab.dev/analysis
+- English: https://golf.archerlab.dev/analysis-en
+- Japanese: https://golf.archerlab.dev/analysis-jp
 
-## Links
-- Analyze in Korean: https://golf.archerlab.dev/analysis
-- Analyze in English: https://golf.archerlab.dev/analysis-en
-- Analyze in Japanese: https://golf.archerlab.dev/analysis-jp
+## Practice Guides
+- Korean self-practice guide: https://golf.archerlab.dev/seo/golf-dokak
+- English driver slice guide: https://golf.archerlab.dev/seo/fix-driver-slice
+- Japanese self-practice guide: https://golf.archerlab.dev/seo/golf-dokugaku
+- Japanese driver slice guide: https://golf.archerlab.dev/seo/driver-slice-naoshikata
+
+## Service Facts
+- Runs in a web browser and does not require an app installation.
+- The uploaded video is used temporarily for analysis and deleted after processing.
+- Shared analysis-result text is retained for 30 days.
+- Results are relative estimates affected by filming conditions and do not certify skill or handicap.
+- Privacy policy: https://golf.archerlab.dev/privacy-en
+- Terms of use: https://golf.archerlab.dev/terms-en
+
+## Publisher and Discovery
+- Publisher: ArcherLab — https://archerlab.dev/
+- Canonical site: https://golf.archerlab.dev/
 - Sitemap: https://golf.archerlab.dev/sitemap.xml
-- Developer: https://archerlab.dev
-
-## Language
-- Korean (한국어)
-- English
-- Japanese (日本語)
-
-## Category
-Golf, AI Sports Analysis, Swing Coaching, Free Golf Tool
+- Languages: Korean, English, Japanese
+- Last reviewed: 2026-08-31

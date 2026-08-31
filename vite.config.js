@@ -30,7 +30,7 @@ export default defineConfig({
     }),
   ],
   build: {
-    outDir: 'dist',
+    outDir: 'dist/web',
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, 'index.html'),

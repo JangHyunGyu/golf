@@ -9,8 +9,8 @@
     <script src="assets/js/error-reporter.js?v=20260729-external-synchronizer-filter" defer></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
-	<title>無料AIゴルフスイング診断・解析｜動画アップロードでスイング分析</title>
-	<meta name="description" content="ゴルフ スイング診断を無料で実行。動画をアップロードするとAIが姿勢、テンポ、インパクト、スライス傾向を分析・解析し、改善ポイントを返します。" />
+	<title>ゴルフスイング無料診断・AI解析｜動画アップロードで分析</title>
+	<meta name="description" content="ゴルフスイングを動画で無料診断。アップロードするとAIが姿勢、テンポ、インパクト、スライス傾向を分析し、改善ポイントを返します。" />
 	<meta name="keywords" content="ゴルフ スイング診断, ゴルフ スイング 診断, スイング 診断, ゴルフスイング診断, ゴルフ スイング 解析, ゴルフ スイング 分析, ゴルフ 無料診断">
 	<link rel="canonical" href="https://golf.archerlab.dev/analysis-jp" />
     <link rel="sitemap" type="application/xml" href="https://golf.archerlab.dev/sitemap.xml" />
@@ -22,14 +22,18 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="ja_JP" />
 	<meta property="og:site_name" content="ゴルフスイングマスター" />
-	<meta property="og:title" content="無料AIゴルフスイング診断・解析" />
+	<meta property="og:title" content="ゴルフスイング無料診断・AI解析" />
 	<meta property="og:description" content="動画をアップロードするとAIがゴルフスイングを無料診断。姿勢、テンポ、インパクト、スライス傾向を分析します。" />
 	<meta property="og:url" content="https://golf.archerlab.dev/analysis-jp" />
 	<meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta property="og:image:width" content="1024" />
+	<meta property="og:image:height" content="716" />
+	<meta property="og:image:alt" content="AIゴルフスイング無料診断" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="無料AIゴルフスイング診断・解析" />
+	<meta name="twitter:title" content="ゴルフスイング無料診断・AI解析" />
 	<meta name="twitter:description" content="動画でスイング診断。AIがゴルフスイングを無料で分析・解析します。" />
 	<meta name="twitter:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta name="twitter:image:alt" content="AIゴルフスイング無料診断" />
 	
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,22 +67,53 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "無料AIゴルフスイング診断",
-      "alternateName": ["ゴルフスイング分析機", "ゴルフ スイング診断", "スイング 診断", "ゴルフ 無料診断"],
-      "url": "https://golf.archerlab.dev/analysis-jp",
-      "image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
-      "operatingSystem": "Web",
-      "applicationCategory": "SportsApplication",
-      "inLanguage": "ja",
-      "isAccessibleForFree": true,
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "JPY"
-      },
-      "description": "動画アップロードで使える無料AIゴルフスイング診断、スイング分析、スイング解析サービス",
-      "keywords": "ゴルフ スイング診断, スイング 診断, ゴルフ 無料診断, ゴルフスイング解析, ゴルフスイング分析"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://archerlab.dev/#organization",
+          "name": "ArcherLab",
+          "url": "https://archerlab.dev/"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://golf.archerlab.dev/#website",
+          "name": "Golf Swing Master",
+          "alternateName": "ゴルフスイングマスター",
+          "url": "https://golf.archerlab.dev/",
+          "inLanguage": ["ko", "en", "ja"],
+          "publisher": { "@id": "https://archerlab.dev/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://golf.archerlab.dev/analysis-jp#webpage",
+          "url": "https://golf.archerlab.dev/analysis-jp",
+          "name": "ゴルフスイング無料診断・AI解析｜動画アップロードで分析",
+          "description": "ゴルフスイングを動画で無料診断。アップロードするとAIが姿勢、テンポ、インパクト、スライス傾向を分析し、改善ポイントを返します。",
+          "inLanguage": "ja",
+          "dateModified": "2026-08-31",
+          "isPartOf": { "@id": "https://golf.archerlab.dev/#website" },
+          "mainEntity": { "@id": "https://golf.archerlab.dev/analysis-jp#app" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://golf.archerlab.dev/analysis-jp#app",
+          "name": "ゴルフスイング無料診断・AI解析",
+          "alternateName": ["無料AIゴルフスイング診断", "ゴルフスイング分析", "ゴルフ無料診断"],
+          "url": "https://golf.archerlab.dev/analysis-jp",
+          "image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
+          "operatingSystem": "Web Browser",
+          "applicationCategory": "SportsApplication",
+          "inLanguage": "ja",
+          "isAccessibleForFree": true,
+          "provider": { "@id": "https://archerlab.dev/#organization" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "JPY"
+          },
+          "description": "動画アップロードで使える無料AIゴルフスイング診断、スイング分析、スイング解析サービス"
+        }
+      ]
     }
     </script>
     <link rel="manifest" href="manifest-jp.json">

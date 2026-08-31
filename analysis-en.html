@@ -9,8 +9,8 @@
     <script src="assets/js/error-reporter.js?v=20260729-external-synchronizer-filter" defer></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
-	<title>Free Online Golf Swing Analyzer - AI Video Analysis</title>
-	<meta name="description" content="Upload a swing video and get free online AI golf swing analysis. Check posture, tempo, impact, slice tendency, and improvement drills with no app required." />
+	<title>Free AI Golf Swing Analyzer Online | Video Analysis</title>
+	<meta name="description" content="Upload a swing video for free AI golf swing analysis online. Review visible posture, tempo, impact, and slice patterns, then get focused practice drills—no app required." />
 	<meta name="keywords" content="free golf swing analyzer, online golf swing analysis, free online golf swing analysis, golf swing analysis free, AI swing analyzer free">
 	<link rel="canonical" href="https://golf.archerlab.dev/analysis-en" />
     <link rel="sitemap" type="application/xml" href="https://golf.archerlab.dev/sitemap.xml" />
@@ -22,14 +22,18 @@
 	<meta property="og:type" content="website" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="og:site_name" content="Golf Swing Master" />
-	<meta property="og:title" content="Free Online Golf Swing Analyzer" />
-	<meta property="og:description" content="Upload a swing video and get free AI golf swing analysis with posture, tempo, impact, and slice feedback. No app required." />
+	<meta property="og:title" content="Free AI Golf Swing Analyzer Online" />
+	<meta property="og:description" content="Upload a swing video for free AI analysis of visible posture, tempo, impact, and slice patterns. No app required." />
 	<meta property="og:url" content="https://golf.archerlab.dev/analysis-en" />
 	<meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta property="og:image:width" content="1024" />
+	<meta property="og:image:height" content="716" />
+	<meta property="og:image:alt" content="Free AI golf swing analyzer" />
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:title" content="Free Online Golf Swing Analyzer" />
-	<meta name="twitter:description" content="Free AI golf swing analysis from a video upload. No app required." />
+	<meta name="twitter:title" content="Free AI Golf Swing Analyzer Online" />
+	<meta name="twitter:description" content="Upload a swing video for free online AI golf swing analysis and focused practice drills." />
 	<meta name="twitter:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta name="twitter:image:alt" content="Free AI golf swing analyzer" />
 	
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,22 +67,52 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Free Online Golf Swing Analyzer",
-      "alternateName": ["Golf Swing Analyzer", "Free Golf Swing Analysis", "AI Swing Analyzer"],
-      "url": "https://golf.archerlab.dev/analysis-en",
-      "image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
-      "operatingSystem": "Web",
-      "applicationCategory": "SportsApplication",
-      "inLanguage": "en",
-      "isAccessibleForFree": true,
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "description": "Free online AI golf swing analysis and posture correction service",
-      "keywords": "free golf swing analyzer, online golf swing analysis, free online golf swing analysis, AI swing analyzer free"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://archerlab.dev/#organization",
+          "name": "ArcherLab",
+          "url": "https://archerlab.dev/"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://golf.archerlab.dev/#website",
+          "name": "Golf Swing Master",
+          "url": "https://golf.archerlab.dev/",
+          "inLanguage": ["ko", "en", "ja"],
+          "publisher": { "@id": "https://archerlab.dev/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://golf.archerlab.dev/analysis-en#webpage",
+          "url": "https://golf.archerlab.dev/analysis-en",
+          "name": "Free AI Golf Swing Analyzer Online | Video Analysis",
+          "description": "Upload a swing video for free AI golf swing analysis online. Review visible posture, tempo, impact, and slice patterns, then get focused practice drills—no app required.",
+          "inLanguage": "en",
+          "dateModified": "2026-08-31",
+          "isPartOf": { "@id": "https://golf.archerlab.dev/#website" },
+          "mainEntity": { "@id": "https://golf.archerlab.dev/analysis-en#app" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://golf.archerlab.dev/analysis-en#app",
+          "name": "Free AI Golf Swing Analyzer Online",
+          "alternateName": ["Golf Swing Analyzer", "AI Golf Swing Analysis", "Online Swing Analyzer"],
+          "url": "https://golf.archerlab.dev/analysis-en",
+          "image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
+          "operatingSystem": "Web Browser",
+          "applicationCategory": "SportsApplication",
+          "inLanguage": "en",
+          "isAccessibleForFree": true,
+          "provider": { "@id": "https://archerlab.dev/#organization" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Free online AI golf swing analysis from an uploaded video, with feedback on visible posture, tempo, impact phases, slice patterns, and focused practice drills."
+        }
+      ]
     }
     </script>
     <link rel="manifest" href="manifest-en.json">

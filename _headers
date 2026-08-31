@@ -5,6 +5,14 @@ https://golf-3xe.pages.dev/*
 https://:version.golf-3xe.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 
+# Localized landing hubs duplicate the analyzer intent and must not compete
+# with the indexable analysis pages.
+/index-en*
+  X-Robots-Tag: noindex, follow
+
+/index-jp*
+  X-Robots-Tag: noindex, follow
+
 # Repository and build inputs are public assets in the current root deployment,
 # but they are not search content.
 /seo/_*
@@ -20,10 +28,4 @@ https://:version.golf-3xe.pages.dev/*
   X-Robots-Tag: noindex, nofollow
 
 /vite.config.js
-  X-Robots-Tag: noindex, nofollow
-
-/granite.config.ts
-  X-Robots-Tag: noindex, nofollow
-
-/swing-ai.ait
   X-Robots-Tag: noindex, nofollow

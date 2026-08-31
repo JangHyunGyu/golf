@@ -25,10 +25,14 @@
 	<meta property="og:description" content="영상으로 자세, 템포, 임팩트 구간과 슬라이스 징후를 확인하고 개선 연습을 받아보세요." />
 	<meta property="og:url" content="https://golf.archerlab.dev/analysis" />
 	<meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta property="og:image:width" content="1024" />
+	<meta property="og:image:height" content="716" />
+	<meta property="og:image:alt" content="무료 AI 골프 스윙 분석 도구" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="무료 AI 골프 스윙 분석" />
 	<meta name="twitter:description" content="영상을 올리고 AI 스윙 피드백과 개선 연습을 확인하세요." />
 	<meta name="twitter:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png" />
+	<meta name="twitter:image:alt" content="무료 AI 골프 스윙 분석 도구" />
 	
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,20 +68,53 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "무료 AI 골프 스윙 분석기",
-      "url": "https://golf.archerlab.dev/analysis",
-      "image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
-      "operatingSystem": "Web",
-      "applicationCategory": "SportsApplication",
-      "inLanguage": "ko",
-      "isAccessibleForFree": true,
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "KRW"
-      },
-      "description": "업로드 영상의 보이는 동작을 바탕으로 자세, 템포, 임팩트 구간과 연습 방향을 제안하는 무료 AI 골프 스윙 분석 서비스"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://archerlab.dev/#organization",
+          "name": "ArcherLab",
+          "url": "https://archerlab.dev/"
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://golf.archerlab.dev/#website",
+          "name": "Golf Swing Master",
+          "alternateName": "골프 스윙 마스터",
+          "url": "https://golf.archerlab.dev/",
+          "inLanguage": ["ko", "en", "ja"],
+          "publisher": { "@id": "https://archerlab.dev/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://golf.archerlab.dev/analysis#webpage",
+          "url": "https://golf.archerlab.dev/analysis",
+          "name": "무료 AI 골프 스윙 분석 | 영상 업로드 온라인 진단",
+          "description": "스윙 영상을 업로드하면 AI가 자세, 템포, 임팩트 구간과 슬라이스 징후를 살펴보고 개선 연습을 제안하는 무료 온라인 골프 스윙 분석입니다.",
+          "inLanguage": "ko",
+          "dateModified": "2026-08-31",
+          "isPartOf": { "@id": "https://golf.archerlab.dev/#website" },
+          "mainEntity": { "@id": "https://golf.archerlab.dev/analysis#app" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://golf.archerlab.dev/analysis#app",
+          "name": "무료 AI 골프 스윙 분석기",
+          "alternateName": ["AI 골프 스윙 분석", "온라인 골프 스윙 진단"],
+          "url": "https://golf.archerlab.dev/analysis",
+          "image": "https://golf.archerlab.dev/assets/images/kakao_golf.png",
+          "operatingSystem": "Web Browser",
+          "applicationCategory": "SportsApplication",
+          "inLanguage": "ko",
+          "isAccessibleForFree": true,
+          "provider": { "@id": "https://archerlab.dev/#organization" },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "KRW"
+          },
+          "description": "업로드 영상의 보이는 동작을 바탕으로 자세, 템포, 임팩트 구간과 연습 방향을 제안하는 무료 AI 골프 스윙 분석 서비스"
+        }
+      ]
     }
     </script>
     <link rel="manifest" href="manifest.json">

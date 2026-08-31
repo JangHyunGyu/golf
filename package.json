@@ -1,23 +1,21 @@
 {
   "name": "golf-swing-master",
   "version": "1.0.0",
-  "description": "AI 골프 스윙 분석 - 토스 미니앱",
+  "description": "Cloudflare Pages에서 제공하는 AI 골프 스윙 분석 웹앱",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.cjs",
-    "dev": "granite dev",
-    "build": "granite build",
+    "dev": "vite",
+    "build": "vite build",
     "preview": "vite preview",
     "validate": "node validate.js && node validate-seo.js",
     "validate:dist": "node validate-seo.js --dist",
-    "deploy": "ait deploy"
+    "deploy": "npm run build && npm run validate:dist && wrangler pages deploy dist/web --project-name golf --branch main"
   },
   "devDependencies": {
     "vite": "^7.3.1",
-    "vite-plugin-static-copy": "^3.2.0"
-  },
-  "dependencies": {
-    "@apps-in-toss/web-framework": "^1.11.2"
+    "vite-plugin-static-copy": "^3.2.0",
+    "wrangler": "4.127.1"
   }
 }
