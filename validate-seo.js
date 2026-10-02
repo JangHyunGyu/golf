@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const SITE = 'https://golf.archerlab.dev';
-const TODAY = '2026-08-31';
+const TODAY = '2026-10-02';
 const CHECK_DIST = process.argv.includes('--dist');
 
 const INDEXABLE = new Map([

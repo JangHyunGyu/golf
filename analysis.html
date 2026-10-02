@@ -290,7 +290,7 @@
     <div id="resultModal" class="modal-overlay">
         <div class="modal-container">
             <div class="modal-header">
-                <h3 id="modalTitle" class="modal-title">정밀 분석 결과</h3>
+                <h3 id="modalTitle" class="modal-title">스윙 분석 결과</h3>
                 <button id="modalCloseBtn" class="modal-close" onclick="closeModal()">&times;</button>
             </div>
             <div id="modalBody" class="modal-body">
@@ -335,7 +335,7 @@
                     <h4>💡 이용 방법</h4>
                     <ol>
                         <li><strong>클럽 선택</strong>: 드라이버, 우드/유틸, 아이언, 웨지 중 선택</li>
-                        <li><strong>영상 선택</strong>: 분석할 영상을 선택하거나 드래그 해서 추가해주세요</li>
+                        <li><strong>영상 선택</strong>: 분석할 영상을 고르거나, 이 칸으로 끌어다 놓습니다</li>
                         <li><strong>분석 & 코칭</strong>: 버튼을 누르면 분석을 시작합니다 (최대 1~2분 소요)</li>
                     </ol>
                 </div>
@@ -360,35 +360,35 @@
             messages: {
                 fileTooLarge: "파일 크기가 너무 큽니다 ({size} MB).\\n100MB 이하의 영상만 분석 가능합니다.",
                 fileSelected: "선택된 파일",
-                processTitle: "정밀 분석 프로세스 진행 중...",
-                stepInit: "보안 연결 수립 및 데이터 전송 세션을<br>초기화하고 있습니다...",
-                stepUpload: "분석 서버로 영상 데이터 전송 중...",
-                uploadWarning: "(고화질 영상은 전송에 시간이 소요될 수 있습니다)",
-                networkWarning: "(네트워크 환경에 따라 속도가 달라질 수 있습니다)",
-                stepProcessing: "클라우드 서버에서 영상 전처리 및<br>데이터 최적화 작업을 수행 중입니다...",
-                waitMessage: "잠시만 기다려주세요.",
-                stepAnalyzing: "골프 스윙 분석 엔진이 신체 각도와<br>클럽의 궤적을 프레임 단위로 정밀 분석하고 있습니다...",
+                processTitle: "스윙 영상을 분석하는 중입니다",
+                stepInit: "보안 연결을 확인하고<br>전송을 준비하는 중입니다",
+                stepUpload: "분석 서버로 영상을 보내는 중입니다",
+                uploadWarning: "(화질이 높으면 보내는 데 더 걸릴 수 있습니다)",
+                networkWarning: "(망 상태에 따라 속도가 달라집니다)",
+                stepProcessing: "서버에서 영상을<br>분석하기 좋게 정리하는 중입니다",
+                waitMessage: "잠시만 기다려 주세요.",
+                stepAnalyzing: "몸의 각도와 클럽이 지나가는 길을<br>프레임마다 보고 있습니다",
                 analyzeTimeWarning: "(최대 1~2분 소요될 수 있습니다)",
-                resultTitle: "정밀 분석 결과",
+                resultTitle: "스윙 분석 결과",
                 errorTitle: "오류 발생",
                 resultError: "분석 결과를 가져오지 못했습니다.",
                 shareTitle: "골프 스윙 영상 분석",
-                shareDesc: "내 골프 스윙 영상을 AI가 분석해주는 서비스입니다. 지금 바로 체험해보세요!",
+                shareDesc: "올린 스윙 영상에서 자세와 템포를 짚어 줍니다.",
                 shareBtn: "분석 결과 보기",
                 copyNoResult: "복사할 분석 결과가 없습니다.",
                 copySuccess: "분석 결과가 클립보드에 복사되었습니다!",
                 copyFail: "결과 복사에 실패했습니다.",
                 loadingShared: "공유된 분석 결과 불러오는 중...",
-                resultTitleShared: "정밀 분석 결과 (공유됨)",
+                resultTitleShared: "스윙 분석 결과 (공유)",
                 loadSharedFail: "공유된 결과를 찾을 수 없거나 만료되었습니다.",
                 sectionSummary: "총평",
                 labelStrengths: "장점",
                 labelWeaknesses: "단점 및 개선점",
-                sectionDetail: "핵심 요소 정밀 분석",
+                sectionDetail: "항목별 분석",
                 sectionOverall: "종합 평점 및 등급",
                 labelScore: "종합 점수",
                 labelGrade: "등급",
-                sectionLesson: "원포인트 레슨 (One Point Lesson)",
+                sectionLesson: "다음에 해볼 한 가지",
                 scoreUnit: "점"
             },
             generatePrompt: function(club) {

@@ -224,7 +224,7 @@ function renderJsonAnalysis(content) {
     html += `</ul>`;
 
     // 2. Detail Scores
-    html += `<h3>2. ${escapeHtml(msg.sectionDetail || '핵심 요소 정밀 분석')}</h3>`;
+    html += `<h3>2. ${escapeHtml(msg.sectionDetail || '항목별 분석')}</h3>`;
     if (data.detailScores && Array.isArray(data.detailScores)) {
         data.detailScores.forEach((item, i) => {
             html += `<div style="margin-bottom:1.2rem;">`;
@@ -242,7 +242,7 @@ function renderJsonAnalysis(content) {
     html += `</ul>`;
 
     // 4. One Point Lesson
-    html += `<h3>4. ${escapeHtml(msg.sectionLesson || '원포인트 레슨')}</h3>`;
+    html += `<h3>4. ${escapeHtml(msg.sectionLesson || '다음에 해볼 한 가지')}</h3>`;
     html += `<ul><li>${highlightText(data.onePointLesson || '')}</li></ul>`;
 
     return html;
