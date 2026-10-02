@@ -29,3 +29,9 @@ Golf Swing Master is an ArcherLab web tool that reviews visible checkpoints in a
 - Sitemap: https://golf.archerlab.dev/sitemap.xml
 - Languages: Korean, English, Japanese
 - Last reviewed: 2026-08-31
+
+## Service guide (what it is, pricing, how to use, FAQ)
+- Korean: https://golf.archerlab.dev/seo/golf-swing-master-about
+- English: https://golf.archerlab.dev/seo/golf-swing-master-about-en
+- Full text for AI systems: https://golf.archerlab.dev/llms-full.txt
+- Last updated: 2026-10-02

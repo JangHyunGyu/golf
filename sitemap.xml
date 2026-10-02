@@ -98,4 +98,24 @@
     <priority>0.7</priority>
   </url>
 <!-- traffic-pages:end -->
+<!-- about-pages:start -->
+  <url>
+    <loc>https://golf.archerlab.dev/seo/golf-swing-master-about</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/seo/golf-swing-master-about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/seo/golf-swing-master-about-en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/seo/golf-swing-master-about-en"/>
+  </url>
+  <url>
+    <loc>https://golf.archerlab.dev/seo/golf-swing-master-about-en</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/seo/golf-swing-master-about"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/seo/golf-swing-master-about-en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/seo/golf-swing-master-about-en"/>
+  </url>
+<!-- about-pages:end -->
 </urlset>

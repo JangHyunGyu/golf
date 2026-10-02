@@ -99,6 +99,24 @@ const INDEXABLE = new Map([
     lang: 'ko',
     alternates: {},
   }],
+  ['seo/golf-swing-master-about.html', {
+    url: `${SITE}/seo/golf-swing-master-about`,
+    lang: 'ko',
+    alternates: {
+      ko: `${SITE}/seo/golf-swing-master-about`,
+      en: `${SITE}/seo/golf-swing-master-about-en`,
+      'x-default': `${SITE}/seo/golf-swing-master-about-en`,
+    },
+  }],
+  ['seo/golf-swing-master-about-en.html', {
+    url: `${SITE}/seo/golf-swing-master-about-en`,
+    lang: 'en',
+    alternates: {
+      ko: `${SITE}/seo/golf-swing-master-about`,
+      en: `${SITE}/seo/golf-swing-master-about-en`,
+      'x-default': `${SITE}/seo/golf-swing-master-about-en`,
+    },
+  }],
 ]);
 
 const LEGAL = new Map([
@@ -225,10 +243,12 @@ for (const [file, expected] of INDEXABLE) {
   const types = structuredData(html, file);
   if (file.startsWith('seo/')) {
     const isIntentGuide = file === 'seo/golf-swing-video-checklist.html'
-      || file === 'seo/online-golf-swing-analysis-guide.html';
+      || file === 'seo/online-golf-swing-analysis-guide.html'
+      || file === 'seo/golf-swing-master-about.html'
+      || file === 'seo/golf-swing-master-about-en.html';
     if (isIntentGuide) {
       check(types.has('WebPage') && types.has('FAQPage'), `${file}: page and visible FAQ structured data`);
-      check(/href="\/analysis"/.test(html), `${file}: crawlable analyzer CTA`);
+      check(/href="\/analysis(?:-en)?"/.test(html), `${file}: crawlable analyzer CTA`);
     } else {
       check(types.has('WebPage') && types.has('Article') && types.has('WebApplication'), `${file}: guide structured data`);
       check(!types.has('FAQPage'), `${file}: no obsolete FAQ rich-result markup`);

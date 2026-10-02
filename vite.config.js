@@ -21,6 +21,7 @@ export default defineConfig({
         { src: '_redirects', dest: '.' },
         { src: '404.html', dest: '.' },
         { src: 'llms.txt', dest: '.' },
+        { src: 'llms-full.txt', dest: '.' },
         { src: 'seo/*.html', dest: 'seo' },
         { src: 'privacy*.html', dest: '.' },
         { src: 'terms*.html', dest: '.' },

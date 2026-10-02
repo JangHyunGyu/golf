@@ -1,0 +1,125 @@
+# Golf Swing Master — full service description
+
+---
+
+## 골프 스윙 마스터란? 영상으로 스윙을 점검하는 무료 AI 분석 도구 (ko)
+
+URL: https://golf.archerlab.dev/seo/golf-swing-master-about
+Last updated: 2026-10-02
+
+골프 스윙 마스터(Golf Swing Master)는 스윙 영상을 올리면 멀티모달 AI가 영상에 보이는 어드레스, 백스윙, 전환, 임팩트 구간, 균형을 살펴보고 연습할 포인트를 정리해 주는 무료 웹 도구입니다. 앱 설치와 회원가입 없이 브라우저에서 쓰며, 점수는 촬영 조건의 영향을 받는 상대적인 참고값입니다.
+
+### 한눈에 보기
+- 서비스: 골프 스윙 마스터 — AI 골프 스윙 분석 웹 도구
+- 이용 요금: 무료
+- 가입·설치: 계정 가입 없이 브라우저에서 이용. 앱 설치 불필요
+- 입력: 골프 스윙 영상(100MB 이하)과 클럽 종류(드라이버, 우드/유틸리티, 아이언, 웨지)
+- 분석 시간: 보통 최대 1~2분
+- 언어: 한국어, 영어, 일본어
+- 영상 처리: 분석을 위해 임시 업로드되며 처리 후 삭제됩니다. 공유용 결과 텍스트는 30일 보관됩니다.
+- 운영: ArcherLab (장현규)
+
+### Who it is for / 대상
+- 연습장에 가기 전후에 내 스윙을 영상으로 점검해 보고 싶은 골퍼
+- 레슨 사이에 혼자 연습하면서 기준 영상을 남기고 싶은 분
+- 촬영 각도와 구도를 맞춰 스윙 변화를 비교하고 싶은 분
+
+### How to use / 이용 방법
+1. 분석 화면에서 클럽 종류를 고릅니다.
+2. 전신과 클럽이 보이는 영상을 선택하거나 끌어다 놓습니다. 밝은 곳에서 흔들림 없이 정면이나 타깃 라인 뒤쪽에서 찍은 영상이 좋습니다.
+3. 분석 버튼을 누르고 결과가 나올 때까지 기다립니다.
+4. 결과에서 점수보다 먼저 어느 구간의 어떤 동작을 짚었는지 읽고, 연습 과제를 하나만 골라 같은 구도로 다시 촬영해 비교합니다.
+
+### Features / 기능
+- 어드레스, 백스윙, 전환, 임팩트 구간, 피니시 균형에 대한 관찰 포인트 정리
+- 자세와 템포에 대한 상대적 점수와 연습 우선순위 제안
+- 결과 텍스트 복사와 카카오톡 공유
+- 한국어·영어·일본어 화면과 앱처럼 설치할 수 있는 웹 앱(선택)
+
+### Notes / 알아 둘 점
+- 점수는 한 영상에서 관찰된 자세와 균형을 요약한 상대적 AI 추정치입니다. 공인 지표나 핸디캡, 프로 레슨의 진단을 대신하지 않습니다.
+- 클럽·볼 데이터는 직접 측정하지 않으며, 카메라 각도·조명·프레임 속도에 따라 결과가 달라질 수 있습니다.
+- 원본 영상은 외부 저장소와 AI 처리 서비스로 전송됩니다. 얼굴, 차량 번호, 집 내부처럼 식별 가능한 정보가 담긴 영상은 올리지 않는 편이 좋습니다. 자세한 내용은 개인정보 처리방침을 확인하세요.
+- 공유 링크는 별도 로그인 없이 열리므로, 링크를 아는 사람은 30일 동안 결과 텍스트를 볼 수 있습니다.
+
+### FAQ
+
+**골프 스윙 마스터는 무료인가요?**
+네. 무료로 쓸 수 있고 계정 가입도 필요하지 않습니다.
+
+**앱을 설치해야 하나요?**
+아니요. 지원되는 브라우저에서 영상 파일을 선택해 바로 분석할 수 있습니다.
+
+**어떤 영상을 올리면 좋은가요?**
+머리부터 발끝까지 전신과 클럽이 보이고 밝고 흔들림이 적은 영상이 좋습니다. 파일 크기는 100MB 이하여야 합니다.
+
+**올린 영상은 저장되나요?**
+분석을 위해 임시로 올라가고, 분석이 끝나면 삭제를 시도합니다. 완료되지 않은 업로드는 30분 뒤 정리 대상이 됩니다. 공유 결과는 영상 없이 텍스트만 30일 보관됩니다.
+
+**점수가 실력이나 핸디캡을 나타내나요?**
+아닙니다. 촬영 조건의 영향을 받는 상대적인 참고값이며 실력 인증이 아닙니다.
+
+**레슨을 대신할 수 있나요?**
+아닙니다. 영상에서 보이는 특징을 점검하는 보조 도구이고 전문 코치의 관찰을 대체하지 않습니다.
+
+---
+
+## What is Golf Swing Master? Free AI swing analysis from a video (en)
+
+URL: https://golf.archerlab.dev/seo/golf-swing-master-about-en
+Last updated: 2026-10-02
+
+Golf Swing Master is a free web tool. You upload a golf swing video and a multimodal AI reviews the checkpoints it can see — address, backswing, transition, the impact phase and balance — and lists what to practice. It runs in the browser with no app install or account. The score is a relative reference that depends on how the video was filmed.
+
+### At a glance
+- Service: Golf Swing Master — AI golf swing analysis web tool
+- Price: Free
+- Signup / install: No account, no app install; runs in the browser
+- Input: A golf swing video up to 100 MB and a club type (driver, wood/hybrid, iron, wedge)
+- Analysis time: Usually up to 1–2 minutes
+- Languages: Korean, English, Japanese
+- Video handling: Uploaded temporarily for analysis, then deleted after processing. Shared result text is kept for 30 days.
+- Operator: ArcherLab (Hyungyu Jang)
+
+### Who it is for / 대상
+- Golfers who want to check their swing on video before or after practice
+- People practicing between lessons who want a baseline video
+- Anyone comparing swing changes using the same camera angle
+
+### How to use / 이용 방법
+1. On the analysis page, choose a club type.
+2. Select or drag in a video that shows your whole body and the club. Bright light, a steady camera and a face-on or down-the-line angle work best.
+3. Press the analysis button and wait for the result.
+4. Read which phase and movement the AI points out before looking at the score, pick one practice task, and film again from the same angle to compare.
+
+### Features / 기능
+- Observations on address, backswing, transition, impact phase and finish balance
+- Relative scores for posture and tempo, with practice priorities
+- Copy the result text or share it through KakaoTalk
+- Korean, English and Japanese pages, and an optional installable web app
+
+### Notes / 알아 둘 점
+- The score is a relative AI estimate from one video. It is not an official metric, a handicap or a professional lesson diagnosis.
+- The tool does not measure club or ball data, and results change with camera angle, lighting and frame rate.
+- The original video is sent to external storage and AI processing services. Avoid videos that show faces, license plates or the inside of a home. See the privacy policy.
+- Share links open without a login, so anyone with the link can read the result text for 30 days.
+
+### FAQ
+
+**Is Golf Swing Master free?**
+Yes. It is free to use and does not require an account.
+
+**Do I need to install an app?**
+No. Choose a video file in a supported browser and start the analysis.
+
+**What kind of video works best?**
+A bright, steady video that shows your whole body and the club. The file must be 100 MB or smaller.
+
+**Is my video stored?**
+It is uploaded temporarily for analysis, and the server tries to delete it after processing. Incomplete uploads become eligible for cleanup after 30 minutes. Shared results keep only text, for 30 days.
+
+**Does the score show my skill or handicap?**
+No. It is a relative reference affected by filming conditions, not a certification.
+
+**Can it replace a lesson?**
+No. It is a support tool for checking what is visible on video and does not replace a coach.
