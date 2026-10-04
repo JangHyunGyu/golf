@@ -52,6 +52,8 @@ self.addEventListener('fetch', (event) => {
 
     const url = new URL(request.url);
     if (url.origin !== self.location.origin || url.pathname.endsWith('/version.json')) return;
+    // Account delivery stays outside app caches; session scripts must stay current.
+    if (url.pathname.startsWith('/_account/') || url.pathname === '/assets/js/archerlab-session.js') return;
 
     if (request.mode === 'navigate') {
         event.respondWith(
