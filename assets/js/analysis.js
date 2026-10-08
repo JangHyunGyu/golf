@@ -26,6 +26,7 @@ const detectBrowserLanguage = () => {
 
     // 검색 봇 감지 (SEO 문제 방지)
     if (/bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i.test(navigator.userAgent)) return;
+    if (new URLSearchParams(window.location.search).get("id")) return;
     const isBot = /bot|crawl|spider|slurp|facebookexternalhit|mediapartners/i.test(navigator.userAgent);
     
     // 내부 이동 감지 (사이트 내에서 링크 클릭으로 이동한 경우 리다이렉트 방지)
@@ -36,25 +37,30 @@ const detectBrowserLanguage = () => {
     if (browserLang && !isBot && !isInternal) {
         const currentPath = window.location.pathname;
         const currentFile = currentPath.substring(currentPath.lastIndexOf('/') + 1) || "";
+        const hasHtmlExtension = /\.html$/i.test(currentFile);
 
         // 현재 파일명에서 기본 이름 추출 (예: analysis-en -> analysis)
         let baseName = currentFile.replace(/-en(\.html)?$|-jp(\.html)?$|(\.html)$/, "");
         if (!baseName || baseName === "index") baseName = "index";
+        const localizedFile = (file) => {
+            if (!file || file === "/" || !hasHtmlExtension || file.endsWith(".html")) return file;
+            return `${file}.html`;
+        };
 
         let targetFile = null;
 
         // 브라우저 언어와 현재 페이지 언어가 다를 경우 타겟 파일 설정
         if (browserLang === "ko" && !docLang.startsWith("ko")) {
-            targetFile = baseName === "index" ? "/" : baseName;
+            targetFile = localizedFile(baseName === "index" ? "/" : baseName);
         } else if (browserLang === "ja" && !docLang.startsWith("ja")) {
-            targetFile = baseName + "-jp";
+            targetFile = localizedFile(baseName + "-jp");
         } else if (browserLang === "en" && !docLang.startsWith("en")) {
-            targetFile = baseName + "-en";
+            targetFile = localizedFile(baseName + "-en");
         }
 
         // 타겟 파일이 존재하고 현재 파일과 다를 경우 이동
         if (targetFile && targetFile !== currentFile) {
-            window.location.replace(targetFile);
+            window.location.replace(targetFile + window.location.search + window.location.hash);
         }
     }
 })();
@@ -79,6 +85,8 @@ const ANALYSIS_CLIENT_MESSAGES = ({
         emptyResponse: "서버에서 빈 분석 결과를 반환했습니다.",
         invalidResponse: "서버 분석 결과 형식이 올바르지 않습니다.",
         resultNotFound: "공유된 분석 결과를 찾을 수 없습니다.",
+        videoOnly: "동영상 파일만 업로드할 수 있습니다. mp4, webm, mov 파일을 선택해 주세요.",
+        emptyFile: "빈 영상 파일은 업로드할 수 없습니다.",
     },
     en: {
         rejection: "We couldn't identify a golf swing in the uploaded video, so it can't be analyzed. Please try again with a golf swing video.",
@@ -94,6 +102,8 @@ const ANALYSIS_CLIENT_MESSAGES = ({
         emptyResponse: "The server returned an empty analysis result.",
         invalidResponse: "The server returned an invalid analysis result.",
         resultNotFound: "The shared analysis result was not found.",
+        videoOnly: "Only video files can be uploaded. Choose an mp4, webm, or mov file.",
+        emptyFile: "An empty video file can't be uploaded.",
     },
     ja: {
         rejection: "アップロードされた動画でゴルフスイングを確認できなかったため、分析できません。ゴルフスイングの動画でもう一度お試しください。",
@@ -109,8 +119,21 @@ const ANALYSIS_CLIENT_MESSAGES = ({
         emptyResponse: "サーバーから空の分析結果が返されました。",
         invalidResponse: "サーバーから無効な分析結果が返されました。",
         resultNotFound: "共有された分析結果が見つかりません。",
+        videoOnly: "動画ファイルのみアップロードできます。mp4、webm、movファイルを選んでください。",
+        emptyFile: "空の動画ファイルはアップロードできません。",
     },
 })[ANALYSIS_LANGUAGE];
+
+function videoMimeType(file) {
+    const type = String(file?.type || "").split(";")[0].trim().toLowerCase();
+    if (type.startsWith("video/")) return type;
+    const name = String(file?.name || "").toLowerCase();
+    if (name.endsWith(".webm")) return "video/webm";
+    if (name.endsWith(".mov")) return "video/quicktime";
+    if (name.endsWith(".m4v")) return "video/x-m4v";
+    if (name.endsWith(".mp4")) return "video/mp4";
+    return "";
+}
 
 function analysisMessage(key, values = {}) {
     return Object.entries(values).reduce(
@@ -185,21 +208,73 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+function highlightScores(escaped, unit) {
+    const safeUnit = String(unit || "점").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const pattern = new RegExp(`(?<![\\d.])(\\d{1,2}\\.\\d{1,2})(?![\\d.])(?:\\s*${safeUnit})?`, "g");
+    return escaped.replace(pattern, `<span class="score">$1${unit}</span>`);
+}
+
+function parseAnalysisPayload(content) {
+    const trimmed = String(content || "").trim()
+        .replace(/^```(?:json)?\s*/i, "")
+        .replace(/\s*```$/, "");
+    try {
+        return JSON.parse(trimmed);
+    } catch (error) {
+        const start = trimmed.indexOf("{");
+        const end = trimmed.lastIndexOf("}");
+        if (start >= 0 && end > start) {
+            try {
+                return JSON.parse(trimmed.slice(start, end + 1));
+            } catch (_) {
+                // Keep the original parse failure and use the markdown fallback.
+            }
+        }
+        throw error;
+    }
+}
+
+function sanitizeAnalysisHtml(html) {
+    const template = document.createElement("template");
+    template.innerHTML = String(html || "");
+    const blocked = new Set(["SCRIPT", "IFRAME", "OBJECT", "EMBED", "LINK", "META", "STYLE", "FORM", "BASE"]);
+    const clean = (node) => {
+        [...node.childNodes].forEach((child) => {
+            if (child.nodeType !== 1) return;
+            if (blocked.has(child.tagName)) {
+                child.remove();
+                return;
+            }
+            [...child.attributes].forEach((attr) => {
+                const name = attr.name.toLowerCase();
+                const value = attr.value.replace(/[\u0000-\u001f\s]+/g, "").toLowerCase();
+                if (name.startsWith("on") || name === "srcdoc" || name === "style") {
+                    child.removeAttribute(attr.name);
+                    return;
+                }
+                if ((name === "href" || name === "src" || name === "xlink:href") &&
+                    (value.startsWith("javascript:") || value.startsWith("vbscript:") || value.startsWith("data:"))) {
+                    child.removeAttribute(attr.name);
+                }
+            });
+            clean(child);
+        });
+    };
+    clean(template.content);
+    return template.innerHTML;
+}
+
 function highlightText(text) {
     let escaped = escapeHtml(text);
     // Highlight timestamps [mm:ss] or [mm:ss~mm:ss] or [mm:ss - mm:ss]
     escaped = escaped.replace(/\[(\d{2}:\d{2}(?:\s*[~\-]\s*\d{2}:\d{2})?)\]/g, '<span class="timestamp">[$1]</span>');
-    // Highlight scores
-    const unit = ANALYSIS_CONFIG.messages.scoreUnit || '점';
-    escaped = escaped.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})\\b(?!${unit})`, 'g'), `<span class="score">$1${unit}</span>`);
-    escaped = escaped.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})${unit}`, 'g'), `<span class="score">$1${unit}</span>`);
-    return escaped;
+    return highlightScores(escaped, ANALYSIS_CONFIG.messages.scoreUnit || "점");
 }
 
 function renderJsonAnalysis(content) {
     let data;
     try {
-        data = JSON.parse(content);
+        data = parseAnalysisPayload(content);
     } catch (e) {
         return null; // Not JSON, fallback to markdown
     }
@@ -251,17 +326,14 @@ function renderJsonAnalysis(content) {
 function renderMarkdownFallback(content) {
     let formattedContent;
     if (typeof marked !== 'undefined' && marked.parse) {
-        formattedContent = marked.parse(content);
+        formattedContent = sanitizeAnalysisHtml(marked.parse(content));
     } else {
-        formattedContent = content.replace(/\n/g, '<br>');
+        formattedContent = escapeHtml(content).replace(/\n/g, '<br>');
     }
     const unit = ANALYSIS_CONFIG.messages.scoreUnit || '점';
     // Highlight timestamps
     formattedContent = formattedContent.replace(/\[(\d{2}:\d{2}(?:\s*[~-]\s*\d{2}:\d{2})?)\]/g, '<span class="timestamp">[$1]</span>');
-    // Highlight scores
-    formattedContent = formattedContent.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})\\b(?!${unit})`, 'g'), `<span class="score">$1${unit}</span>`);
-    formattedContent = formattedContent.replace(new RegExp(`\\b([0-9]\\.[0-9]{1,2})${unit}`, 'g'), `<span class="score">$1${unit}</span>`);
-    return formattedContent;
+    return highlightScores(formattedContent, unit);
 }
 // --- End JSON Analysis Renderer ---
 
@@ -338,6 +410,22 @@ function handleFileSelect() {
     if (file) {
         const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
         
+        if (file.size <= 0) {
+            alert(analysisMessage("emptyFile"));
+            videoInput.value = "";
+            fileNameDiv.textContent = "";
+            analyzeBtn.disabled = true;
+            return;
+        }
+
+        if (!videoMimeType(file)) {
+            alert(analysisMessage("videoOnly"));
+            videoInput.value = "";
+            fileNameDiv.textContent = "";
+            analyzeBtn.disabled = true;
+            return;
+        }
+
         if (file.size > 100 * 1024 * 1024) { // R2 direct upload limit
             alert(ANALYSIS_CONFIG.messages.fileTooLarge.replace('{size}', sizeInMB));
             videoInput.value = "";
@@ -369,7 +457,7 @@ async function uploadVideoInChunks(apiUrl, file, session, onProgress) {
                 await new Promise((resolve, reject) => {
                     const xhr = new XMLHttpRequest();
                     xhr.open("POST", analysisApiUrl(apiUrl, "upload_part"));
-                    xhr.setRequestHeader("Content-Type", session.mimeType || file.type || "video/mp4");
+                    xhr.setRequestHeader("Content-Type", session.mimeType || videoMimeType(file) || "video/mp4");
                     xhr.setRequestHeader("X-Upload-Token", session.uploadToken);
                     xhr.setRequestHeader("X-Part-Number", String(partNumber));
                     xhr.timeout = 120000;
@@ -456,7 +544,7 @@ async function runAnalysis() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    mimeType: file.type,
+                    mimeType: videoMimeType(file),
                     numBytes: file.size,
                     displayName: file.name
                 })
@@ -560,7 +648,7 @@ async function runAnalysis() {
             body: JSON.stringify({
                 fileUri: fileUri,
                 fileName: fileName,
-                mimeType: file.type,
+                mimeType: videoMimeType(file),
                 genre: genre,
                 userPrompt: prompt
             })
@@ -670,7 +758,9 @@ function shareKakao() {
             Kakao.init('41684f8ded61c7e396e37031d51bbc3c');
         }
 
-        const shareUrl = window.location.href.split('?')[0] + (currentAnalysisId ? `?id=${currentAnalysisId}` : '');
+        const shareUrl = currentAnalysisId
+            ? `${window.location.origin}${window.location.pathname}?id=${encodeURIComponent(currentAnalysisId)}`
+            : window.location.href;
 
         Kakao.Share.sendDefault({
             objectType: 'feed',
