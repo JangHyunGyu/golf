@@ -791,17 +791,43 @@ function shareKakao() {
     }
 }
 
+async function copyPlainText(text) {
+    try {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+            await navigator.clipboard.writeText(text);
+            return true;
+        }
+    } catch (error) {
+        // In-app browsers often reject the async clipboard API.
+    }
+
+    try {
+        const area = document.createElement("textarea");
+        area.value = text;
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.top = "0";
+        area.style.left = "0";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        const copied = document.execCommand("copy");
+        area.remove();
+        return copied;
+    } catch (error) {
+        return false;
+    }
+}
+
 function copyResult() {
     if (!latestAnalysisResult) {
         alert(ANALYSIS_CONFIG.messages.copyNoResult);
         return;
     }
-    
-    navigator.clipboard.writeText(latestAnalysisResult).then(() => {
-        alert(ANALYSIS_CONFIG.messages.copySuccess);
-    }).catch(err => {
-        console.error('Copy failed:', err);
-        alert(ANALYSIS_CONFIG.messages.copyFail);
+
+    copyPlainText(latestAnalysisResult).then((copied) => {
+        alert(copied ? ANALYSIS_CONFIG.messages.copySuccess : ANALYSIS_CONFIG.messages.copyFail);
     });
 }
 
