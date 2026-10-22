@@ -17,7 +17,7 @@ Last updated: 2026-10-02
 - 분석 시간: 보통 최대 1~2분
 - 언어: 한국어, 영어, 일본어
 - 영상 처리: 분석을 위해 임시 업로드되며 처리 후 삭제됩니다. 공유용 결과 텍스트는 30일 보관됩니다.
-- 운영: ArcherLab (장현규)
+- 운영: archerlab
 
 ### Who it is for / 대상
 - 연습장에 가기 전후에 내 스윙을 영상으로 점검해 보고 싶은 골퍼
@@ -79,7 +79,7 @@ Golf Swing Master is a free web tool. You upload a golf swing video and a multim
 - Analysis time: Usually up to 1–2 minutes
 - Languages: Korean, English, Japanese
 - Video handling: Uploaded temporarily for analysis, then deleted after processing. Shared result text is kept for 30 days.
-- Operator: ArcherLab (Hyungyu Jang)
+- Operator: archerlab
 
 ### Who it is for / 대상
 - Golfers who want to check their swing on video before or after practice
