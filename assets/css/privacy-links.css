@@ -1,0 +1,15 @@
+/* Persistent, keyboard- and touch-accessible privacy links. */
+.privacy-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 16px; padding: 4px 12px; pointer-events: auto; }
+.privacy-links a { display: inline-flex; min-height: 44px; align-items: center; padding: 6px 10px; color: inherit; font-size: .9rem; text-underline-offset: 3px; }
+.privacy-links a:focus-visible, .upload-privacy-note a:focus-visible { outline: 3px solid #e4c987; outline-offset: 3px; }
+.upload-privacy-note { max-width: 68ch; margin: 16px auto; padding: 12px 16px; color: #d7dcd8; background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.14); border-radius: 8px; font-size: .9rem; line-height: 1.7; overflow-wrap: anywhere; text-align: left; }
+.upload-privacy-note a { color: #f0d9a0; text-decoration: underline; text-underline-offset: 3px; }
+/* Landing hubs need natural scrolling when the footer grows or the viewport shrinks. */
+html:has(.hub-container), body:has(.hub-container) { position: relative; height: auto; min-height: 100%; overflow-x: clip; overflow-y: auto; }
+body:has(.hub-container) { min-height: 100dvh; display: flex; flex-direction: column; }
+body:has(.hub-container)::before { position: fixed; inset: 0; width: auto; height: auto; }
+body:has(.hub-container) main { flex: 1 0 auto; height: auto; min-height: 0; overflow: visible; }
+body:has(.hub-container) .hub-container { height: auto; min-height: 0; padding-bottom: 32px; }
+body:has(.hub-container) .site-footer { position: relative; inset: auto; flex: 0 0 auto; padding-bottom: max(16px, env(safe-area-inset-bottom)) !important; }
+@media (max-height: 500px) { body:has(.hub-container) .hub-card { min-height: 160px; } }
+@media (prefers-reduced-motion: reduce) { body:has(.hub-container) *, body:has(.hub-container) *::before, body:has(.hub-container) *::after { animation: none !important; transition: none !important; } body:has(.hub-container) .hub-card { opacity: 1; transform: none; } }

@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="origin-trial" content="Agn9opFYdjvT/UqEIvt4RnCkmN8Kt+8/lzvg731pKSz7MpNoJkLvra/pLOIFgR9GZb39JbBGeJ+CDO++Tus3FggAAABmeyJvcmlnaW4iOiJodHRwczovL2FyY2hlcmxhYi5kZXY6NDQzIiwiZmVhdHVyZSI6IkhUTUxJbkNhbnZhcyIsImV4cGlyeSI6MTc5MjQ1NDQwMCwiaXNTdWJkb21haW4iOnRydWV9">
-    <script src="assets/js/app-update.js?v=1.0.3" defer></script>
+    <script src="assets/js/app-update.js?v=1.0.4" defer></script>
     <script src="assets/js/browser-check.js?v=1.0.4" defer></script>
     <script src="assets/js/error-reporter.js?v=20260729-external-synchronizer-filter" defer></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
 	<title>ゴルフスイング無料診断・AI解析｜動画アップロードで分析</title>
 	<meta name="description" content="ゴルフスイングを動画で無料診断。アップロードするとAIが姿勢、テンポ、インパクト、スライス傾向を分析し、改善ポイントを返します。" />
@@ -61,7 +61,7 @@
 		wcs_do();
 		}
 	</script>
-    
+
     <link rel="stylesheet" href="assets/css/analysis.css?v=20260730-seo">
     <link rel="stylesheet" href="assets/css/analysis-loaders.css">
     <script type="application/ld+json">
@@ -147,6 +147,7 @@
   <script src="/assets/js/archerlab-session.js" defer data-archerlab-account></script>
     <meta property="og:image:secure_url" content="https://golf.archerlab.dev/assets/images/social/golf-representative.png">
     <meta property="og:image:type" content="image/png">
+<link rel="stylesheet" href="/assets/css/privacy-links.css?v=20261101-privacy">
 </head>
 
 <body>
@@ -165,7 +166,7 @@
         </div>
         <div class="analysis-container">
             <h1 class="hero__title">無料AIゴルフスイング診断</h1>
-            
+
             <button id="guideBtn" class="guide-btn">
                 <span class="guide-icon">ℹ️</span> 利用案内
             </button>
@@ -191,7 +192,8 @@
             </div>
 
             <button id="analyzeBtn" disabled>分析＆コーチング</button>
-            
+<p class="upload-privacy-note">動画はCloudflare R2に一時保存し、AI解析の実行後に削除を試みます。残った完成動画はアップロード完了から30分後に毎時の削除処理の対象となります。共有結果は30日間保存します。 <a href="/privacy-jp#upload-privacy">プライバシーポリシー</a></p>
+
             <div id="result"></div>
 
             <section class="analysis-resource-guide" aria-labelledby="analysisGuideTitle">
@@ -204,16 +206,13 @@
                     <summary>解析しやすい動画の撮り方</summary>
                     <p>全身とクラブが画面に入るよう、明るい場所でカメラを固定してください。正面または後方（ダウン・ザ・ライン）から撮ると確認できるポイントが増えます。</p>
                 </details>
-                <details>
-                    <summary>動画と共有結果はどう扱われますか？</summary>
-                    <p>動画は解析のため一時的にアップロードされ、処理後に削除されます。解析結果のテキストは共有リンク機能のため30日間保存されます。詳しくは<a href="/privacy-jp">プライバシー案内</a>をご覧ください。</p>
-                </details>
+
                 <nav class="analysis-resources" aria-label="ゴルフ練習ガイド">
                     <a href="/seo/golf-dokugaku">独学チェックリスト</a>
                     <a href="/seo/driver-slice-naoshikata">スライスの直し方</a>
                 </nav>
             </section>
-            
+
             <footer class="site-footer">
                 <div class="site-footer__inner">
                     <div class="contact-links">
@@ -225,9 +224,10 @@
                         </button>
                     </div>
                     <p class="copyright">© 2026 ArcherLab. All rights reserved.</p>
-                    <p class="policy-links"><a href="/privacy-jp">プライバシー</a><span aria-hidden="true"> · </span><a href="/terms-jp">利用規約</a></p>
+                    <p class="policy-links"><a href="/terms-jp">利用規約</a></p>
                 </div>
-            </footer>
+            <nav class="privacy-links" aria-label="プライバシー情報"><a href="/privacy-jp">プライバシーポリシー</a></nav>
+</footer>
         </div>
 	</main>
 
@@ -279,15 +279,15 @@
             } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 var overlay = document.createElement('div');
                 overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;';
-                
+
                 var msg = document.createElement('p');
                 msg.innerHTML = '下部の <b>[共有]</b> ボタンを押し、<br><b>[ホーム画面に追加]</b> を選択してください。';
                 msg.style.cssText = 'font-size:18px;line-height:1.5;margin-bottom:20px;';
-                
+
                 var arrow = document.createElement('div');
                 arrow.innerHTML = '⬇️';
                 arrow.style.cssText = 'font-size:40px;animation:bounce 1s infinite;';
-                
+
                 var closeBtn = document.createElement('button');
                 closeBtn.innerHTML = '閉じる';
                 closeBtn.style.cssText = 'margin-top:30px;padding:10px 20px;background:white;color:black;border:none;border-radius:5px;font-weight:bold;cursor:pointer;';

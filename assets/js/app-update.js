@@ -1,7 +1,7 @@
 (() => {
     'use strict';
 
-    const CURRENT_VERSION = '1.0.3';
+    const CURRENT_VERSION = '1.0.4';
     const UPDATE_CHECK_DELAY_MS = 3000;
     let registration = null;
     let reloadStarted = false;

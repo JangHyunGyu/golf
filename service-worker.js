@@ -1,5 +1,5 @@
 const CACHE_PREFIX = 'golf-';
-const CACHE_NAME = 'golf-v1.0.3';
+const CACHE_NAME = 'golf-v1.0.4';
 const PRECACHE_URLS = [
     './',
     './index.html',

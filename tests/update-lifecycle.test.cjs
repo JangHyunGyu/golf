@@ -18,7 +18,7 @@ const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 test('all application pages use the shared update lifecycle', () => {
     for (const page of pages) {
         const html = read(page);
-        assert.match(html, /assets\/js\/app-update\.js\?v=1\.0\.3/);
+        assert.match(html, /assets\/js\/app-update\.js\?v=1\.0\.4/);
         assert.doesNotMatch(html, /getRegistrations\s*\(/);
         assert.doesNotMatch(html, /registration\.unregister\s*\(/);
         assert.doesNotMatch(html, /reload\s*\(\s*true\s*\)/);
@@ -30,7 +30,7 @@ test('published and client versions agree', () => {
     const version = JSON.parse(read('version.json')).version;
     const client = read('assets/js/app-update.js');
     const worker = read('service-worker.js');
-    assert.equal(version, '1.0.3');
+    assert.equal(version, '1.0.4');
     assert.match(client, new RegExp(`CURRENT_VERSION = ['"]${version.replaceAll('.', '\\.')}['"]`));
     assert.match(worker, new RegExp(`golf-v${version.replaceAll('.', '\\.')}`));
 });

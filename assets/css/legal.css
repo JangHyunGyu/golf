@@ -361,3 +361,11 @@ tr:last-child td {
     color: #111;
   }
 }
+
+/* Reachable legal navigation on phones, including landscape safe areas. */
+body { min-height: 100dvh; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); overflow-wrap: anywhere; }
+.legal-topbar { flex-wrap: wrap; }
+.legal-brand, .language-links a, .legal-footer a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; }
+.language-links a { min-width: 44px; }
+.legal-brand { white-space: normal; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

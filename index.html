@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="origin-trial" content="Agn9opFYdjvT/UqEIvt4RnCkmN8Kt+8/lzvg731pKSz7MpNoJkLvra/pLOIFgR9GZb39JbBGeJ+CDO++Tus3FggAAABmeyJvcmlnaW4iOiJodHRwczovL2FyY2hlcmxhYi5kZXY6NDQzIiwiZmVhdHVyZSI6IkhUTUxJbkNhbnZhcyIsImV4cGlyeSI6MTc5MjQ1NDQwMCwiaXNTdWJkb21haW4iOnRydWV9">
-    <script src="assets/js/app-update.js?v=1.0.3" defer></script>
+    <script src="assets/js/app-update.js?v=1.0.4" defer></script>
     <script src="assets/js/browser-check.js?v=1.0.4" defer></script>
     <script src="assets/js/error-reporter.js?v=20260729-external-synchronizer-filter" defer></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 	<meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
 	<title>골프 스윙 마스터 | ArcherLab AI 골프 도구</title>
 	<meta name="description" content="ArcherLab의 골프 스윙 마스터입니다. 영상 기반 AI 골프 스윙 분석 도구와 연습 가이드를 제공합니다." />
@@ -39,7 +39,7 @@
     <noscript><link rel="stylesheet" as="style" crossorigin href="assets/vendor/pretendard/pretendard.css" /></noscript>
 	<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/style.css?v=20260730-seo">
-    <link rel="stylesheet" href="assets/css/landing-page.css?v=1.0.3">
+    <link rel="stylesheet" href="assets/css/landing-page.css?v=20261101-privacy">
 	<script type="application/ld+json">
 	{
 		"@context": "https://schema.org",
@@ -110,6 +110,7 @@
   <script src="/assets/js/archerlab-session.js" defer data-archerlab-account></script>
     <meta property="og:image:secure_url" content="https://golf.archerlab.dev/assets/images/social/golf-representative.png">
     <meta property="og:image:type" content="image/png">
+<link rel="stylesheet" href="/assets/css/privacy-links.css?v=20261101-privacy">
 </head>
 
 <body>
@@ -152,9 +153,10 @@
                 </button>
             </div>
             <p class="copyright">© 2026 ArcherLab. All rights reserved.</p>
-            <p class="policy-links"><a href="/privacy">개인정보 처리 안내</a><span aria-hidden="true"> · </span><a href="/terms">이용약관</a><span aria-hidden="true"> · </span><a href="/seo/golf-swing-master-about">서비스 안내</a></p>
+            <p class="policy-links"><a href="/terms">이용약관</a><span aria-hidden="true"> · </span><a href="/seo/golf-swing-master-about">서비스 안내</a></p>
         </div>
-    </footer>
+    <nav class="privacy-links" aria-label="개인정보 안내"><a href="/privacy">개인정보처리방침</a></nav>
+</footer>
 
     <!-- Contact Modal -->
     <div id="contactModal" class="modal-overlay">
@@ -204,15 +206,15 @@
             } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 var overlay = document.createElement('div');
                 overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;';
-                
+
                 var msg = document.createElement('p');
                 msg.innerHTML = '하단의 <b>[공유]</b> 버튼을 누르고<br><b>[홈 화면에 추가]</b>를 선택하세요.';
                 msg.style.cssText = 'font-size:18px;line-height:1.5;margin-bottom:20px;';
-                
+
                 var arrow = document.createElement('div');
                 arrow.innerHTML = '⬇️';
                 arrow.style.cssText = 'font-size:40px;animation:bounce 1s infinite;';
-                
+
                 var closeBtn = document.createElement('button');
                 closeBtn.innerHTML = '닫기';
                 closeBtn.style.cssText = 'margin-top:30px;padding:10px 20px;background:white;color:black;border:none;border-radius:5px;font-weight:bold;cursor:pointer;';

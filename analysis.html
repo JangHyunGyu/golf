@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="origin-trial" content="Agn9opFYdjvT/UqEIvt4RnCkmN8Kt+8/lzvg731pKSz7MpNoJkLvra/pLOIFgR9GZb39JbBGeJ+CDO++Tus3FggAAABmeyJvcmlnaW4iOiJodHRwczovL2FyY2hlcmxhYi5kZXY6NDQzIiwiZmVhdHVyZSI6IkhUTUxJbkNhbnZhcyIsImV4cGlyeSI6MTc5MjQ1NDQwMCwiaXNTdWJkb21haW4iOnRydWV9">
-    <script src="assets/js/app-update.js?v=1.0.3" defer></script>
+    <script src="assets/js/app-update.js?v=1.0.4" defer></script>
     <script src="assets/js/browser-check.js?v=1.0.4" defer></script>
     <script src="assets/js/error-reporter.js?v=20260729-external-synchronizer-filter" defer></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="naver-site-verification" content="6694c688ca87f2b5e6ff142d1d6576f8bfbdb267" />
 	<title>무료 AI 골프 스윙 분석 | 영상 업로드 온라인 진단</title>
 	<meta name="description" content="스윙 영상을 업로드하면 AI가 자세, 템포, 임팩트 구간과 슬라이스 징후를 살펴보고 개선 연습을 제안하는 무료 온라인 골프 스윙 분석입니다." />
@@ -61,7 +61,7 @@
 		wcs_do();
 		}
 	</script>
-    
+
     <link rel="stylesheet" href="assets/css/analysis.css?v=20260730-seo">
     <link rel="stylesheet" href="assets/css/analysis-loaders.css">
     <!-- <link rel="stylesheet" href="assets/css/custom-select.css"> -->
@@ -147,6 +147,7 @@
   <script src="/assets/js/archerlab-session.js" defer data-archerlab-account></script>
     <meta property="og:image:secure_url" content="https://golf.archerlab.dev/assets/images/social/golf-representative.png">
     <meta property="og:image:type" content="image/png">
+<link rel="stylesheet" href="/assets/css/privacy-links.css?v=20261101-privacy">
 </head>
 
 <body>
@@ -165,7 +166,7 @@
         </div>
         <div class="analysis-container">
             <h1 class="hero__title">무료 AI 골프 스윙 분석</h1>
-            
+
             <button id="guideBtn" class="guide-btn">
                 <span class="guide-icon">ℹ️</span> 이용 안내
             </button>
@@ -192,9 +193,10 @@
             </div>
 
             <button id="analyzeBtn" disabled>분석 & 코칭</button>
-            
+<p class="upload-privacy-note">영상은 Cloudflare R2에 임시 저장하고 AI 분석을 실행한 뒤 삭제를 시도합니다. 업로드 완료 후 30분이 지난 영상은 매시간 실행하는 정리 작업에서 삭제하며 공유 결과는 30일간 보관합니다. <a href="/privacy#upload-privacy">개인정보처리방침</a></p>
+
             <!-- Loading div removed, moved to modal -->
-            
+
             <div id="result"></div>
 
             <section class="analysis-resource-guide" aria-labelledby="analysisGuideTitle">
@@ -207,16 +209,13 @@
                     <summary>정확도를 높이는 촬영 방법</summary>
                     <p>전신과 클럽이 프레임 안에 들어오도록 밝은 곳에서 촬영하세요. 정면 또는 타깃 라인 뒤쪽 영상을 흔들림 없이 찍으면 관찰 가능한 구간이 늘어납니다.</p>
                 </details>
-                <details>
-                    <summary>영상과 공유 결과는 어떻게 처리되나요?</summary>
-                    <p>영상은 분석을 위해 임시 업로드되고 처리 후 삭제됩니다. 분석 결과 텍스트는 공유 링크 제공을 위해 30일간 보관됩니다. 자세한 내용은 <a href="/privacy">개인정보 처리 안내</a>에서 확인할 수 있습니다.</p>
-                </details>
+
                 <nav class="analysis-resources" aria-label="골프 연습 자료">
                     <a href="/seo/golf-dokak">골프 독학 체크리스트</a>
                     <a href="/seo/driver-slice-gyojung">드라이버 슬라이스 교정</a>
                 </nav>
             </section>
-            
+
             <footer class="site-footer">
                 <div class="site-footer__inner">
                     <div class="contact-links">
@@ -228,9 +227,10 @@
                         </button>
                     </div>
                     <p class="copyright">© 2026 ArcherLab. All rights reserved.</p>
-                    <p class="policy-links"><a href="/privacy">개인정보 처리 안내</a><span aria-hidden="true"> · </span><a href="/terms">이용약관</a></p>
+                    <p class="policy-links"><a href="/terms">이용약관</a></p>
                 </div>
-            </footer>
+            <nav class="privacy-links" aria-label="개인정보 안내"><a href="/privacy">개인정보처리방침</a></nav>
+</footer>
         </div>
 	</main>
 
@@ -282,15 +282,15 @@
             } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 var overlay = document.createElement('div');
                 overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;text-align:center;';
-                
+
                 var msg = document.createElement('p');
                 msg.innerHTML = '하단의 <b>[공유]</b> 버튼을 누르고<br><b>[홈 화면에 추가]</b>를 선택하세요.';
                 msg.style.cssText = 'font-size:18px;line-height:1.5;margin-bottom:20px;';
-                
+
                 var arrow = document.createElement('div');
                 arrow.innerHTML = '⬇️';
                 arrow.style.cssText = 'font-size:40px;animation:bounce 1s infinite;';
-                
+
                 var closeBtn = document.createElement('button');
                 closeBtn.innerHTML = '닫기';
                 closeBtn.style.cssText = 'margin-top:30px;padding:10px 20px;background:white;color:black;border:none;border-radius:5px;font-weight:bold;cursor:pointer;';

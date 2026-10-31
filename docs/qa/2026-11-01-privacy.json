@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-01",
+  "scope": "Standalone privacy pages, footer navigation, upload storage/deletion summaries, and responsive navigation. No backend storage or AI routing changes.",
+  "languages": [
+    "ko",
+    "en",
+    "ja"
+  ],
+  "backendEvidence": {
+    "source": "latindance/assets/js/worker.js",
+    "deployedVersion": "aa4c0c6f-71a9-40eb-afad-e88ee4d6b3bb",
+    "originalVideo": "Temporary R2; finally attempts deletion after AI call success or error.",
+    "completedLeftovers": "Eligible 30 minutes after upload completion; hourly scheduled cleanup.",
+    "incompleteParts": "Not listed by completed-object cleanup. Bucket lifecycle inspection found only a videos/ rule, not a media-analysis/ rule; do not promise a deletion deadline.",
+    "sharedResults": "Cloudflare KV expirationTtl = 60 * 60 * 24 * 30.",
+    "temporaryAndShareLinks": "No separate login or password; disclosed in policy."
+  },
+  "koreanReview": {
+    "originalCharacters": 2739,
+    "finalCharacters": 2798,
+    "changeRatePercent": 5.5,
+    "diagnosis": [
+      "F-4: stacked technical nouns",
+      "A-18: long modifier before interrupted-upload parts",
+      "C-11: commas after connective endings",
+      "Context: analysis output described as input"
+    ],
+    "finalReview": "Independent reviewer privacy_korean_review read actual diffs and adjacent context for all seven affected Korean files; accepted final wording and verified exact normalized extraction match.",
+    "checklistPassed": 6,
+    "checklistTotal": 6,
+    "grade": "B",
+    "gradeReason": "Conservative changes below the skill A-grade edit-rate band; no remaining wording blocker.",
+    "gates": "verify_change_rate.py and verify_gates.py passed; initial connective-comma warning resolved.",
+    "examples": [
+      {
+        "before": "남은 완성 영상",
+        "after": "업로드 완료 후 30분이 지난 영상",
+        "reason": "Clarify that completion means upload completion, not video editing."
+      },
+      {
+        "before": "선택한 클럽 종류, AI 분석 결과를 사용합니다.",
+        "after": "선택한 클럽 종류를 처리하고 AI 분석 결과를 생성합니다.",
+        "reason": "Distinguish input data from generated output."
+      },
+      {
+        "before": "30일간 저장한 뒤 만료시킵니다.",
+        "after": "30일간 보관합니다. 보관 기간이 지나면 공유 링크로 조회할 수 없습니다.",
+        "reason": "Explain the visible consequence of expiry."
+      }
+    ]
+  },
+  "originalsAndReviewArtifacts": "D:/backups/privacy-publication/20261101/golf",
+  "runtimeFiles": {
+    "privacy-en.html": "7511991ef9742a8d7b5a8c63f48d74247a4b35c485fc8f0bb511f1686b2793aa",
+    "privacy-jp.html": "a981adec3fa74719615562ed3670b62282fd682b69d2a5bd35ea0a43b963bd8b",
+    "privacy.html": "15d22544481d5fbab150375b9edca24f3cb874470f458bd9d2becaef5755a501"
+  },
+  "verification": {
+    "requiredChecks": "passed",
+    "localBrowserChecks": "See local-ui-results.json in the audit directory",
+    "existingLatinDanceBrowserSuite": null,
+    "viewports": [
+      [
+        320,
+        568
+      ],
+      [
+        430,
+        932
+      ],
+      [
+        568,
+        320
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        768,
+        1024
+      ],
+      [
+        1024,
+        768
+      ],
+      [
+        1440,
+        900
+      ],
+      [
+        390,
+        664
+      ]
+    ],
+    "covers": [
+      "policy layout",
+      "all supported language links",
+      "homepage/analyzer entry links",
+      "touch targets",
+      "keyboard focus",
+      "horizontal overflow",
+      "reduced motion",
+      "safe-area CSS",
+      "dynamic viewport sizing"
+    ]
+  }
+}

@@ -1,170 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="/assets/js/ga.js?v=1.0.3" defer></script>
-<script src="/assets/js/ga-engagement.js?v=20260618-engagement" defer></script>
   <meta charset="utf-8">
-  <meta http-equiv="origin-trial" content="Agn9opFYdjvT/UqEIvt4RnCkmN8Kt+8/lzvg731pKSz7MpNoJkLvra/pLOIFgR9GZb39JbBGeJ+CDO++Tus3FggAAABmeyJvcmlnaW4iOiJodHRwczovL2FyY2hlcmxhYi5kZXY6NDQzIiwiZmVhdHVyZSI6IkhUTUxJbkNhbnZhcyIsImV4cGlyeSI6MTc5MjQ1NDQwMCwiaXNTdWJkb21haW4iOnRydWV9">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Privacy Policy | Golf Swing Master</title>
-  <meta name="description" content="How Golf Swing Master handles uploaded swing videos, AI analysis, shared results, analytics, and technical logs.">
+  <meta name="description" content="How Golf Swing Master stores and deletes videos, processes AI analysis, shares results, and handles usage data.">
   <meta name="robots" content="noindex,follow">
   <link rel="canonical" href="https://golf.archerlab.dev/privacy-en">
-  <link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/privacy">
-  <link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/privacy-en">
-  <link rel="alternate" hreflang="ja" href="https://golf.archerlab.dev/privacy-jp">
+  <link rel="alternate" hreflang="ko" href="https://golf.archerlab.dev/privacy"><link rel="alternate" hreflang="en" href="https://golf.archerlab.dev/privacy-en"><link rel="alternate" hreflang="ja" href="https://golf.archerlab.dev/privacy-jp">
   <link rel="alternate" hreflang="x-default" href="https://golf.archerlab.dev/privacy-en">
-  <meta property="og:type" content="website">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:site_name" content="Golf Swing Master">
-  <meta property="og:title" content="Privacy Policy | Golf Swing Master">
-  <meta property="og:description" content="How uploaded videos, AI analysis, shared results, and technical data are handled.">
-  <meta property="og:url" content="https://golf.archerlab.dev/privacy-en">
-  <meta property="og:image" content="https://golf.archerlab.dev/assets/images/kakao_golf.png">
-  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/css/legal.css">
+  <link rel="stylesheet" href="/assets/vendor/pretendard/pretendard.css">
+  <link rel="stylesheet" href="/assets/css/legal.css?v=20261101-privacy">
 </head>
 <body>
   <div class="legal-shell">
     <header class="legal-topbar">
-      <a class="legal-brand" href="/analysis-en">Golf Swing Master</a>
-      <nav class="language-links" aria-label="Choose language">
-        <a href="/privacy" lang="ko">KO</a>
-        <a href="/privacy-en" lang="en" aria-current="page">EN</a>
-        <a href="/privacy-jp" lang="ja">JA</a>
-      </nav>
+      <a class="legal-brand" href="/index-en">Golf Swing Master</a>
+      <nav class="language-links" aria-label="Choose language"><a href="/privacy" lang="ko">KO</a><a href="/privacy-en" lang="en" aria-current="page">EN</a><a href="/privacy-jp" lang="ja">JA</a></nav>
     </header>
-
     <main>
       <article class="legal-document">
         <header class="legal-hero">
-          <p class="legal-eyebrow">Privacy</p>
+          <p class="legal-eyebrow">ArcherLab</p>
           <h1>Privacy Policy</h1>
-          <p class="legal-summary">This policy explains what Golf Swing Master processes when it analyzes a swing video and delivers an AI-generated result.</p>
-          <p class="legal-effective">Effective: <time datetime="2026-07-30">July 30, 2026</time></p>
+          <p class="legal-summary">How Golf Swing Master stores and deletes videos, processes AI analysis, shares results, and handles usage data.</p>
+          <p class="legal-effective"><time datetime="2026-11-01">Effective: November 1, 2026</time></p>
         </header>
-
         <div class="legal-content">
-          <aside class="legal-notice">
-            <strong>Please read this first.</strong> No account is required, but your original video is sent to external storage and AI processing services for analysis. Avoid uploading videos that show faces, license plates, the inside of your home, or other identifiable or sensitive information.
-          </aside>
-
-          <section class="legal-section">
-            <h2>1. Scope and operator</h2>
-            <p>This policy applies to the Golf Swing Master web service at <strong>golf.archerlab.dev</strong>. Questions about the service or this policy can be sent to <a class="legal-contact" href="mailto:archerlab@archerlab.dev">archerlab@archerlab.dev</a>.</p>
-          </section>
-
-          <section class="legal-section">
-            <h2>2. Data we process</h2>
-            <p>The service does not create user accounts. It may process the following data to provide and maintain its features:</p>
-            <ul>
-              <li>The original golf swing video you select</li>
-              <li>Upload metadata such as file name, media type, and file size</li>
-              <li>Your selected club type and the AI-generated analysis text</li>
-              <li>A shared-result identifier and creation time</li>
-              <li>Page, browser, device, screen-size, and usage-event information collected through Google and Naver analytics</li>
-              <li>Technical logs such as error messages and stacks, the URL or path where an error occurred, online status, and viewport size</li>
-            </ul>
-          </section>
-
-          <section class="legal-section">
-            <h2>3. Original video processing and deletion</h2>
-            <ol>
-              <li>Your selected video is temporarily uploaded to Cloudflare R2 for analysis.</li>
-              <li>The video is processed through OpenRouter and the current downstream AI model provider selected at analysis time.</li>
-              <li>For a successful analysis, the server attempts to delete the temporary original video after receiving the AI provider's response.</li>
-              <li>If an upload is incomplete or analysis fails before the normal deletion flow completes, its object becomes eligible for cleanup 30 minutes after upload begins and is removed by a scheduled cleanup job.</li>
-            </ol>
-            <p>The 30-minute period is when an object becomes eligible for cleanup. Exact deletion may occur later depending on when the scheduled job runs. The original video is not stored with the shared result.</p>
-          </section>
-
-          <section class="legal-section">
-            <h2>4. Shared-result retention</h2>
-            <p>Analysis-result text is stored in Cloudflare KV for 30 days to provide the share-link feature. The raw video is not included in that shared result.</p>
-            <p>Shared links have no separate login or access password. Anyone who has the link can view the result during its 30-day retention period, so take care before posting it in a public channel.</p>
-          </section>
-
-          <section class="legal-section">
-            <h2>5. Why we process data</h2>
-            <ul>
-              <li>To upload a video, run AI swing analysis, display the result, and support result sharing</li>
-              <li>To diagnose errors, respond to outages, review security, and improve service quality</li>
-              <li>To understand aggregate visits and feature usage</li>
-            </ul>
-          </section>
-
-          <section class="legal-section">
-            <h2>6. Service providers</h2>
-            <div class="legal-table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Provider</th>
-                    <th>Role</th>
-                    <th>Data that may be processed</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Cloudflare</td>
-                    <td>Web hosting, temporary video storage (R2), shared-result storage (KV), and network delivery</td>
-                    <td>Original video, upload metadata, result text, and connection or network information</td>
-                  </tr>
-                  <tr>
-                    <td>OpenRouter and the current downstream AI model provider</td>
-                    <td>Video-based AI analysis</td>
-                    <td>Original video, analysis instructions, and selected club type</td>
-                  </tr>
-                  <tr>
-                    <td>Google Analytics and Naver Analytics</td>
-                    <td>Visit and usage measurement</td>
-                    <td>Page events and browser, device, and connection-related information</td>
-                  </tr>
-                  <tr>
-                    <td>Technical logging service</td>
-                    <td>Error collection and incident diagnosis</td>
-                    <td>Error messages and stacks, URL, path, viewport, and similar technical information</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <p>These providers may process data under their own terms and privacy policies, including in countries other than your country of residence.</p>
-          </section>
-
-          <section class="legal-section">
-            <h2>7. Your choices and precautions</h2>
-            <ul>
-              <li>Uploading a video is optional. Video analysis does not begin unless you choose a file and start the analysis.</li>
-              <li>Upload only videos you have the right to use and for which you have obtained any necessary consent from people shown.</li>
-              <li>Avoid identifiable faces, bystanders, location details, license plates, personal documents, and sensitive information, or obscure them before uploading.</li>
-              <li>Send a shared link only to intended recipients and do not redistribute it when it is no longer needed.</li>
-            </ul>
-            <p>If you contact us about a shared result or technical log, including the relevant share link or approximate time of the event can help us investigate.</p>
-          </section>
-
-          <section class="legal-section">
-            <h2>8. Security and limitations</h2>
-            <p>We aim to use reasonable safeguards, including encrypted transport and hard-to-guess identifiers. No internet transmission or third-party service can be guaranteed completely secure. The safest option is not to upload sensitive video.</p>
-          </section>
-
-          <section class="legal-section">
-            <h2>9. Changes and contact</h2>
-            <p>We may revise this policy when features, providers, or applicable requirements change. Material updates will be indicated by changing the effective date on this page.</p>
-            <p>Privacy contact: <a class="legal-contact" href="mailto:archerlab@archerlab.dev">archerlab@archerlab.dev</a></p>
-          </section>
+          <aside class="legal-notice" id="upload-privacy">Photo uploads are not supported. Uploaded videos are stored temporarily in Cloudflare R2 and sent to AI services for analysis. After running AI analysis, we attempt to delete the original whether the AI call succeeds or fails. Remaining completed videos become eligible for hourly cleanup 30 minutes after upload completion; actual deletion can take longer.</aside>
+          <section class="legal-section" id="section-1"><h2>1. Operator and scope</h2>
+<p>ArcherLab operates Golf Swing Master at golf.archerlab.dev. Send privacy questions and deletion requests to <a href="mailto:archerlab@archerlab.dev">archerlab@archerlab.dev</a>.</p>
+</section>
+<section class="legal-section" id="section-2"><h2>2. Data and purposes</h2>
+<p>We process your original video and audio, file name, type and size, and selected club type to generate an AI analysis result. Results and creation times support share links. Connection, device, browser and error information support usage measurement, security and troubleshooting.</p>
+</section>
+<section class="legal-section" id="section-3"><h2>3. Uploaded video storage and deletion</h2>
+<p>Videos are stored temporarily in Cloudflare R2. After running AI analysis, we attempt to delete the original. Completed videos left after an earlier error or a failed deletion become eligible for cleanup 30 minutes after upload completion. Cleanup runs hourly, so deletion within 30 minutes is not guaranteed.</p>
+<p>Parts left by an interrupted upload are not completed videos and are not covered by this cleanup job. We have not confirmed a separate automatic deletion deadline for these parts and cannot promise deletion within a fixed period. To request deletion, contact us with the approximate upload time.</p>
+<p>Temporary video URLs have no separate login or password. Although the URLs are difficult to guess, anyone who has one can access the video until deletion. Do not share these URLs.</p>
+</section>
+<section class="legal-section" id="section-4"><h2>4. Results and share links</h2>
+<p>Result text, selected options and creation times are saved in Cloudflare KV for 30 days and then expire. The original video is not included in a shared result. Anyone with the share link can read the result without signing in. Check it for identifying information before sharing.</p>
+</section>
+<section class="legal-section" id="section-5"><h2>5. External processing services</h2>
+<p>Cloudflare provides hosting, temporary video storage and result storage. Videos and analysis requests are sent through OpenRouter to Google Gemini models. Data may be processed outside your country.</p>
+<p>The deletion periods on this page cover the temporary storage and shared results managed by ArcherLab. External AI services have their own logging and retention policies; deleting our original does not mean all provider copies are immediately deleted. See <a href="https://openrouter.ai/docs/guides/privacy/provider-logging">OpenRouter provider data policies</a> and <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
+</section>
+<section class="legal-section" id="section-6"><h2>6. Cookies, analytics and error logs</h2>
+<p>Google Analytics and Naver Analytics process pages visited, usage events, and device, browser and connection information. Error messages, stacks, page URLs and viewport sizes may be sent to ArcherLab’s error logging service. These records may include a shared-result identifier.</p>
+<p>You can clear cookies and site data in your browser settings. Doing so does not delete videos or shared results on the server. The 30-minute and 30-day periods for videos and results do not apply to analytics or error logs. Contact us to ask about or request deletion of this information.</p>
+</section>
+<section class="legal-section" id="section-7"><h2>7. ArcherLab account connection</h2>
+<p>Video analysis does not require registration. If you are already signed in to ArcherLab, Golf synchronizes your sign-in state with the account and session services, processing your account identifier, display name and session cookies. Account questions and deletion requests can also be sent to the contact above.</p>
+</section>
+<section class="legal-section" id="section-8"><h2>8. Your choices and requests</h2>
+<p>Analysis starts only after you select a video and press the analysis button. Upload only videos you have the right to use, with consent from people shown. Hide unnecessary faces, license plates, personal documents and other identifying information before uploading.</p>
+<p>To request access, correction, deletion or restriction of processing, email the service name and a share link or approximate upload time. Send only the details needed to identify your request; do not attach the original video again. We will review and respond to requests to the extent we can locate the stored data.</p>
+</section>
+<section class="legal-section" id="section-9"><h2>9. Policy changes</h2>
+<p>When the service or data handling changes, we update this page and its effective date.</p>
+</section>
         </div>
       </article>
     </main>
-
-    <footer class="legal-footer">
-      <nav aria-label="Legal pages">
-        <a href="/privacy-en" aria-current="page">Privacy</a>
-        <a href="/terms-en">Terms</a>
-        <a href="/analysis-en">Back to analyzer</a>
-      </nav>
-      <p>© 2026 ArcherLab. Golf Swing Master.</p>
-    </footer>
+    <footer class="legal-footer"><nav aria-label="Privacy information"><a href="/index-en">Back to service</a><a href="mailto:archerlab@archerlab.dev">archerlab@archerlab.dev</a></nav><p>© 2026 ArcherLab. Golf Swing Master.</p></footer>
   </div>
 </body>
 </html>
