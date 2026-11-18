@@ -31,6 +31,7 @@ export default defineConfig({
     }),
   ],
   build: {
+    target: ['es2018', 'safari12'],
     outDir: 'dist/web',
     rollupOptions: {
       input: {

@@ -125,9 +125,9 @@ const ANALYSIS_CLIENT_MESSAGES = ({
 })[ANALYSIS_LANGUAGE];
 
 function videoMimeType(file) {
-    const type = String(file?.type || "").split(";")[0].trim().toLowerCase();
+    const type = String(((file === null || file === void 0 ? void 0 : file.type)) || "").split(";")[0].trim().toLowerCase();
     if (type.startsWith("video/")) return type;
-    const name = String(file?.name || "").toLowerCase();
+    const name = String(((file === null || file === void 0 ? void 0 : file.name)) || "").toLowerCase();
     if (name.endsWith(".webm")) return "video/webm";
     if (name.endsWith(".mov")) return "video/quicktime";
     if (name.endsWith(".m4v")) return "video/x-m4v";
@@ -137,7 +137,7 @@ function videoMimeType(file) {
 
 function analysisMessage(key, values = {}) {
     return Object.entries(values).reduce(
-        (message, [name, value]) => message.replaceAll(`{${name}}`, String(value)),
+        (message, [name, value]) => message.split(`{${name}}`).join(String(value)),
         ANALYSIS_CLIENT_MESSAGES[key] || ANALYSIS_CLIENT_MESSAGES.analysisFailed
     );
 }
@@ -210,8 +210,8 @@ function escapeHtml(text) {
 
 function highlightScores(escaped, unit) {
     const safeUnit = String(unit || "점").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const pattern = new RegExp(`(?<![\\d.])(\\d{1,2}\\.\\d{1,2})(?![\\d.])(?:\\s*${safeUnit})?`, "g");
-    return escaped.replace(pattern, `<span class="score">$1${unit}</span>`);
+    const pattern = new RegExp(`(^|[^\\d.])(\\d{1,2}\\.\\d{1,2})(?![\\d.])(?:\\s*${safeUnit})?`, "g");
+    return escaped.replace(pattern, `$1<span class="score">$2${unit}</span>`);
 }
 
 function parseAnalysisPayload(content) {
@@ -271,7 +271,7 @@ function highlightText(text) {
     return highlightScores(escaped, ANALYSIS_CONFIG.messages.scoreUnit || "점");
 }
 
-function renderJsonAnalysis(content) {
+function renderJsonAnalysis(content) { var __oc0, __oc1;
     let data;
     try {
         data = parseAnalysisPayload(content);
@@ -294,8 +294,8 @@ function renderJsonAnalysis(content) {
     // 1. Summary
     html += `<h3>1. ${escapeHtml(msg.sectionSummary || '총평')}</h3>`;
     html += `<ul>`;
-    html += `<li><strong>${escapeHtml(msg.labelStrengths || '장점')}:</strong> ${highlightText(data.summary?.strengths || '')}</li>`;
-    html += `<li><strong>${escapeHtml(msg.labelWeaknesses || '단점 및 개선점')}:</strong> ${highlightText(data.summary?.weaknesses || '')}</li>`;
+    html += `<li><strong>${escapeHtml(msg.labelStrengths || '장점')}:</strong> ${highlightText((((__oc0 = data.summary) === null || __oc0 === void 0 ? void 0 : __oc0.strengths)) || '')}</li>`;
+    html += `<li><strong>${escapeHtml(msg.labelWeaknesses || '단점 및 개선점')}:</strong> ${highlightText((((__oc1 = data.summary) === null || __oc1 === void 0 ? void 0 : __oc1.weaknesses)) || '')}</li>`;
     html += `</ul>`;
 
     // 2. Detail Scores
@@ -504,7 +504,7 @@ async function uploadVideoInChunks(apiUrl, file, session, onProgress) {
     return completeRes.json();
 }
 
-async function runAnalysis() {
+async function runAnalysis() { var __oc2, __oc3, __oc4;
     const file = videoInput.files[0];
     if (!file) return;
 
@@ -668,7 +668,7 @@ async function runAnalysis() {
             throw new Error(analysisMessage("invalidResponse"));
         }
         
-        let content = data.choices?.[0]?.message?.content || ANALYSIS_CONFIG.messages.resultError;
+        let content = (((__oc4 = (__oc3 = (__oc2 = data.choices) === null || __oc2 === void 0 ? void 0 : __oc2[0]) === null || __oc3 === void 0 ? void 0 : __oc3.message) === null || __oc4 === void 0 ? void 0 : __oc4.content)) || ANALYSIS_CONFIG.messages.resultError;
         
         latestAnalysisResult = content;
 
